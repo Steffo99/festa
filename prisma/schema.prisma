@@ -49,6 +49,8 @@ model Partecipant {
   shouldBring Item[]
   drives      Vehicle[]           @relation("VehicleDrive")
   rides       Vehicle[]           @relation("VehicleRide")
+  expenses    Transaction[]       @relation("TransactionFrom")
+  income      Transaction[]       @relation("TransactionTo")
 }
 
 enum PartecipationMeans {
@@ -108,4 +110,18 @@ enum VehicleType {
 enum VoyageType {
   TO
   FROM
+}
+
+/// A monetary transaction related to the event.
+model Transaction {
+  id       Int          @id @default(autoincrement())
+  //
+  fromId   Int?
+  from     Partecipant? @relation("TransactionFrom", fields: [fromId], references: [id])
+  toId     Int?
+  to       Partecipant? @relation("TransactionTo", fields: [toId], references: [id])
+  //
+  amount   Decimal
+  currency String
+  reason   String
 }
