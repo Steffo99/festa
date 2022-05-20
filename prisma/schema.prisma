@@ -1,3 +1,4 @@
+// TODO: Remove this, as it is a secret!
 datasource db {
   provider = "mysql"
   url = "mysql://vvtzpi3s4m76:pscale_pw_s9q4qK3T7YeBOoe8osmdeuD34XuOk1ZOKmkH321qw1g@gwzak9auhlla.eu-central-2.psdb.cloud/festa?sslaccept=strict"
