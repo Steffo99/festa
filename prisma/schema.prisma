@@ -6,6 +6,57 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+/// An event is the representation of a gathering of people in a certain place at a certain time.
+model Event {
+  id            Int           @id @default(autoincrement())
+  //
+  slug          String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  viewPassword  String?
+  joinPassword  String?
+  //
+  name          String
+  description   String
+  postcard      String?
+  startTime     DateTime?
+  endTime       DateTime?
+  location      String?
+  //
+  partecipants  Partecipant[]
+}
+
+/// A partecipant is a person who may or may not partecipate to the event.
+model Partecipant {
+  id            Int                 @id @default(autoincrement())
+  eventId       Int
+  event         Event               @relation(fields: [eventId], references: [id])
+  //
+  name          String
+  email         String
+  //
+  means         PartecipationMeans
+  createdAt     DateTime            @default(now())
+  joinedAt      DateTime?
+  //
+  answer        PartecipationAnswer
+}
+
+enum PartecipationMeans {
+  CREATOR
+  INVITED
+  ACCEPTED
+  JOINED
+}
+
+enum PartecipationAnswer {
+  HOST
+  YES
+  MAYBE
+  NO
+  PENDING
 }
