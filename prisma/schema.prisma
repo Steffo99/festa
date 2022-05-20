@@ -12,11 +12,11 @@ datasource db {
 
 /// An event is the representation of a gathering of people in a certain place at a certain time.
 model Event {
-  id           Int              @id @default(autoincrement())
+  id           Int           @id @default(autoincrement())
   //
   slug         String
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
   viewPassword String?
   joinPassword String?
   //
@@ -28,7 +28,8 @@ model Event {
   location     String?
   //
   partecipants Partecipant[]
-  neededItems  CollectiveItem[]
+  neededItems  Item[]
+  vehicles     Vehicle[]
 }
 
 /// A partecipant is a person who may or may not partecipate to the event.
@@ -45,7 +46,9 @@ model Partecipant {
   joinedAt    DateTime?
   //
   answer      PartecipationAnswer
-  shouldBring CollectiveItem[]
+  shouldBring Item[]
+  drives      Vehicle[]           @relation("VehicleDrive")
+  rides       Vehicle[]           @relation("VehicleRide")
 }
 
 enum PartecipationMeans {
@@ -64,7 +67,7 @@ enum PartecipationAnswer {
 }
 
 /// An item which should be bought and brought by somebody to the event.
-model CollectiveItem {
+model Item {
   id         Int          @id @default(autoincrement())
   eventId    Int
   event      Event        @relation(fields: [eventId], references: [id])
@@ -75,4 +78,28 @@ model CollectiveItem {
   //
   assignedId Int?
   assigned   Partecipant? @relation(fields: [assignedId], references: [id])
+}
+
+/// A vehicle which is being used to transport people from and to the event.
+model Vehicle {
+  id       Int           @id @default(autoincrement())
+  eventId  Int
+  event    Event         @relation(fields: [eventId], references: [id])
+  //
+  driverId Int
+  driver   Partecipant   @relation("VehicleDrive", fields: [driverId], references: [id])
+  riders   Partecipant[] @relation("VehicleRide")
+  //
+  slots Int @default(4)
+  password String?
+  //
+  voyage VoyageType
+  location String
+  departureAt DateTime
+  arrivalAt DateTime
+}
+
+enum VoyageType {
+  TO
+  FROM
 }
