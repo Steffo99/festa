@@ -12,38 +12,40 @@ datasource db {
 
 /// An event is the representation of a gathering of people in a certain place at a certain time.
 model Event {
-  id            Int           @id @default(autoincrement())
+  id           Int              @id @default(autoincrement())
   //
-  slug          String
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-  viewPassword  String?
-  joinPassword  String?
+  slug         String
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  viewPassword String?
+  joinPassword String?
   //
-  name          String
-  description   String
-  postcard      String?
-  startTime     DateTime?
-  endTime       DateTime?
-  location      String?
+  name         String
+  description  String
+  postcard     String?
+  startTime    DateTime?
+  endTime      DateTime?
+  location     String?
   //
-  partecipants  Partecipant[]
+  partecipants Partecipant[]
+  neededItems  CollectiveItem[]
 }
 
 /// A partecipant is a person who may or may not partecipate to the event.
 model Partecipant {
-  id            Int                 @id @default(autoincrement())
-  eventId       Int
-  event         Event               @relation(fields: [eventId], references: [id])
+  id          Int                 @id @default(autoincrement())
+  eventId     Int
+  event       Event               @relation(fields: [eventId], references: [id])
   //
-  name          String
-  email         String
+  name        String
+  email       String
   //
-  means         PartecipationMeans
-  createdAt     DateTime            @default(now())
-  joinedAt      DateTime?
+  means       PartecipationMeans
+  createdAt   DateTime            @default(now())
+  joinedAt    DateTime?
   //
-  answer        PartecipationAnswer
+  answer      PartecipationAnswer
+  shouldBring CollectiveItem[]
 }
 
 enum PartecipationMeans {
@@ -59,4 +61,18 @@ enum PartecipationAnswer {
   MAYBE
   NO
   PENDING
+}
+
+/// An item which should be bought and brought by somebody to the event.
+model CollectiveItem {
+  id         Int          @id @default(autoincrement())
+  eventId    Int
+  event      Event        @relation(fields: [eventId], references: [id])
+  //
+  quantity   Int
+  name       String
+  purchased  Boolean      @default(false)
+  //
+  assignedId Int?
+  assigned   Partecipant? @relation(fields: [assignedId], references: [id])
 }
