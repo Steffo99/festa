@@ -82,21 +82,27 @@ model Item {
 
 /// A vehicle which is being used to transport people from and to the event.
 model Vehicle {
-  id       Int           @id @default(autoincrement())
-  eventId  Int
-  event    Event         @relation(fields: [eventId], references: [id])
+  id          Int           @id @default(autoincrement())
+  eventId     Int
+  event       Event         @relation(fields: [eventId], references: [id])
   //
-  driverId Int
-  driver   Partecipant   @relation("VehicleDrive", fields: [driverId], references: [id])
-  riders   Partecipant[] @relation("VehicleRide")
+  driverId    Int
+  driver      Partecipant   @relation("VehicleDrive", fields: [driverId], references: [id])
+  riders      Partecipant[] @relation("VehicleRide")
   //
-  slots Int @default(4)
-  password String?
+  type        VehicleType   @default(CAR)
+  slots       Int           @default(4)
+  password    String?
   //
-  voyage VoyageType
-  location String
+  voyage      VoyageType
+  location    String
   departureAt DateTime
-  arrivalAt DateTime
+  arrivalAt   DateTime
+}
+
+enum VehicleType {
+  CAR
+  OTHER
 }
 
 enum VoyageType {
