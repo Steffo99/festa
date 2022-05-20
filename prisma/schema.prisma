@@ -2,126 +2,126 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
 /// An event is the representation of a gathering of people in a certain place at a certain time.
 model Event {
-  id           Int           @id @default(autoincrement())
-  //
-  slug         String
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  viewPassword String?
-  joinPassword String?
-  //
-  name         String
-  description  String
-  postcard     String?
-  startTime    DateTime?
-  endTime      DateTime?
-  location     String?
-  //
-  partecipants Partecipant[]
-  neededItems  Item[]
-  vehicles     Vehicle[]
+    id           Int           @id @default(autoincrement())
+    //
+    slug         String
+    createdAt    DateTime      @default(now())
+    updatedAt    DateTime      @updatedAt
+    viewPassword String?
+    joinPassword String?
+    //
+    name         String
+    description  String
+    postcard     String?
+    startTime    DateTime?
+    endTime      DateTime?
+    location     String?
+    //
+    partecipants Partecipant[]
+    neededItems  Item[]
+    vehicles     Vehicle[]
 }
 
 /// A partecipant is a person who may or may not partecipate to the event.
 model Partecipant {
-  id          Int                 @id @default(autoincrement())
-  eventId     Int
-  event       Event               @relation(fields: [eventId], references: [id])
-  //
-  name        String
-  email       String
-  //
-  means       PartecipationMeans
-  createdAt   DateTime            @default(now())
-  joinedAt    DateTime?
-  //
-  answer      PartecipationAnswer
-  shouldBring Item[]
-  drives      Vehicle[]           @relation("VehicleDrive")
-  rides       Vehicle[]           @relation("VehicleRide")
-  expenses    Transaction[]       @relation("TransactionFrom")
-  income      Transaction[]       @relation("TransactionTo")
+    id          Int                 @id @default(autoincrement())
+    eventId     Int
+    event       Event               @relation(fields: [eventId], references: [id])
+    //
+    name        String
+    email       String
+    //
+    means       PartecipationMeans
+    createdAt   DateTime            @default(now())
+    joinedAt    DateTime?
+    //
+    answer      PartecipationAnswer
+    shouldBring Item[]
+    drives      Vehicle[]           @relation("VehicleDrive")
+    rides       Vehicle[]           @relation("VehicleRide")
+    expenses    Transaction[]       @relation("TransactionFrom")
+    income      Transaction[]       @relation("TransactionTo")
 }
 
 enum PartecipationMeans {
-  CREATOR
-  INVITED
-  ACCEPTED
-  JOINED
+    CREATOR
+    INVITED
+    ACCEPTED
+    JOINED
 }
 
 enum PartecipationAnswer {
-  HOST
-  YES
-  MAYBE
-  NO
-  PENDING
+    HOST
+    YES
+    MAYBE
+    NO
+    PENDING
 }
 
 /// An item which should be bought and brought by somebody to the event.
 model Item {
-  id         Int          @id @default(autoincrement())
-  eventId    Int
-  event      Event        @relation(fields: [eventId], references: [id])
-  //
-  quantity   Int
-  name       String
-  purchased  Boolean      @default(false)
-  //
-  assignedId Int?
-  assigned   Partecipant? @relation(fields: [assignedId], references: [id])
+    id         Int          @id @default(autoincrement())
+    eventId    Int
+    event      Event        @relation(fields: [eventId], references: [id])
+    //
+    quantity   Int
+    name       String
+    purchased  Boolean      @default(false)
+    //
+    assignedId Int?
+    assigned   Partecipant? @relation(fields: [assignedId], references: [id])
 }
 
 /// A vehicle which is being used to transport people from and to the event.
 model Vehicle {
-  id          Int           @id @default(autoincrement())
-  eventId     Int
-  event       Event         @relation(fields: [eventId], references: [id])
-  //
-  driverId    Int
-  driver      Partecipant   @relation("VehicleDrive", fields: [driverId], references: [id])
-  riders      Partecipant[] @relation("VehicleRide")
-  //
-  type        VehicleType   @default(CAR)
-  slots       Int           @default(4)
-  password    String?
-  //
-  voyage      VoyageType
-  location    String
-  departureAt DateTime
-  arrivalAt   DateTime
+    id          Int           @id @default(autoincrement())
+    eventId     Int
+    event       Event         @relation(fields: [eventId], references: [id])
+    //
+    driverId    Int
+    driver      Partecipant   @relation("VehicleDrive", fields: [driverId], references: [id])
+    riders      Partecipant[] @relation("VehicleRide")
+    //
+    type        VehicleType   @default(CAR)
+    slots       Int           @default(4)
+    password    String?
+    //
+    voyage      VoyageType
+    location    String
+    departureAt DateTime
+    arrivalAt   DateTime
 }
 
 enum VehicleType {
-  CAR
-  OTHER
+    CAR
+    OTHER
 }
 
 enum VoyageType {
-  TO
-  FROM
+    TO
+    FROM
 }
 
 /// A monetary transaction related to the event.
 model Transaction {
-  id       Int          @id @default(autoincrement())
-  //
-  fromId   Int?
-  from     Partecipant? @relation("TransactionFrom", fields: [fromId], references: [id])
-  toId     Int?
-  to       Partecipant? @relation("TransactionTo", fields: [toId], references: [id])
-  //
-  amount   Decimal
-  currency String
-  reason   String
+    id       Int          @id @default(autoincrement())
+    //
+    fromId   Int?
+    from     Partecipant? @relation("TransactionFrom", fields: [fromId], references: [id])
+    toId     Int?
+    to       Partecipant? @relation("TransactionTo", fields: [toId], references: [id])
+    //
+    amount   Decimal
+    currency String
+    reason   String
 }
