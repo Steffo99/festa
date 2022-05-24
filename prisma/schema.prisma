@@ -32,6 +32,17 @@ model Event {
     vehicles     Vehicle[]
 }
 
+/// A user is a person who is using the Festa website, who logged in via Telegram.
+model User {
+    id           BigInt   @id
+    firstName    String
+    lastName     String?
+    username     String?
+    photoUrl     String?
+    lastAuthDate DateTime
+    hash         String
+}
+
 /// A partecipant is a person who may or may not partecipate to the event.
 model Partecipant {
     id          Int                 @id @default(autoincrement())

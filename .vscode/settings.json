@@ -1,0 +1,15 @@
+{
+    "files.exclude": {
+        // Version control
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        // Node
+        "node_modules": true,
+        ".next": true,
+        "yarn.lock": true,
+    }
+}
