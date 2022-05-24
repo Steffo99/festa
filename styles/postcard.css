@@ -1,0 +1,22 @@
+.postcard {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+
+    position: absolute;
+    z-index: -1;
+
+    user-select: none;
+}
+
+@media (prefers-color-scheme: light) {
+    .postcard {
+        filter: blur(16px) contrast(25%) brightness(175%);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .postcard {
+        filter: blur(16px) contrast(50%) brightness(50%);
+    }
+}

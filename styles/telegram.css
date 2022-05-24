@@ -1,0 +1,26 @@
+/* Taken from the Telegram widget button */
+.btn-telegram {
+    display: inline-block;
+    vertical-align: top;
+    font-weight: 500;
+    background-color: #54a9eb;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin: 0;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+
+    font-size: 16px;
+    line-height: 20px;
+    padding: 9px 21px 11px;
+    border-radius: 20px;
+}
+
+.img-telegram-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+
+    margin-left: 4px;
+}
