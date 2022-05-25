@@ -1,9 +1,15 @@
-import i18n from "./next-i18next.config"
+const path = require("path")
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  i18n,
+  i18n: {
+    defaultLocale: "it-IT",
+    locales: [
+      "it-IT",
+    ],
+    localePath: path.resolve('./public/locales'),
+  }
 }
 
 module.exports = nextConfig
