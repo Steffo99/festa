@@ -7,7 +7,7 @@ export function UserAvatar() {
     return login ?
         <img
             src={login?.photo_url}
-            className="img-telegram-avatar"
+            className="avatar-telegram"
         />
     :
         null
