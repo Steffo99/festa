@@ -1,4 +1,8 @@
 /* Taken from the Telegram widget button */
+.container-btn-telegram > div {
+    height: 40px;
+}
+
 .btn-telegram {
     display: inline-block;
     vertical-align: top;

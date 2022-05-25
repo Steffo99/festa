@@ -12,11 +12,13 @@ export function LoginButton(props: any) {
                 Log out
             </button>
         :
-            <OriginalTelegramLoginButton
-                dataOnauth={setLogin}
-                usePic={false}
-                {...props}
-            />
+            <div className="container-btn-telegram">
+                <OriginalTelegramLoginButton
+                    dataOnauth={setLogin}
+                    usePic={false}
+                    {...props}
+                />
+            </div>
         ),
         [login]
     )

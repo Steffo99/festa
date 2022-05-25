@@ -26,6 +26,16 @@ export interface LoginData extends UserData {
 
 
 /**
+ * Get the default Telegram representation of a username.
+ * 
+ * @param u 
+ * @returns 
+ */
+export function getTelegramName(u: UserData) {
+}
+
+
+/**
  * Create a {@link LoginData} object from a {@link ParsedUrlQuery}.
  * 
  * @param queryObj The source object.
