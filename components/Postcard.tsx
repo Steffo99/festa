@@ -5,8 +5,6 @@ import { useDefinedContext } from "../hooks/useDefinedContext";
 export function Postcard() {
     const [postcard, _] = useDefinedContext(PostcardContext)
 
-    console.log(postcard)
-
     return (
         <img
             className="postcard"
