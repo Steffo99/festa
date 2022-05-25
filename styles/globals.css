@@ -16,10 +16,15 @@ a:visited {
     color: #aa44ff;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+
 @media (prefers-color-scheme: light) {
     body {
         background-color: white;
         color: black;
+        text-shadow: 2px 2px 2px white;
     }
 }
 
@@ -27,5 +32,6 @@ a:visited {
     body {
         background-color: black;
         color: white;
+        text-shadow: 2px 2px 2px black;
     }
 }

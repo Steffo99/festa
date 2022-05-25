@@ -4,7 +4,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 export async function getStaticProps(context: NextPageContext) {
     return {props: {
-        ...(await serverSideTranslations(context.locale ?? "it-IT", ["common"]))
+        ...(await serverSideTranslations(context.locale, ["common"]))
     }}
 }
 
@@ -12,13 +12,13 @@ const Page: NextPage = () => {
     const {t} = useTranslation("common")
 
     return (
-        <div>
-            <h1>
+        <div className="index-layout">
+            <h1 class="index-title">
                 {t("title")}
             </h1>
-            <p>
+            <h2>
                 {t("description")}
-            </p>
+            </h2>
         </div>
     )
 }
