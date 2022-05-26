@@ -6,7 +6,7 @@ import type { AppProps } from 'next/app'
 import { LoginContext } from '../contexts/login'
 import { useState } from 'react'
 import * as Telegram from "../utils/telegram"
-import defaultPostcard from "../images/adi-goldstein-Hli3R6LKibo-unsplash.jpg"
+import defaultPostcard from "../public/postcards/adi-goldstein-Hli3R6LKibo-unsplash.jpg"
 import { Postcard } from '../components/Postcard'
 import { PostcardContext } from '../contexts/postcard'
 import { StaticImageData } from 'next/image'
