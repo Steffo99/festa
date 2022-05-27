@@ -1,6 +1,6 @@
 import * as React from "react"
 import { useContext } from "react"
-import { createDefinedContext } from "./useDefinedContext"
+import { createDefinedContext } from "./definedContext"
 
 /**
  * Create a new defined context (see {@link createDefinedContext}) containing the tuple returned by {@link React.useState} for the given type.

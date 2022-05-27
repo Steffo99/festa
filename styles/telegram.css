@@ -21,10 +21,8 @@
     border-radius: 20px;
 }
 
-.avatar-telegram {
-    width: 40px;
-    height: 40px;
+.avatar-telegram-inline {
+    height: 1em;
     border-radius: 20px;
-
-    margin-left: 4px;
+    margin-right: 3px;
 }

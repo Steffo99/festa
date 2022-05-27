@@ -1,6 +1,6 @@
 import nodecrypto from "crypto"
 import { ParsedUrlQuery } from "querystring"
-import * as QueryString from "./querystring"
+import * as QueryString from "./queryString"
 
 /**
  * Serializable Telegram user data without any technical information.

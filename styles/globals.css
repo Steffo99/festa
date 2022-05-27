@@ -1,7 +1,43 @@
-html, body {
+@media (prefers-color-scheme: light) {
+    body {
+        --background: #fafafa;
+        --foreground: black;
+        --border: darkgray;
+        
+        --anchor: #4444ff;
+        --anchor-visited: #aa44ff;
+        --anchor-active: #ff4444;
+
+        --positive: #008800;
+        --negative: #880000;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        --background: #050505;
+        --foreground: white;
+        --border: darkgray;
+
+        --anchor: #8888ff;
+        --anchor-visited: #aa88ff;
+        --anchor-active: #ff8888;
+        
+        --positive: #88ff88;
+        --negative: #ff8888;
+    }
+}
+
+
+body {
     padding: 0;
     margin: 0;
+
+    background-color: var(--background);
+
     font-family: sans-serif;
+    color: var(--foreground);
+    text-shadow: 1px 1px 1px var(--background);
 }
 
 * {
@@ -10,43 +46,61 @@ html, body {
 
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
+    text-shadow: 2px 2px 2px var(--background);
 }
 
-@media (prefers-color-scheme: light) {
-    body {
-        background-color: white;
-        color: black;
-    }
-
-    h1, h2, h3, h4, h5, h6 {
-        text-shadow: 1px 1px 1px white;
-    }
-
-    a {
-        color: #4444ff;
-    }
-
-    a:visited {
-        color: #aa44ff;
-    }
+a {
+    color: var(--anchor);
 }
 
-@media (prefers-color-scheme: dark) {
-    body {
-        background-color: black;
-        color: white;
-        text-shadow: 1px 1px 1px black;
-    }
+a:visited {
+    color: var(--anchor-visited);
+}
 
-    h1, h2, h3, h4, h5, h6 {
-        text-shadow: 2px 2px 2px black;
-    }
+a:active {
+    color: var(--anchor-active);
+}
 
-    a {
-        color: #8888ff;
-    }
+input, button {
+    padding: 8px;
+    margin: 2px 4px;
 
-    a:visited {
-        color: #aa88ff;
-    }
+    color: var(--foreground);
+    background-color: var(--background);
+
+    border-width: 2px;
+    border-color: var(--border);
+    border-radius: 16px;
+
+    font-size: medium;
+    height: 40px;
+
+    vertical-align: middle;
+}
+
+input[type="text"] {
+    border-style: inset;
+}
+
+input[type="submit"], button {
+    border-style: outset;
+}
+
+input[type="submit"]:active, button:active {
+    border-style: inset;
+}
+
+.input-square {
+    width: 40px;
+    height: 40px;
+}
+
+.input-positive {
+    border-color: var(--positive);
+    color: var(--positive);
+}
+
+.input-negative {
+    border-color: var(--negative);
+    color: var(--negative);
 }
