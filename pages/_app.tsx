@@ -1,7 +1,4 @@
 import '../styles/globals.css'
-import '../styles/telegram.css'
-import '../styles/postcard.css'
-import "../styles/index.css"
 import type { AppProps } from 'next/app'
 import { LoginContext } from '../contexts/login'
 import { useEffect, useState } from 'react'

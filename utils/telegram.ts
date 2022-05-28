@@ -74,6 +74,11 @@ export class LoginResponse implements LoginData {
      * @param queryObj The query string object, from `context.query`.
      */
     constructor(ld: LoginData) {
+        if(!ld.id) throw new Error("Missing `id`")
+        if(!ld.first_name) throw new Error("Missing `first_name`")
+        if(!ld.auth_date) throw new Error("Missing `auth_date`")
+        if(!ld.hash) throw new Error("Missing `hash`")
+        
         this.id = ld.id
         this.first_name = ld.first_name
         this.last_name = ld.last_name

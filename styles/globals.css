@@ -1,33 +1,12 @@
-@media (prefers-color-scheme: light) {
-    body {
-        --background: #fafafa;
-        --foreground: black;
-        --border: darkgray;
-        
-        --anchor: #4444ff;
-        --anchor-visited: #aa44ff;
-        --anchor-active: #ff4444;
-
-        --positive: #008800;
-        --negative: #880000;
-    }
+* {
+    box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-    body {
-        --background: #050505;
-        --foreground: white;
-        --border: darkgray;
-
-        --anchor: #8888ff;
-        --anchor-visited: #aa88ff;
-        --anchor-active: #ff8888;
-        
-        --positive: #88ff88;
-        --negative: #ff8888;
-    }
+*::selection {
+    background-color: var(--selection);
+    color: var(--foreground);
+    text-shadow: none;
 }
-
 
 body {
     padding: 0;
@@ -35,13 +14,9 @@ body {
 
     background-color: var(--background);
 
-    font-family: sans-serif;
     color: var(--foreground);
+    font-family: sans-serif;
     text-shadow: 1px 1px 1px var(--background);
-}
-
-* {
-    box-sizing: border-box;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -66,7 +41,7 @@ input, button {
     margin: 2px 4px;
 
     color: var(--foreground);
-    background-color: var(--background);
+    background-color: var(--interactable);
 
     border-width: 2px;
     border-color: var(--border);
@@ -104,3 +79,8 @@ input[type="submit"]:active, button:active {
     border-color: var(--negative);
     color: var(--negative);
 }
+
+@import "index.css";
+@import "postcard.css";
+@import "telegram.css";
+@import "variables.css";

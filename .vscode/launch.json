@@ -9,7 +9,7 @@
             "request": "launch",
             "runtimeArgs": [
                 "run",
-                "dev",
+                "app:dev",
             ],
             "runtimeExecutable": "yarn",
             "skipFiles": [

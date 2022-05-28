@@ -40,7 +40,14 @@ model User {
     username     String?
     photoUrl     String?
     lastAuthDate DateTime
-    hash         String
+    tokens       Token[]
+}
+
+model Token {
+    userId    BigInt
+    user      User     @relation(fields: [userId], references: [id])
+    token     String   @id
+    expiresAt DateTime
 }
 
 /// A partecipant is a person who may or may not partecipate to the event.

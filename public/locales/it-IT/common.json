@@ -1,1 +1,9 @@
-{}
+{
+    "siteTitle": "Festa",
+    "siteSubtitle": "Organizza con facilità il tuo evento!",
+    "introTelegramLogin": "Per prima cosa, effettua il login con Telegram.",
+    "introTelegramLoggedIn": "Sei connesso come <1/>!",
+    "introTelegramLogout": "Non sei tu?",
+    "introCreateEvent": "Dai un nome al tuo primo evento:",
+    "introCreateEventSlugPlaceholder": "nome-evento-2022"
+}
