@@ -1,3 +1,6 @@
+@import "color-schemes.css";
+@import "page-tweaks.css";
+
 * {
     box-sizing: border-box;
 }
@@ -17,10 +20,15 @@ body {
     color: var(--foreground);
     font-family: sans-serif;
     text-shadow: 1px 1px 1px var(--background);
+
+    min-height: 100vh;
+}
+
+hgroup > * {
+    margin: 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    margin: 0;
     text-shadow: 2px 2px 2px var(--background);
 }
 
@@ -34,6 +42,14 @@ a:visited {
 
 a:active {
     color: var(--anchor-active);
+}
+
+.positive {
+    color: var(--positive);
+}
+
+.negative {
+    color: var(--negative);
 }
 
 input, button {
@@ -65,22 +81,35 @@ input[type="submit"]:active, button:active {
     border-style: inset;
 }
 
-.input-square {
+.square-40 {
     width: 40px;
     height: 40px;
 }
 
-.input-positive {
+input.positive, button.positive {
     border-color: var(--positive);
-    color: var(--positive);
 }
 
-.input-negative {
+input.negative, button.negative {
     border-color: var(--negative);
-    color: var(--negative);
 }
 
-@import "index.css";
-@import "postcard.css";
-@import "telegram.css";
-@import "variables.css";
+.page {
+    min-height: 100vh;
+}
+
+.container-btn-telegram > div {
+    height: 40px;
+}
+
+.postcard {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+
+    position: absolute;
+    z-index: -1;
+
+    user-select: none;
+    pointer-events: none;
+}

@@ -1,6 +1,5 @@
-import { useStorageState } from "react-storage-hooks";
+import { FestaLoginData } from "../types/user";
 import { createStateContext } from "../utils/stateContext";
-import * as Telegram from "../utils/telegram"
 
 
 /**
@@ -10,4 +9,4 @@ import * as Telegram from "../utils/telegram"
  * 
  * Please note that the data containing in this context is not validated, and will need to be validated by the server on every request.
  */
-export const LoginContext = createStateContext<Telegram.LoginData | null>()
+export const LoginContext = createStateContext<FestaLoginData | null>()

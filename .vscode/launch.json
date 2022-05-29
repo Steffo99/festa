@@ -9,13 +9,26 @@
             "request": "launch",
             "runtimeArgs": [
                 "run",
-                "app:dev",
+                "dev",
             ],
             "runtimeExecutable": "yarn",
             "skipFiles": [
                 "<node_internals>/**"
             ],
             "type": "node"
-        }
+        },
+        {
+            "name": "Prisma Studio",
+            "request": "launch",
+            "runtimeArgs": [
+                "run",
+                "studio",
+            ],
+            "runtimeExecutable": "yarn",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        },
     ]
 }

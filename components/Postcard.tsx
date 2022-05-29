@@ -6,7 +6,7 @@ export function Postcard() {
     const [postcard, _] = useDefinedContext(PostcardContext)
 
     return (
-        <img
+        <Image
             className="postcard"
             src={typeof postcard === "string" ? postcard : postcard.src}
             alt=""

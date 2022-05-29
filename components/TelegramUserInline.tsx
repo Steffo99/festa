@@ -1,11 +1,11 @@
-import { UserData } from "../utils/telegram";
+import { TelegramLoginData } from "../types/user";
 import { TelegramAvatar } from "./TelegramAvatar";
 
-interface TelegramUserLinkProps {
-    u: UserData
+interface Props {
+    u: TelegramLoginData
 }
 
-export function TelegramUser({u}: TelegramUserLinkProps) {
+export function TelegramUserInline({u}: Props) {
 
     if(u.username) return (
         <a href={`https://t.me/${u.username}`}>

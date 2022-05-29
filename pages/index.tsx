@@ -1,10 +1,13 @@
-import type { NextPage, NextPageContext } from 'next'
+import { NextPageContext } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { Intro } from '../components/Intro';
-import { TutorialTelegramLogin } from '../components/TutorialTelegramLogin';
+import { useState } from 'react';
 import { LoginContext } from '../contexts/login';
 import { useDefinedContext } from '../utils/definedContext';
+import { ApiError } from '../types/api';
+import { TelegramLoginButton } from "../components/TelegramLoginButton"
+import { useTelegramToFestaCallback } from '../hooks/useTelegramToFestaCallback';
+
 
 export async function getStaticProps(context: NextPageContext) {
     return {
@@ -14,14 +17,24 @@ export async function getStaticProps(context: NextPageContext) {
     }
 }
 
-const Page: NextPage = () => {
+
+export default function PageIndex() {
     const { t } = useTranslation("common")
     const [login, setLogin] = useDefinedContext(LoginContext)
+    const [error, setError] = useState<ApiError | null | undefined>(null)
 
-    if (!login) {
-        return (
+    const onLogin = useTelegramToFestaCallback(setLogin, setError)
+
+    return (
+        login ? 
             <main className="page-index">
-                <hgroup>
+                <h1>
+                    {t("siteTitle")}
+                </h1>
+            </main>
+        :
+            <main id="page-hero" className="page">
+                <hgroup className="hgroup-hero">
                     <h1>
                         {t("siteTitle")}
                     </h1>
@@ -29,25 +42,29 @@ const Page: NextPage = () => {
                         {t("siteSubtitle")}
                     </h2>
                 </hgroup>
-                <div>
-                    <TutorialTelegramLogin />
-                </div>
+                {
+                    error ? 
+                    <div className="negative">
+                        <p>
+                            {t("telegramLoginError")}
+                        </p>
+                        <p>
+                            <code>
+                                {JSON.stringify(error)}
+                            </code>
+                        </p>
+                    </div>
+                    :
+                    <div>
+                        <p>
+                            {t("telegramLoginDescription")}
+                        </p>
+                        <TelegramLoginButton
+                            dataOnauth={onLogin}
+                            botName={process.env.NEXT_PUBLIC_TELEGRAM_USERNAME}
+                        />
+                    </div>
+                }
             </main>
-        )
-    }
-
-    return (
-        <main className="page-index">
-            <hgroup>
-                <h1>
-                    {t("siteTitle")}
-                </h1>
-                <h2>
-                    {t("siteSubtitle")}
-                </h2>
-            </hgroup>
-        </main>
     )
 }
-
-export default Page

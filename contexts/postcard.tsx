@@ -1,6 +1,6 @@
 import { createStateContext } from "../utils/stateContext";
 import { StaticImageData } from "next/image";
-import * as Telegram from "../utils/telegram"
+import * as Telegram from "../utils/TelegramUserDataClass"
 
 
 /**

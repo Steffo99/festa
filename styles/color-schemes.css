@@ -14,6 +14,10 @@
         --negative: #880000;
     }
 
+    .postcard {
+        filter: blur(16px) contrast(25%) brightness(175%);
+    }
+
 /* Dark theme */
 @media (prefers-color-scheme: dark) {
     body {
@@ -29,5 +33,9 @@
         
         --positive: #88ff88;
         --negative: #ff8888;
+    }
+
+    .postcard {
+        filter: blur(16px) contrast(50%) brightness(50%);
     }
 }

@@ -1,14 +1,13 @@
 {
-  "name": "festa",
+  "name": "@steffo/festa",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "app:dev": "next dev",
-    "app:build": "next build",
-    "app:start": "next start",
-    "app:lint": "next lint",
-    "db:dev": "dotenv -e .env.local prisma db push --force-reset",
-    "db:generate": "dotenv -e .env.local prisma generate"
+    "dev": "dotenv -e .env.local prisma db push && dotenv -e .env.local prisma generate && dotenv -e .env.local next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "studio": "dotenv -e .env.local prisma studio"
   },
   "dependencies": {
     "@prisma/client": "3.14.0",

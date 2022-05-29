@@ -1,145 +1,72 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// Prisma Schema file
+// https://pris.ly/d/prisma-schema
 
-generator client {
-    provider = "prisma-client-js"
-}
-
+// Use the PostgreSQL database at the URL specified via the DATABASE_URL environment variable.
 datasource db {
     provider = "postgresql"
     url      = env("DATABASE_URL")
 }
 
-/// An event is the representation of a gathering of people in a certain place at a certain time.
-model Event {
-    id           Int           @id @default(autoincrement())
-    //
-    slug         String
-    createdAt    DateTime      @default(now())
-    updatedAt    DateTime      @updatedAt
-    viewPassword String?
-    joinPassword String?
-    //
-    name         String
-    description  String
-    postcard     String?
-    startTime    DateTime?
-    endTime      DateTime?
-    location     String?
-    //
-    partecipants Partecipant[]
-    neededItems  Item[]
-    vehicles     Vehicle[]
+// Generate @prisma/client for use in JavaScript and TypeScript.
+generator client {
+    provider = "prisma-client-js"
 }
 
-/// A user is a person who is using the Festa website, who logged in via Telegram.
+/// A person who is using the Festa website, who may have logged in via various account types.
 model User {
-    id           BigInt   @id
-    firstName    String
-    lastName     String?
-    username     String?
-    photoUrl     String?
-    lastAuthDate DateTime
-    tokens       Token[]
+    /// A unique id for the user on the Festa website.
+    id               String            @id @default(uuid()) @db.Uuid
+    /// The power level of the user on the Festa website.
+    powerLevel       PowerLevel        @default(USER)
+    /// The displayed name of the user.
+    displayName      String
+    /// The URL of the displayed avatar of the user.
+    displayAvatarURL String?
+    /// The tokens the user can use to login.
+    tokens           Token[]
+    /// The Telegram accounts associated with this user.
+    accountsTelegram AccountTelegram[]
 }
 
+/// A possible powerLevel value for an {@link User}.
+enum PowerLevel {
+    /// The user has no special privileges.
+    USER
+    /// The user can override any permission check.
+    SUPERUSER
+}
+
+/// A container for user data associated with a single [Telegram](https://telegram.org/).
+model AccountTelegram {
+    /// The id of the {@link User} associated with this account.
+    userId     String  @db.Uuid
+    /// The {@link User} associated with this account.
+    user       User    @relation(fields: [userId], references: [id])
+    /// The Telegram id of the account.
+    telegramId Int      @id
+    /// The Telegram first name of the account. Always present.
+    firstName  String
+    /// The Telegram last name of the account. May be omitted.
+    lastName   String?
+    /// The username of the account. May not be present if the account has not opted in to public discovery on Telegram.
+    /// If set, allows the user to be contacted via `https://t.me/USERNAME`.
+    username   String?
+    /// The URL where the user's avatar is accessible at.
+    photoUrl   String?
+    /// The locale of the user. Its presence is VERY inconsistent, don't make any assumption based on that.
+    lang       String?
+    /// The last time the account was updated.
+    updatedAt  DateTime @updatedAt
+}
+
+/// A token that can be used to authenticate to the API as an {@link User}.
 model Token {
-    userId    BigInt
+    /// The id of the user that the token allows to login as.
+    userId    String   @db.Uuid
+    /// The user that the token allows to login as.
     user      User     @relation(fields: [userId], references: [id])
+    /// The token itself, a string.
     token     String   @id
+    /// The datetime after which the token should cease to be valid for authentication.
     expiresAt DateTime
-}
-
-/// A partecipant is a person who may or may not partecipate to the event.
-model Partecipant {
-    id          Int                 @id @default(autoincrement())
-    eventId     Int
-    event       Event               @relation(fields: [eventId], references: [id])
-    //
-    name        String
-    email       String
-    //
-    means       PartecipationMeans
-    createdAt   DateTime            @default(now())
-    joinedAt    DateTime?
-    //
-    answer      PartecipationAnswer
-    shouldBring Item[]
-    drives      Vehicle[]           @relation("VehicleDrive")
-    rides       Vehicle[]           @relation("VehicleRide")
-    expenses    Transaction[]       @relation("TransactionFrom")
-    income      Transaction[]       @relation("TransactionTo")
-}
-
-enum PartecipationMeans {
-    CREATOR
-    INVITED
-    ACCEPTED
-    JOINED
-}
-
-enum PartecipationAnswer {
-    HOST
-    YES
-    MAYBE
-    NO
-    PENDING
-}
-
-/// An item which should be bought and brought by somebody to the event.
-model Item {
-    id         Int          @id @default(autoincrement())
-    eventId    Int
-    event      Event        @relation(fields: [eventId], references: [id])
-    //
-    quantity   Int
-    name       String
-    purchased  Boolean      @default(false)
-    //
-    assignedId Int?
-    assigned   Partecipant? @relation(fields: [assignedId], references: [id])
-}
-
-/// A vehicle which is being used to transport people from and to the event.
-model Vehicle {
-    id          Int           @id @default(autoincrement())
-    eventId     Int
-    event       Event         @relation(fields: [eventId], references: [id])
-    //
-    driverId    Int
-    driver      Partecipant   @relation("VehicleDrive", fields: [driverId], references: [id])
-    riders      Partecipant[] @relation("VehicleRide")
-    //
-    type        VehicleType   @default(CAR)
-    slots       Int           @default(4)
-    password    String?
-    //
-    voyage      VoyageType
-    location    String
-    departureAt DateTime
-    arrivalAt   DateTime
-}
-
-enum VehicleType {
-    CAR
-    OTHER
-}
-
-enum VoyageType {
-    TO
-    FROM
-}
-
-/// A monetary transaction related to the event.
-model Transaction {
-    id       Int          @id @default(autoincrement())
-    //
-    fromId   Int?
-    from     Partecipant? @relation("TransactionFrom", fields: [fromId], references: [id])
-    toId     Int?
-    to       Partecipant? @relation("TransactionTo", fields: [toId], references: [id])
-    //
-    amount   Decimal
-    currency String
-    reason   String
 }
