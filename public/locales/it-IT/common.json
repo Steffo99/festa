@@ -1,6 +1,14 @@
 {
     "siteTitle": "Festa",
-    "siteSubtitle": "Organizza con facilità il tuo evento!",
+    "siteSubtitle": "Organizza eventi con facilità!",
     "telegramLoginDescription": "Per iniziare, effettua il login con Telegram.",
-    "logOutPrompt": "Non sei tu?"
+    "telegramLoginWorking": "Un attimo solo, sto effettuando il login...",
+    "telegramLoginError": "Si è verificato il seguente errore durante il login con Telegram:",
+    "logOutPrompt": "Non sei tu?",
+    "eventsSubtitleFirst": "Crea il tuo primo evento!",
+    "eventsInputDescriptionFirst": "Dai un nome al tuo primo evento!",
+    "eventsSubtitleAnother": "Cosa vuoi fare oggi?",
+    "eventsInputName": "Nome evento",
+    "eventsInputNamePlaceholder": "Festa a Festà",
+    "eventsInputSubmitLabel": "Crea evento"
 }

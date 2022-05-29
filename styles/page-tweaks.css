@@ -1,44 +1,60 @@
-#page-hero {
-    display: flex;
-    flex-direction: column;
+#page-index {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 1fr 1fr;
 
-    justify-content: space-evenly;
-    align-items: center;
+    justify-content: center;
     text-align: center;
 }
 
-#page-hero h1 {
+#page-index .hero-titles {
+    align-self: center;
+    grid-row: 1;
+}
+
+.hero-titles h1 {
     font-size: 10rem;
 }
 
-#page-hero h2 {
+.hero-titles h2 {
     font-size: 2.5rem;
 }
 
-@media (max-width: 640px) {
-    #page-hero h1 {
+@media (max-width: 640px) or (max-height: 640px) {
+    .hero-titles h1 {
         font-size: 5rem;
     }
 
-    #page-hero h2 {
+    .hero-titles h2 {
         font-size: 1.5rem;
     }
 }
 
-#page-events {
-    display: flex;
-    flex-direction: column;
-
-    justify-content: space-evenly;
-    align-items: center;
-    text-align: center;
+#page-index .hero-action {
+    align-self: start;
+    grid-row: 2;
 }
 
-#page-create {
+.form-event-create {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 
     justify-content: space-evenly;
     align-items: center;
     text-align: center;
+    gap: 8px;
+
+    width: 100%;
+    max-width: 480px;
+
+    margin: 0 auto;
+}
+
+.form-event-create #input-name {
+    flex-grow: 1;
+    width: 100%;
+}
+
+.form-event-create #input-submit {
+    flex-shrink: 0;
 }

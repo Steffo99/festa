@@ -21,41 +21,40 @@ export async function getStaticProps(context: NextPageContext) {
 export default function PageIndex() {
     const { t } = useTranslation("common")
     const [login, setLogin] = useDefinedContext(LoginContext)
+    const [working, setWorking] = useState<boolean>(false)
     const [error, setError] = useState<ApiError | null | undefined>(null)
-
-    const onLogin = useTelegramToFestaCallback(setLogin, setError)
-
-    return (
-        login ? 
-            <main className="page-index">
+    const onLogin = useTelegramToFestaCallback(setLogin, setError, setWorking)
+    
+    if(!login) return (
+        <main id="page-index" className="page">
+            <hgroup className="hero-titles">
                 <h1>
                     {t("siteTitle")}
                 </h1>
-            </main>
-        :
-            <main id="page-hero" className="page">
-                <hgroup className="hgroup-hero">
-                    <h1>
-                        {t("siteTitle")}
-                    </h1>
-                    <h2>
-                        {t("siteSubtitle")}
-                    </h2>
-                </hgroup>
-                {
-                    error ? 
-                    <div className="negative">
+                <h2>
+                    {t("siteSubtitle")}
+                </h2>
+            </hgroup>
+            {error ? 
+                <div className="hero-action negative">
+                    <p>
+                        {t("telegramLoginError")}
+                    </p>
+                    <p>
+                        <code>
+                            {JSON.stringify(error)}
+                        </code>
+                    </p>
+                </div>
+                :
+                working ?
+                    <div>
                         <p>
-                            {t("telegramLoginError")}
-                        </p>
-                        <p>
-                            <code>
-                                {JSON.stringify(error)}
-                            </code>
+                            {t("telegramLoginWorking")}
                         </p>
                     </div>
                     :
-                    <div>
+                    <div className="hero-action">
                         <p>
                             {t("telegramLoginDescription")}
                         </p>
@@ -64,7 +63,41 @@ export default function PageIndex() {
                             botName={process.env.NEXT_PUBLIC_TELEGRAM_USERNAME}
                         />
                     </div>
-                }
-            </main>
+            }
+        </main>
+    )
+
+    return (
+        <main id="page-index" className="page">
+            <hgroup className="hero-titles">
+                <h1>
+                    {t("siteTitle")}
+                </h1>
+                <h2>
+                    {t("eventsSubtitleFirst")}
+                </h2>
+            </hgroup>
+            <div className="hero-action">
+                <label htmlFor="input-name">
+                    <p>
+                        {t("eventsInputDescriptionFirst")}
+                    </p>
+                </label>
+                <form className="form-event-create">
+                    <input 
+                        id="input-name" 
+                        placeholder={t("eventsInputName")}
+                        type="text"
+                    />
+                    <input
+                        id="input-submit"
+                        type="submit"
+                        aria-label={t("eventsInputSubmitLabel")}
+                        value="→"
+                        className="square-40 positive"
+                    />
+                </form>
+            </div>
+        </main>
     )
 }

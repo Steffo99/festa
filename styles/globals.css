@@ -54,7 +54,6 @@ a:active {
 
 input, button {
     padding: 8px;
-    margin: 2px 4px;
 
     color: var(--foreground);
     background-color: var(--interactable);
@@ -75,6 +74,7 @@ input[type="text"] {
 
 input[type="submit"], button {
     border-style: outset;
+    text-align: center;
 }
 
 input[type="submit"]:active, button:active {
@@ -96,6 +96,7 @@ input.negative, button.negative {
 
 .page {
     min-height: 100vh;
+    padding: 12px;
 }
 
 .container-btn-telegram > div {
