@@ -26,6 +26,8 @@ model User {
     tokens           Token[]
     /// The Telegram accounts associated with this user.
     accountsTelegram AccountTelegram[]
+    /// The events created by this user.
+    eventsCreated    Event[]
 }
 
 /// A possible powerLevel value for an {@link User}.
@@ -39,9 +41,9 @@ enum PowerLevel {
 /// A container for user data associated with a single [Telegram](https://telegram.org/).
 model AccountTelegram {
     /// The id of the {@link User} associated with this account.
-    userId     String  @db.Uuid
+    userId     String   @db.Uuid
     /// The {@link User} associated with this account.
-    user       User    @relation(fields: [userId], references: [id])
+    user       User     @relation(fields: [userId], references: [id])
     /// The Telegram id of the account.
     telegramId Int      @id
     /// The Telegram first name of the account. Always present.
@@ -59,7 +61,7 @@ model AccountTelegram {
     updatedAt  DateTime @updatedAt
 }
 
-/// A token that can be used to authenticate to the API as an {@link User}.
+/// An entity that can be used to authenticate to the API as an {@link User}.
 model Token {
     /// The id of the user that the token allows to login as.
     userId    String   @db.Uuid
@@ -69,4 +71,16 @@ model Token {
     token     String   @id
     /// The datetime after which the token should cease to be valid for authentication.
     expiresAt DateTime
+}
+
+/// The core of the project, a single instance of people gathering in a certain place at a certain time.
+model Event {
+    /// An unique url-safe string identifying the event, and allowing it to be accessed at `/events/SLUG`.
+    slug      String @id
+    /// The id of the {@link User} who created the event.
+    creatorId String @db.Uuid
+    /// The {@link User} who created the event.
+    creator   User   @relation(fields: [creatorId], references: [id])
+    /// The name of the event.
+    name      String
 }

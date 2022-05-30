@@ -1,7 +1,7 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { LoginContext } from '../contexts/login'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import defaultPostcard from "../public/postcards/adi-goldstein-Hli3R6LKibo-unsplash.jpg"
 import { Postcard } from '../components/Postcard'
 import { PostcardContext } from '../contexts/postcard'

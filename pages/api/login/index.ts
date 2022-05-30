@@ -3,12 +3,13 @@ import { prisma } from "../../../utils/prismaClient"
 import { TelegramUserDataClass } from "../../../utils/TelegramUserDataClass"
 import { default as cryptoRandomString } from "crypto-random-string"
 import { ApiResult } from "../../../types/api"
-import { Token, User } from "@prisma/client"
 import { FestaLoginData } from "../../../types/user"
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ApiResult<FestaLoginData>>) {
     switch (req.method) {
+        case "OPTIONS":
+            return res.status(200).send("")
         case "POST":
             switch(req.query.provider) {
                 case "telegram":
