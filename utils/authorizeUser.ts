@@ -1,6 +1,6 @@
 import { User } from "@prisma/client"
 import { NextApiRequest, NextApiResponse } from "next"
-import { client } from "./prismaClient"
+import { database } from "./prismaClient"
 import { Interrupt } from "./interrupt"
 
 
@@ -25,7 +25,7 @@ export async function authorizeUser(req: NextApiRequest): Promise<User> {
         throw new Interrupt(401, {error: "Invalid Authorization header" })
     }
 
-    const dbToken = await client.token.findUnique({where: {token}, include: {user: true}})
+    const dbToken = await database.token.findUnique({where: {token}, include: {user: true}})
     
     if(!(dbToken)) {
         throw new Interrupt(401, {error: "No such Authorization token" })

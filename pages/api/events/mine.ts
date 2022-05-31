@@ -1,4 +1,4 @@
-import { client } from "../../../utils/prismaClient";
+import { database } from "../../../utils/prismaClient";
 import { NextApiRequest, NextApiResponse } from "next";
 import { ApiResult } from "../../../types/api";
 import { restInPeace } from "../../../utils/restInPeace";
@@ -16,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         }
     
         await restInPeace(req, res, {
-            model: client.event,
+            model: database.event,
             list: {where}
         })
     })
