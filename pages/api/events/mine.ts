@@ -9,7 +9,7 @@ import { Event } from "@prisma/client";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ApiResult<Event | Event[]>>) {
     handleInterrupts(res, async () => {
-        const user = await authorizeUser(req, res)
+        const user = await authorizeUser(req)
 
         const where = {
             creatorId: user.id

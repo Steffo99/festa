@@ -4,7 +4,7 @@ import { client } from "./prismaClient"
 import { Interrupt } from "./interrupt"
 
 
-export async function authorizeUser(req: NextApiRequest, res: NextApiResponse): Promise<User> {
+export async function authorizeUser(req: NextApiRequest): Promise<User> {
     const authorization = req.headers.authorization
 
     if (!authorization) {
