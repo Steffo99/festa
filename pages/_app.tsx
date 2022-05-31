@@ -9,18 +9,36 @@ import { StaticImageData } from 'next/image'
 import { appWithTranslation } from 'next-i18next'
 import { FestaLoginData } from '../types/user'
 import {useStoredLogin} from "../hooks/useStoredLogin"
+import { Fetcher, SWRConfig } from 'swr'
+import axios, { AxiosRequestConfig } from 'axios'
 
 
 const App = ({ Component, pageProps }: AppProps): JSX.Element => {
-    const [login, setLogin] = useState<FestaLoginData | null>(null)
     const [postcard, setPostcard] = useState<string | StaticImageData>(defaultPostcard)
+
+    const [login, setLogin] = useState<FestaLoginData | null>(null)
     useStoredLogin(setLogin)
+
+    const axiosConfig = {
+        headers: {
+            "Authorization": login ? `Bearer ${login.token}` : "",
+        }
+    }
+    
+    const swrConfig = {
+        fetcher: async (resource: string, localAxiosConfig: AxiosRequestConfig<any>) => {
+            const response = await axios.get(resource, {...axiosConfig, ...localAxiosConfig})
+            return response.data
+        }
+    }
 
     return (
         <PostcardContext.Provider value={[postcard, setPostcard]}>
         <LoginContext.Provider value={[login, setLogin]}>
+        <SWRConfig value={swrConfig}>
             <Postcard/>
             <Component {...pageProps} />
+        </SWRConfig>
         </LoginContext.Provider>
         </PostcardContext.Provider>
     )
