@@ -4,7 +4,7 @@ import { ApiResult } from "../../../types/api";
 import { Model, restInPeace } from "../../../utils/restInPeace";
 import { default as cryptoRandomString} from "crypto-random-string";
 import { handleInterrupts, Interrupt } from "../../../utils/interrupt";
-import { authorizeUser } from "../../../utils/apiAuth";
+import { authorizeUser } from "../../../utils/authorizeUser";
 import { Event } from "@prisma/client";
 
 

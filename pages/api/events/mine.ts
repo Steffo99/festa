@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { ApiResult } from "../../../types/api";
 import { restInPeace } from "../../../utils/restInPeace";
 import { handleInterrupts } from "../../../utils/interrupt";
-import { authorizeUser } from "../../../utils/apiAuth";
+import { authorizeUser } from "../../../utils/authorizeUser";
 import { Event } from "@prisma/client";
 
 
