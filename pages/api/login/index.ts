@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { client } from "../../../utils/prismaClient"
-import { TelegramUserDataClass } from "../../../utils/TelegramUserDataClass"
+import { TelegramLoginDataClass } from "../../../utils/TelegramLoginDataClass"
 import { default as cryptoRandomString } from "crypto-random-string"
 import { ApiResult } from "../../../types/api"
 import { FestaLoginData } from "../../../types/user"
@@ -40,7 +40,7 @@ async function loginTelegram(req: NextApiRequest, res: NextApiResponse<ApiResult
     }
 
     try {
-        var userData: TelegramUserDataClass = new TelegramUserDataClass(req.body)
+        var userData: TelegramLoginDataClass = new TelegramLoginDataClass(req.body)
     }
     catch (_) {
         return res.status(422).json({ error: "Malformed data" })

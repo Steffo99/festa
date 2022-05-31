@@ -7,7 +7,7 @@ import { TelegramLoginData } from "../types/user"
 /**
  * A {@link TelegramLoginData} object extended with various utility methods.
  */
-export class TelegramUserDataClass {
+export class TelegramLoginDataClass {
     id: number
     firstName: string
     lastName?: string
@@ -18,7 +18,7 @@ export class TelegramUserDataClass {
     lang?: string
 
     /**
-     * Construct a {@link TelegramUserDataClass} object from a {@link TelegramLoginData}, validating it in the process.
+     * Construct a {@link TelegramLoginDataClass} object from a {@link TelegramLoginData}, validating it in the process.
      * 
      * @param u The {@link TelegramLoginData} to use. 
      */
