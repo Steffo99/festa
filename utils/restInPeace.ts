@@ -3,7 +3,7 @@ import { ApiError, ApiResult } from "../types/api";
 
 
 // I don't know what the typing of a Prisma model is.
-type Model = any
+export type Model = any
 
 
 type RestInPeaceOptions<T> = {
@@ -97,7 +97,7 @@ export async function restInPeace<T>(req: NextApiRequest, res: NextApiResponse<A
 
 
 interface OperationOptions<T> {
-    before?: (model: T) => Promise<void>,
+    before?: (model: T, obj?: any) => Promise<void>,
     after?: (model: T, obj?: any) => Promise<any>,
 }
 
@@ -106,6 +106,7 @@ interface OperationOptions<T> {
 
 
 interface HeadOptions<T> extends OperationOptions<T> {
+    before?: (model: T) => Promise<void>,
     after?: (model: T) => Promise<void>,
 }
 
@@ -123,6 +124,7 @@ async function handleHead<T>(res: NextApiResponse<"">, model: Model, options: He
 
 
 interface OptionsOptions<T> extends OperationOptions<T> {
+    before?: (model: T) => Promise<void>,
     after?: (model: T) => Promise<void>,
 }
 
@@ -145,6 +147,7 @@ interface ListOptions<T> extends OperationOptions<T> {
      */
     where?: object,
 
+    before?: (model: T) => Promise<void>,
     after?: (model: T, obj: T[]) => Promise<T[]>,
 }
 
@@ -170,6 +173,7 @@ interface RetrieveOptions<T> extends OperationOptions<T> {
      */
     which?: object,
 
+    before?: (model: T) => Promise<void>,
     after?: (model: T, obj: T) => Promise<T>,
 }
 
@@ -196,6 +200,7 @@ interface CreateOptions<T> extends OperationOptions<T> {
      */
     create: object,
 
+    before?: (model: T) => Promise<void>,
     after?: (model: T, obj: T) => Promise<T>,
 }
 
@@ -231,6 +236,7 @@ interface UpsertOptions<T> extends OperationOptions<T> {
      */
     update: object,
 
+    before?: (model: T, obj?: T) => Promise<void>,
     after?: (model: T, obj: T) => Promise<T>,
 }
 
@@ -238,7 +244,8 @@ interface UpsertOptions<T> extends OperationOptions<T> {
  * Handle a `PUT` HTTP request where a single item is either created or updated.
  */
 async function handleUpsert<T>(res: NextApiResponse<ApiResult<T>>, model: Model, options: UpsertOptions<T>) {
-    await options.before?.(model)
+    const initialObj = await model.findUnique({ where: options.which })
+    await options.before?.(model, initialObj)
     const obj = await model.upsert({
         where: options.which,
         create: options.create,
@@ -265,6 +272,7 @@ interface UpdateOptions<T> extends OperationOptions<T> {
      */
     update: object,
 
+    before?: (model: T, obj?: T) => Promise<void>,
     after?: (model: T, obj: T) => Promise<T>,
 }
 
@@ -272,7 +280,8 @@ interface UpdateOptions<T> extends OperationOptions<T> {
  * Handle a `PATCH` HTTP request where a single item is updated.
  */
 async function handleUpdate<T>(res: NextApiResponse<ApiResult<T>>, model: Model, options: UpdateOptions<T>) {
-    await options.before?.(model)
+    const initialObj = await model.findUnique({ where: options.which })
+    await options.before?.(model, initialObj)
     const obj = await model.update({
         where: options.which,
         data: options.update,
@@ -293,6 +302,7 @@ interface DestroyOptions<T> extends OperationOptions<T> {
      */
     which?: object,
 
+    before?: (model: T, obj?: T) => Promise<void>,
     after?: (model: T) => Promise<void>,
 }
 
@@ -300,7 +310,8 @@ interface DestroyOptions<T> extends OperationOptions<T> {
  * Handle a `DELETE` HTTP request where a single item is destroyed.
  */
 async function handleDestroy<T>(res: NextApiResponse<ApiResult<T>>, model: Model, options: DestroyOptions<T>) {
-    await options.before?.(model)
+    const initialObj = await model.findUnique({ where: options.which })
+    await options.before?.(model, initialObj)
     await model.delete({
         where: options.which,
     })

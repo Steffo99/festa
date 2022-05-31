@@ -1,16 +1,22 @@
 import { client } from "../../../utils/prismaClient";
 import { NextApiRequest, NextApiResponse } from "next";
 import { ApiResult } from "../../../types/api";
-import { restInPeace } from "../../../utils/restInPeace";
+import { Model, restInPeace } from "../../../utils/restInPeace";
 import { default as cryptoRandomString} from "crypto-random-string";
-import { handleInterrupts } from "../../../utils/interrupt";
+import { handleInterrupts, Interrupt } from "../../../utils/interrupt";
 import { authorizeUser } from "../../../utils/apiAuth";
-import { User } from "@prisma/client";
+import { Event } from "@prisma/client";
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ApiResult<Event | Event[]>>) {
     handleInterrupts(res, async () => {
         const user = await authorizeUser(req, res)
+
+        const canEdit = async (model: Model, obj?: Event) => {
+            if(obj && obj.creatorId !== user.id) {
+                throw new Interrupt(403, {error: "Only the creator can edit an event"})
+            }
+        }
 
         const which = {
             slug: req.query.slug
@@ -28,7 +34,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             model: client.event,
             retrieve: {which},
             create: {create},
-            // TODO: this might prove problematic
+            upsert: {create, update, before: canEdit},
+            update: {update, before: canEdit},
+            destroy: {before: canEdit},
         })
     })
 }
