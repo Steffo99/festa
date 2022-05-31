@@ -4,6 +4,14 @@ import { client } from "./prismaClient"
 import { Interrupt } from "./interrupt"
 
 
+/**
+ * Find the user who is authenticating in a request.
+ * 
+ * _For API route usage._
+ * 
+ * @param req The request performed by the user.
+ * @returns The user.
+ */
 export async function authorizeUser(req: NextApiRequest): Promise<User> {
     const authorization = req.headers.authorization
 
