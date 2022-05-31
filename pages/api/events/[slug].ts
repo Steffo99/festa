@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     handleInterrupts(res, async () => {
         const user = await authorizeUser(req, res)
 
-        const canEdit = async (model: Model, obj?: Event) => {
+        const canEdit = async (_model: Model, obj?: Event) => {
             if(obj && obj.creatorId !== user.id) {
                 throw new Interrupt(403, {error: "Only the creator can edit an event"})
             }
