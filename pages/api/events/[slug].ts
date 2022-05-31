@@ -34,9 +34,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             model: client.event,
             retrieve: {which},
             create: {create},
-            upsert: {create, update, before: canEdit},
-            update: {update, before: canEdit},
-            destroy: {before: canEdit},
+            upsert: {which, create, update, before: canEdit},
+            update: {which, update, before: canEdit},
+            destroy: {which, before: canEdit},
         })
     })
 }
