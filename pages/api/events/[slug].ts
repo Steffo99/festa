@@ -30,7 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             name: req.body.name
         }
     
-        restInPeace(req, res, {
+        await restInPeace(req, res, {
             model: client.event,
             retrieve: {which},
             create: {create},
