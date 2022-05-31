@@ -1,4 +1,4 @@
-import { prisma } from "./prismaClient"
+import { client } from "./prismaClient"
 import { AccountTelegram, Token, User } from "@prisma/client"
 import nodecrypto from "crypto"
 import { TelegramLoginData } from "../types/user"

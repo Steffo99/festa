@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import { prisma } from "../../../utils/prismaClient"
+import { client } from "../../../utils/prismaClient"
 import { TelegramUserDataClass } from "../../../utils/TelegramUserDataClass"
 import { default as cryptoRandomString } from "crypto-random-string"
 import { ApiResult } from "../../../types/api"
@@ -54,7 +54,7 @@ async function loginTelegram(req: NextApiRequest, res: NextApiResponse<ApiResult
         return res.status(401).json({ error: "Telegram login data has been tampered" })
     }
 
-    const accountTelegram = await prisma.accountTelegram.upsert({
+    const accountTelegram = await client.accountTelegram.upsert({
         where: {
             telegramId: userData.id
         },
@@ -75,7 +75,7 @@ async function loginTelegram(req: NextApiRequest, res: NextApiResponse<ApiResult
         }
     })
 
-    const token = await prisma.token.create({
+    const token = await client.token.create({
         data: {
             userId: accountTelegram.userId,
             token: cryptoRandomString({ length: 16, type: "base64" }),

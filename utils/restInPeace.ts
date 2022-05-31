@@ -1,252 +1,309 @@
-/**
- * 3 AM coding
- */
-
 import { NextApiRequest, NextApiResponse } from "next";
 import { ApiError, ApiResult } from "../types/api";
 
 
-type RestInOptions<T> = {
+// I don't know what the typing of a Prisma model is.
+type Model = any
+
+
+type RestInPeaceOptions<T> = {
     /**
      * Prisma delegate to operate on.
      */
-    model: any,
+    model: Model,
 
     /**
-     * What kind of request is being performed: `true` for list, `false` for detail.
+     * Options for the "head" operation.
      */
-    isList: boolean
+    head?: HeadOptions<T>
 
     /**
-     * Where clause for Prisma queries about multiple objects.
-     * 
-     * Cannot be set together with `whereDetail`.
+     * Options for the "options" operation.
      */
-    whereList: object,
+    options?: OptionsOptions<T>
 
     /**
-     * Where clause for Prisma queries about a single object.
-     * 
-     * Cannot be set together with `whereList`.
+     * Options for the "list" operation.
      */
-    whereDetail: object,
+    list?: ListOptions<T>
 
     /**
-     * The same as Prisma's `create`.
+     * Options for the "retrieve" operation.
      */
-    create: any,
+    retrieve?: RetrieveOptions<T>
 
     /**
-     * The same as Prisma's `update`.
+     * Options for the "create" operation.
      */
-    update: any,
+    create?: CreateOptions<T>
 
     /**
-     * Operations not allowed.
+     * Options for the "upsert" operation.
      */
-    disallow?: {
-        head?: boolean,
-        options?: boolean,
-        retrieve?: boolean,
-        list?: boolean,
-        create?: boolean,
-        upsert?: boolean,
-        update?: boolean,
-        destroy?: boolean,
-    }
+    upsert?: UpsertOptions<T>
 
     /**
-     * Hooks ran after a specific operation is completed.
-     * 
-     * If a {@link BreakYourBones} is thrown, it will be caught and returned to the user.
-     * 
-     * ```
-     * throw new BreakYourBones(403, {error: "Not allowed"})
-     * ```
+     * Options for the "update" operation.
      */
-    hooks?: {
-        head?: () => T,
-        options?: () => T,
-        retrieve?: (obj: T) => T,
-        list?: (obj: T[]) => T[],
-        create?: (obj: T) => T,
-        upsert?: (obj: T) => T,
-        update?: (obj: T) => T,
-        destroy?: () => T,
-    }
+    update?: UpdateOptions<T>
+
+    /**
+     * Options for the "destroy" operation.
+     */
+    destroy?: DestroyOptions<T>
 }
 
 /**
  * Handle an API route in a [REST](https://en.wikipedia.org/wiki/Representational_state_transfer)ful way.
  */
-export function restInPeace<T>(req: NextApiRequest, res: NextApiResponse<ApiResult<T>>, options: RestInOptions<T>) {
-    // Ensure the wheres are set correctly
-    if (options.whereList && options.whereDetail) {
-        return res.status(500).json({ error: "Request is being handled as both a list operation and a detail operation" })
-    }
-    else if (!(options.whereList || options.whereDetail)) {
-        return res.status(500).json({ error: "Request is not being handled as any kind of operation" })
-    }
-
+export async function restInPeace<T>(req: NextApiRequest, res: NextApiResponse<ApiResult<T>>, options: RestInPeaceOptions<T>) {
     // Handle HEAD by returning an empty body
-    else if (req.method === "HEAD") {
-        return restInHead(res, options)
+    if (options.head && req.method === "HEAD") {
+        return await handleHead(res, options.model, options.head)
     }
     // Same thing for OPTIONS, but beware of weird CORS things!
-    else if (req.method === "OPTIONS") {
-        return restInOptions(res, options)
+    else if (options.options && req.method === "OPTIONS") {
+        return await handleOptions(res, options.model, options.options)
     }
     // GET can be both "list" and "retrieve"
-    else if (req.method === "GET") {
-        return options.isList ? restInList(res, options) : restInRetrieve(res, options)
+    else if (options.list && options.list.where && req.method === "GET") {
+        return await handleList(res, options.model, options.list)
+    }
+    else if(options.retrieve && options.retrieve.which && req.method === "GET") {
+        return await handleRetrieve(res, options.model, options.retrieve)
     }
     // POST is always "create"
-    else if (req.method === "POST") {
-        return options.isList ? noRestForTheWicked(res) : restInCreate(res, options)
+    else if (options.create && req.method === "POST") {
+        return await handleCreate(res, options.model, options.create)
     }
     // PUT is always "upsert"
-    else if (req.method === "PUT") {
-        return options.isList ? noRestForTheWicked(res) : restInUpsert(res, options)
+    else if (options.upsert && options.upsert.which && req.method === "PUT") {
+        return await handleUpsert(res, options.model, options.upsert)
     }
     // PATCH is always "update"
-    else if (req.method === "PATCH") {
-        return options.isList ? noRestForTheWicked(res) : restInUpdate(res, options)
+    else if (options.update && options.update.which && req.method === "PATCH") {
+        return await handleUpdate(res, options.model, options.update)
     }
     // DELETE is always "destroy"
-    else if (req.method === "DELETE") {
-        return options.isList ? noRestForTheWicked(res) : restInDestroy(res, options)
+    else if (options.destroy && options.destroy.which && req.method === "DELETE") {
+        return await handleDestroy(res, options.model, options.destroy)
     }
 
     // What kind of weird HTTP methods are you using?!
     else {
-        return noRestForTheWicked(res)
+        return res.status(405).json({ error: "Method not allowed" })
     }
 }
 
-/**
- * @returns Method not allowed.
- */
-function noRestForTheWicked(res: NextApiResponse) {
-    return res.status(405).json({ error: "Method not allowed" })
+
+interface OperationOptions<T> {
+    before?: (model: T) => Promise<void>,
+    after?: (model: T, obj?: any) => Promise<any>,
 }
 
-/**
- * Error which interrupts the regular flow of a hook to return something different.
- * 
- * Caught by {@link theButcher}.
- */
-export class BreakYourBones<AT> {
-    status: number
-    response: AT
 
-    constructor(status: number, response: AT) {
-        this.status = status
-        this.response = response
-    }
-}
+// === HEAD ===
 
-/**
- * Handle a {@link restInPeace} hook, catching possible {@link BreakYourBones}.
- */
-function theButcher<T>(obj: any, res: NextApiResponse, options: RestInOptions<T>, method: keyof RestInOptions<T>["hooks"]) {
-    try {
-        var mutated = options?.hooks?.[method]?.(obj) ?? obj
-    }
-    catch (e) {
-        if (e instanceof BreakYourBones) {
-            return res.status(e.status).json(e.response)
-        }
-        throw e
-    }
-    return mutated
+
+interface HeadOptions<T> extends OperationOptions<T> {
+    after?: (model: T) => Promise<void>,
 }
 
 /**
  * Handle an `HEAD` HTTP request.
  */
-function restInHead<T>(res: NextApiResponse<"">, options: RestInOptions<T>) {
-    if (options.disallow?.head) return noRestForTheWicked(res)
-    theButcher(undefined, res, options, "head")
+async function handleHead<T>(res: NextApiResponse<"">, model: Model, options: HeadOptions<T>) {
+    await options.before?.(model)
+    await options.after?.(model)
     return res.status(200).send("")
+}
+
+
+// === OPTIONS ===
+
+
+interface OptionsOptions<T> extends OperationOptions<T> {
+    after?: (model: T) => Promise<void>,
 }
 
 /**
  * Handle an `OPTIONS` HTTP request.
  */
-function restInOptions<T>(res: NextApiResponse<ApiResult<T>>, options: RestInOptions<T>) {
-    if (options.disallow?.options) return noRestForTheWicked(res)
-    theButcher(undefined, res, options, "options")
+async function handleOptions<T>(res: NextApiResponse<"">, model: Model, options: OptionsOptions<T>) {
+    await options.before?.(model)
+    await options.after?.(model)
     return res.status(200).send("")
+}
+
+
+// === LIST ===
+
+
+interface ListOptions<T> extends OperationOptions<T> {
+    /**
+     * Prisma Where clause used to list objects available in a API route.
+     */
+    where?: object,
+
+    after?: (model: T, obj: T[]) => Promise<T[]>,
 }
 
 /**
  * Handle a `GET` HTTP request where a list of items is requested.
  */
-function restInList<T>(res: NextApiResponse<ApiResult<T>>, options: RestInOptions<T>) {
-    if (options.disallow?.list) return noRestForTheWicked(res)
-    const objs = options.model.findMany({ where: options.whereList })
-    const mutatedObjs = theButcher(objs, res, options, "list")
+async function handleList<T>(res: NextApiResponse<ApiResult<T>>, model: Model, options: ListOptions<T>) {
+    await options.before?.(model)
+    const objs = await model.findMany({ where: options.where })
+    const mutatedObjs = await options.after?.(model, objs) ?? objs
     return res.status(200).json(mutatedObjs)
+}
+
+
+// === RETRIEVE ===
+
+
+interface RetrieveOptions<T> extends OperationOptions<T> {
+    /**
+     * Prisma Where clause used to select the object to display.
+     * 
+     * See also `findUnique`.
+     */
+    which?: object,
+
+    after?: (model: T, obj: T) => Promise<T>,
 }
 
 /**
  * Handle a `GET` HTTP request where a single item is requested.
  */
-function restInRetrieve<T>(res: NextApiResponse<ApiResult<T>>, options: RestInOptions<T>) {
-    if (options.disallow?.retrieve) return noRestForTheWicked(res)
-    const obj = options.model.findUnique({ where: options.whereDetail })
-    const mutatedObj = theButcher(obj, res, options, "retrieve")
-    if (!obj) {
+async function handleRetrieve<T>(res: NextApiResponse<ApiResult<T>>, model: Model, options: RetrieveOptions<T>) {
+    await options.before?.(model)
+    const obj = await model.findUnique({ where: options.which })
+    const mutatedObj = await options.after?.(model, obj) ?? obj
+    if (!mutatedObj) {
         return res.status(404).json({ error: "Not found" })
     }
     return res.status(200).json(mutatedObj)
 }
 
+
+// === CREATE ===
+
+
+interface CreateOptions<T> extends OperationOptions<T> {
+    /**
+     * Prisma Create clause used to create the object.
+     */
+    create: object,
+
+    after?: (model: T, obj: T) => Promise<T>,
+}
+
 /**
  * Handle a `POST` HTTP request where a single item is created.
  */
-function restInCreate<T>(res: NextApiResponse<ApiResult<T>>, options: RestInOptions<T>) {
-    if (options.disallow?.create) return noRestForTheWicked(res)
-    const obj = options.model.create({ data: options.create })
-    const mutatedObj = theButcher(obj, res, options, "create")
+async function handleCreate<T>(res: NextApiResponse<ApiResult<T>>, model: Model, options: CreateOptions<T>) {
+    await options.before?.(model)
+    const obj = await model.create({ data: options.create })
+    const mutatedObj = await options.after?.(model, obj) ?? obj
     return res.status(200).json(mutatedObj)
+}
+
+
+// === UPSERT ===
+
+
+interface UpsertOptions<T> extends OperationOptions<T> {
+    /**
+     * Prisma Where clause used to select the object to operate on.
+     * 
+     * See also `findUnique`.
+     */
+    which?: object,
+
+    /**
+     * Prisma Create clause used to create the object if it doesn't exist.
+     */
+    create: object,
+    
+    /**
+     * Prisma Update clause used to update the object if it exists.
+     */
+    update: object,
+
+    after?: (model: T, obj: T) => Promise<T>,
 }
 
 /**
  * Handle a `PUT` HTTP request where a single item is either created or updated.
  */
-function restInUpsert<T>(res: NextApiResponse<ApiResult<T>>, options: RestInOptions<T>) {
-    if (options.disallow?.upsert) return noRestForTheWicked(res)
-    const obj = options.model.upsert({
-        where: options.whereDetail,
+async function handleUpsert<T>(res: NextApiResponse<ApiResult<T>>, model: Model, options: UpsertOptions<T>) {
+    await options.before?.(model)
+    const obj = await model.upsert({
+        where: options.which,
         create: options.create,
         update: options.update,
     })
-    const mutatedObj = theButcher(obj, res, options, "upsert")
+    const mutatedObj = await options.after?.(model, obj) ?? obj
     return res.status(200).json(mutatedObj)
+}
+
+
+// === UPDATE ===
+
+
+interface UpdateOptions<T> extends OperationOptions<T> {
+    /**
+     * Prisma Where clause used to select the object to operate on.
+     * 
+     * See also `findUnique`.
+     */
+    which?: object,
+
+    /**
+     * Prisma Update clause used to update the object if it exists.
+     */
+    update: object,
+
+    after?: (model: T, obj: T) => Promise<T>,
 }
 
 /**
  * Handle a `PATCH` HTTP request where a single item is updated.
  */
-function restInUpdate<T>(res: NextApiResponse<ApiResult<T>>, options: RestInOptions<T>) {
-    if (options.disallow?.update) return noRestForTheWicked(res)
-    const obj = options.model.update({
-        where: options.whereDetail,
+async function handleUpdate<T>(res: NextApiResponse<ApiResult<T>>, model: Model, options: UpdateOptions<T>) {
+    await options.before?.(model)
+    const obj = await model.update({
+        where: options.which,
         data: options.update,
     })
-    const mutatedObj = theButcher(obj, res, options, "update")
+    const mutatedObj = await options.after?.(model, obj) ?? obj
     return res.status(200).json(mutatedObj)
+}
+
+
+// === DESTROY ===
+
+
+interface DestroyOptions<T> extends OperationOptions<T> {
+    /**
+     * Prisma Where clause used to select the object to operate on.
+     * 
+     * See also `findUnique`.
+     */
+    which?: object,
+
+    after?: (model: T) => Promise<void>,
 }
 
 /**
  * Handle a `DELETE` HTTP request where a single item is destroyed.
  */
-function restInDestroy<T>(res: NextApiResponse<ApiResult<T>>, options: RestInOptions<T>) {
-    if (options.disallow?.destroy) return noRestForTheWicked(res)
-    options.model.delete({
-        where: options.whereDetail,
+async function handleDestroy<T>(res: NextApiResponse<ApiResult<T>>, model: Model, options: DestroyOptions<T>) {
+    await options.before?.(model)
+    await model.delete({
+        where: options.which,
     })
-    theButcher(undefined, res, options, "destroy")
+    await options.after?.(model)
     return res.status(204).send("")
 }
