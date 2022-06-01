@@ -1,10 +1,12 @@
 #page-index {
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 2fr 3fr;
+    grid-template-rows: auto 1fr;
 
-    justify-content: center;
+    justify-content: stretch;
     text-align: center;
+
+    gap: 32px;
 }
 
 #page-index .hero-titles {
@@ -12,25 +14,30 @@
     grid-row: 1;
 }
 
-.hero-titles h1 {
+#page-index .hero-titles h1 {
     font-size: 10rem;
 }
 
-.hero-titles h2 {
+#page-index .hero-titles h2 {
     font-size: 2.5rem;
 }
 
 @media (max-width: 640px) or (max-height: 640px) {
-    .hero-titles h1 {
+    #page-index .hero-titles h1 {
         font-size: 5rem;
     }
 
-    .hero-titles h2 {
+    #page-index .hero-titles h2 {
         font-size: 1.5rem;
     }
 }
 
 #page-index .hero-action {
     align-self: start;
+    justify-self: center;
+
     grid-row: 2;
+
+    max-width: 800px;
+    width: 100%;
 }

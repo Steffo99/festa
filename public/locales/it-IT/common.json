@@ -14,7 +14,9 @@
     "genericLoading": "Caricamento...",
     "eventListError": "Si è verificato il seguente errore durante il recupero dei tuoi eventi:",
     "eventListDescription": "Questi sono gli eventi che hai creato:",
-    "eventListCreateAnother": "Se vuoi crearne un altro, inserisci il suo nome qui sotto:",
+    "eventListCreateAnother": "Se vuoi crearne un altro, inseriscine il nome qui sotto:",
     "eventListCreateFirst": "Inserisci il nome del tuo primo evento qui sotto!",
-    "eventListCreatePlaceholder": "Nome evento"
+    "eventListCreateEventNameLabel": "Nome evento",
+    "eventListCreateSubmitLabel": "Crea",
+    "eventListCreateRunning": "Creazione in corso..."
 }

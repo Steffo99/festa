@@ -3,7 +3,7 @@ import { useTranslation } from "next-i18next";
 import { FestaIcon } from "./FestaIcon";
 
 type LoadingProps = {
-    text?: string
+    text: string
 }
 
 export function Loading(props: LoadingProps) {
@@ -13,7 +13,7 @@ export function Loading(props: LoadingProps) {
         <span>
             <FestaIcon icon={faAsterisk} spin/>
             &nbsp;
-            {props.text ?? t("genericLoading")}
+            {props.text}
         </span>
     )
 }

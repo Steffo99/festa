@@ -77,8 +77,13 @@ input[type="submit"], button {
     text-align: center;
 }
 
-input[type="submit"]:active, button:active {
+input[type="submit"]:active:not([disabled]), button:active:not([disabled]) {
     border-style: inset;
+}
+
+*[disabled] {
+    opacity: 0.2;
+    cursor: not-allowed;
 }
 
 .square-40 {
@@ -124,10 +129,35 @@ input.negative, button.negative {
 }
 
 .form-monorow {
+    max-width: 600px;
+
+    margin-left: auto;
+    margin-right: auto;
+
     display: flex;
     flex-direction: row;
     gap: 4px;
-
     justify-content: center;
     align-items: center;
+}
+
+.form-monorow input {
+    flex-grow: 1;
+}
+
+.form-monorow input[type="submit"] {
+    flex-grow: 0;
+}
+
+.list-events {
+    max-height: 20vh;
+    padding-left: 20px;
+    padding-bottom: 12px;
+
+    text-align: left;
+
+    overflow-y: scroll;
+
+    column-count: auto;
+    column-width: 140px;
 }

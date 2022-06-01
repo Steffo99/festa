@@ -4,6 +4,8 @@ import { HTMLProps } from "react";
 import { useMyEvents } from "../hooks/useMyEvents";
 import { Loading } from "./Loading";
 import { Event } from "@prisma/client";
+import { EventList } from "./EventList";
+import { EventCreate } from "./EventCreate";
 
 
 export function ActionEventList(props: HTMLProps<HTMLFormElement>) {
@@ -27,7 +29,7 @@ export function ActionEventList(props: HTMLProps<HTMLFormElement>) {
         </>
     }
     else if(!data) {
-        contents = <Loading/>
+        contents = <Loading text={t("eventListLoading")}/>
     }
     else {
         if(data.length === 0) {
@@ -35,6 +37,7 @@ export function ActionEventList(props: HTMLProps<HTMLFormElement>) {
                 <p>
                     {t("eventListCreateFirst")}
                 </p>
+                <EventCreate/>
             </>
         }
         else {
@@ -42,23 +45,11 @@ export function ActionEventList(props: HTMLProps<HTMLFormElement>) {
                 <p>
                     {t("eventListDescription")}
                 </p>
-                <div>
-                    {data.map((event: Event) => <div><a href={`/events/${event.slug}`}>{event.name}</a></div>)}
-                </div>
+                <EventList data={data}/>
                 <p>
                     {t("eventListCreateAnother")}
                 </p>
-                <form className="form-monorow">
-                    <input
-                        type="text"
-                        placeholder={t("eventListCreatePlaceholder")}
-                    />
-                    <input
-                        type="submit"
-                        className="positive square-40"
-                        value="→"
-                    />
-                </form>
+                <EventCreate/>
             </>
         }
     }

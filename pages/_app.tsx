@@ -28,6 +28,8 @@ const App = ({ Component, pageProps }: AppProps): JSX.Element => {
     const swrConfig = {
         fetcher: async (resource: string, localAxiosConfig: AxiosRequestConfig<any>) => {
             const response = await axios.get(resource, {...axiosConfig, ...localAxiosConfig})
+            // To test loading uncomment the following line:
+            // await new Promise(res => setTimeout(res, 100000))
             return response.data
         }
     }
