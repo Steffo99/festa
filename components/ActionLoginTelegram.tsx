@@ -9,7 +9,7 @@ import { useDefinedContext } from "../utils/definedContext"
 import { TelegramLoginButton } from "./TelegramLoginButton"
 
 
-export function FormLoginTelegram({className, ...props}: HTMLProps<HTMLFormElement>) {
+export function ActionLoginTelegram({className, ...props}: HTMLProps<HTMLFormElement>) {
     const { t } = useTranslation("common")    
     const [_, setLogin] = useDefinedContext(LoginContext)
     const [working, setWorking] = useState<boolean>(false)

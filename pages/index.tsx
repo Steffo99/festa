@@ -3,8 +3,8 @@ import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { LoginContext } from '../contexts/login';
 import { useDefinedContext } from '../utils/definedContext';
-import { FormLoginTelegram } from '../components/FormLoginTelegram';
-import { FormEventList } from '../components/FormEventList';
+import { ActionLoginTelegram } from '../components/ActionLoginTelegram';
+import { ActionEventList } from '../components/ActionEventList';
 
 
 export async function getStaticProps(context: NextPageContext) {
@@ -31,11 +31,11 @@ export default function PageIndex() {
                 </h2>
             </hgroup>
             {login ?
-                <FormEventList
+                <ActionEventList
                     className="hero-action"
                 />
             :
-                <FormLoginTelegram
+                <ActionLoginTelegram
                     className="hero-action"
                 />
             }

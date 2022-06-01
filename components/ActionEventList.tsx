@@ -6,7 +6,7 @@ import { Loading } from "./Loading";
 import { Event } from "@prisma/client";
 
 
-export function FormEventList(props: HTMLProps<HTMLFormElement>) {
+export function ActionEventList(props: HTMLProps<HTMLFormElement>) {
     const {t} = useTranslation()
     const { data, error } = useMyEvents()
 
