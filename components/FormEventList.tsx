@@ -14,48 +14,58 @@ export function FormEventList(props: HTMLProps<HTMLFormElement>) {
         "negative": error,
     })
     
-    let message: JSX.Element
     let contents: JSX.Element
 
     if(error) {
-        message = t("formEventListError")
-        contents = (
-            <div>
-                <code>
-                    {JSON.stringify(error)}
-                </code>
-            </div>
-        )
+        contents = <>
+            <p>
+                {t("eventListError")}
+            </p>
+            <code>
+                {JSON.stringify(error)}
+            </code>
+        </>
     }
     else if(!data) {
-        message = <Loading/>
-        contents = <></>
+        contents = <Loading/>
     }
     else {
-        console.debug(data)
         if(data.length === 0) {
-            message = t("formEventListFirst")
-            contents = (
-                <div>zzz</div>
-            )
+            contents = <>
+                <p>
+                    {t("eventListCreateFirst")}
+                </p>
+            </>
         }
         else {
-            message = t("formEventListAnother")
-            contents = (
+            contents = <>
+                <p>
+                    {t("eventListDescription")}
+                </p>
                 <div>
-                    {data.map((event: Event) => <div><a href={`/events/slug`}>{event.name}</a></div>)}
+                    {data.map((event: Event) => <div><a href={`/events/${event.slug}`}>{event.name}</a></div>)}
                 </div>
-            )
+                <p>
+                    {t("eventListCreateAnother")}
+                </p>
+                <form className="form-monorow">
+                    <input
+                        type="text"
+                        placeholder={t("eventListCreatePlaceholder")}
+                    />
+                    <input
+                        type="submit"
+                        className="positive square-40"
+                        value="→"
+                    />
+                </form>
+            </>
         }
     }
 
-
     return (
-        <form className={newClassName}>
-            <p>
-                {message}
-            </p>
+        <div className={newClassName}>
             {contents}
-        </form>
+        </div>
     )
 }

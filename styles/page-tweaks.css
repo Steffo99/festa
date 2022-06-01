@@ -1,7 +1,7 @@
 #page-index {
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 2fr 3fr;
 
     justify-content: center;
     text-align: center;
@@ -33,28 +33,4 @@
 #page-index .hero-action {
     align-self: start;
     grid-row: 2;
-}
-
-.form-event-create {
-    display: flex;
-    flex-direction: row;
-
-    justify-content: space-evenly;
-    align-items: center;
-    text-align: center;
-    gap: 8px;
-
-    width: 100%;
-    max-width: 480px;
-
-    margin: 0 auto;
-}
-
-.form-event-create #input-name {
-    flex-grow: 1;
-    width: 100%;
-}
-
-.form-event-create #input-submit {
-    flex-shrink: 0;
 }

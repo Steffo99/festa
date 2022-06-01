@@ -8,6 +8,7 @@ import { FestaLoginData, TelegramLoginData } from "../types/user"
 import { useDefinedContext } from "../utils/definedContext"
 import { TelegramLoginButton } from "./TelegramLoginButton"
 
+
 export function FormLoginTelegram({className, ...props}: HTMLProps<HTMLFormElement>) {
     const { t } = useTranslation("common")    
     const [_, setLogin] = useDefinedContext(LoginContext)
@@ -69,11 +70,11 @@ export function FormLoginTelegram({className, ...props}: HTMLProps<HTMLFormEleme
     }
     
     return (
-        <form className={newClassName}>
+        <div className={newClassName}>
             <p>
                 {message}
             </p>
             {contents}
-        </form>
+        </div>
     )
 }

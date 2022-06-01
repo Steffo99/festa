@@ -12,7 +12,9 @@
     "eventsInputNamePlaceholder": "Festa a Festà",
     "eventsInputSubmitLabel": "Crea evento",
     "genericLoading": "Caricamento...",
-    "formEventListFirst": "Inserisci il nome del tuo primo evento qui sotto!",
-    "formEventListAnother": "Questi sono gli eventi che hai creato:",
-    "formEventListError": "Si è verificato il seguente errore durante il recupero dei tuoi eventi:"
+    "eventListError": "Si è verificato il seguente errore durante il recupero dei tuoi eventi:",
+    "eventListDescription": "Questi sono gli eventi che hai creato:",
+    "eventListCreateAnother": "Se vuoi crearne un altro, inserisci il suo nome qui sotto:",
+    "eventListCreateFirst": "Inserisci il nome del tuo primo evento qui sotto!",
+    "eventListCreatePlaceholder": "Nome evento"
 }
