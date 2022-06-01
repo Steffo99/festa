@@ -9,25 +9,21 @@ import { StaticImageData } from 'next/image'
 import { appWithTranslation } from 'next-i18next'
 import { FestaLoginData } from '../types/user'
 import {useStoredLogin} from "../hooks/useStoredLogin"
-import { Fetcher, SWRConfig } from 'swr'
-import axios, { AxiosRequestConfig } from 'axios'
+import { SWRConfig } from 'swr'
+import { AxiosRequestConfig } from 'axios'
+import { useAxios } from '../hooks/useAxios'
 
 
 const App = ({ Component, pageProps }: AppProps): JSX.Element => {
     const [postcard, setPostcard] = useState<string | StaticImageData>(defaultPostcard)
-
     const [login, setLogin] = useState<FestaLoginData | null>(null)
     useStoredLogin(setLogin)
 
-    const axiosConfig = {
-        headers: {
-            "Authorization": login ? `Bearer ${login.token}` : "",
-        }
-    }
+    const axios = useAxios(login)
     
     const swrConfig = {
-        fetcher: async (resource: string, localAxiosConfig: AxiosRequestConfig<any>) => {
-            const response = await axios.get(resource, {...axiosConfig, ...localAxiosConfig})
+        fetcher: async (resource: string, init: AxiosRequestConfig<any>) => {
+            const response = await axios.get(resource, init)
             // To test loading uncomment the following line:
             // await new Promise(res => setTimeout(res, 100000))
             return response.data
