@@ -41,7 +41,7 @@ export function FormLoginTelegram({className, ...props}: HTMLProps<HTMLFormEleme
         "negative": error,
     })
     
-    let message: string
+    let message: JSX.Element
     let contents: JSX.Element
 
     if(error) {
@@ -56,7 +56,7 @@ export function FormLoginTelegram({className, ...props}: HTMLProps<HTMLFormEleme
     }
     else if(working) {
         message = t("formTelegramLoginWorking")
-        contents = <div/>
+        contents = <></>
     }
     else {
         message = t("formTelegramLoginDescription")

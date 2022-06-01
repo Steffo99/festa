@@ -4,6 +4,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { LoginContext } from '../contexts/login';
 import { useDefinedContext } from '../utils/definedContext';
 import { FormLoginTelegram } from '../components/FormLoginTelegram';
+import { FormEventList } from '../components/FormEventList';
 
 
 export async function getStaticProps(context: NextPageContext) {
@@ -30,29 +31,9 @@ export default function PageIndex() {
                 </h2>
             </hgroup>
             {login ?
-                <div className="hero-action">
-                    <label htmlFor="input-name">
-                        <p>
-                            {t("eventsInputDescriptionFirst")}
-                        </p>
-                    </label>
-                    <form 
-                        className="form-event-create"
-                    >
-                        <input 
-                            id="input-name" 
-                            placeholder={t("eventsInputName")}
-                            type="text"
-                        />
-                        <input
-                            id="input-submit"
-                            type="submit"
-                            aria-label={t("eventsInputSubmitLabel")}
-                            value="→"
-                            className="square-40 positive"
-                        />
-                    </form>
-                </div>
+                <FormEventList
+                    className="hero-action"
+                />
             :
                 <FormLoginTelegram
                     className="hero-action"

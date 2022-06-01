@@ -114,3 +114,11 @@ input.negative, button.negative {
     user-select: none;
     pointer-events: none;
 }
+
+.icon {
+    filter: drop-shadow(1px 1px 1px var(--background));
+}
+
+.icon.fa-pulse {
+    filter: drop-shadow(1px 1px 1px var(--background));
+}
