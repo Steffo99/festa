@@ -1,5 +1,4 @@
 import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
-import { useTranslation } from "next-i18next";
 import { FestaIcon } from "./FestaIcon";
 
 type ErrorInlineProps = {
@@ -8,14 +7,12 @@ type ErrorInlineProps = {
 }
 
 export function ErrorInline(props: ErrorInlineProps) {
-    const {t} = useTranslation()
-
     return (
         <span className="error error-inline negative">
             <FestaIcon icon={faCircleExclamation}/>
             &nbsp;
             <span>
-                {props.text ?? t("genericError")}
+                {props.text}
             </span>
             &nbsp;
             <code lang="json">

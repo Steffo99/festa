@@ -49,6 +49,6 @@ export function EventCreate() {
                 disabled={!name}
             />
         </form>
-        {createEvent.error ? <ErrorBlock error={createEvent.error}/> : null}
+        {createEvent.error ? <ErrorBlock error={createEvent.error} text={t("eventListCreateError")}/> : null}
     </>
 }

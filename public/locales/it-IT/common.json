@@ -20,5 +20,6 @@
     "eventListCreateFirst": "Inserisci il nome del tuo primo evento qui sotto!",
     "eventListCreateEventNameLabel": "Nome evento",
     "eventListCreateSubmitLabel": "Crea",
-    "eventListCreateRunning": "Creazione in corso..."
+    "eventListCreateRunning": "Creazione in corso...",
+    "eventListCreateError": "Si è verificato il seguente errore nella creazione del tuo evento:"
 }

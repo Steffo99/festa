@@ -1,5 +1,4 @@
 import { faAsterisk } from "@fortawesome/free-solid-svg-icons";
-import { useTranslation } from "next-i18next";
 import { FestaIcon } from "./FestaIcon";
 
 type LoadingProps = {
@@ -7,8 +6,6 @@ type LoadingProps = {
 }
 
 export function Loading(props: LoadingProps) {
-    const {t} = useTranslation()
-
     return (
         <span>
             <FestaIcon icon={faAsterisk} spin/>
