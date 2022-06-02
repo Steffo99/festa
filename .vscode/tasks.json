@@ -1,0 +1,23 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "yarn",
+			"task": "db:generate",
+			"problemMatcher": [],
+			"label": "yarn db:generate"
+		},
+		{
+			"type": "yarn",
+			"task": "db:push",
+			"problemMatcher": [],
+			"label": "yarn: db:push"
+		},
+		{
+			"type": "yarn",
+			"task": "app:lint",
+			"problemMatcher": [],
+			"label": "yarn: app:lint"
+		}
+	]
+}

@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "dotenv -e .env.local prisma db push && dotenv -e .env.local prisma generate && NODE_OPTIONS=--inspect dotenv -e .env.local next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "studio": "dotenv -e .env.local prisma studio"
+    "db:push": "dotenv -e .env.local prisma db push",
+    "db:generate": "dotenv -e .env.local prisma generate",
+    "db:studio": "dotenv -e .env.local cross-env BROWSER=none prisma studio",
+    "app:dev": "cross-env NODE_OPTIONS='--inspect' next dev",
+    "app:build": "next build",
+    "app:start": "next start",
+    "app:lint": "next lint"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
@@ -31,6 +33,7 @@
     "@types/node": "17.0.35",
     "@types/react": "18.0.9",
     "@types/react-dom": "18.0.4",
+    "cross-env": "^7.0.3",
     "dotenv-cli": "^5.1.0",
     "eslint": "8.15.0",
     "eslint-config-next": "12.1.6",
