@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { PostcardContext } from "../contexts/postcard";
 import { useDefinedContext } from "../utils/definedContext";
 

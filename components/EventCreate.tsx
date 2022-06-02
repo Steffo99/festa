@@ -1,15 +1,10 @@
 import { Event } from "@prisma/client"
-import { AxiosError } from "axios"
 import { useTranslation } from "next-i18next"
 import { useRouter } from "next/router"
-import { FormEvent, MouseEventHandler, useCallback, useRef, useState } from "react"
-import { useAxios } from "../hooks/useAxios"
+import { useState } from "react"
 import { useAxiosRequest } from "../hooks/useAxiosRequest"
-import { ApiError } from "../types/api"
-import { FestaLoginData } from "../types/user"
 import { Loading } from "./Loading"
 import { useEffect } from "react"
-import { ErrorInline } from "./ErrorInline"
 import { ErrorBlock } from "./ErrorBlock"
 
 export function EventCreate() {

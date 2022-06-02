@@ -3,7 +3,6 @@ import { useTranslation } from "next-i18next";
 import { HTMLProps } from "react";
 import { useMyEvents } from "../hooks/useMyEvents";
 import { Loading } from "./Loading";
-import { Event } from "@prisma/client";
 import { EventList } from "./EventList";
 import { EventCreate } from "./EventCreate";
 
