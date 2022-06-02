@@ -1,4 +1,4 @@
-import { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { useCallback, useReducer } from "react";
 import { useAxios } from "./useAxios";
 
