@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios"
+import {default as axios, AxiosError } from "axios"
 import {default as classNames} from "classnames"
 import { useTranslation } from "next-i18next"
 import { HTMLProps, useCallback, useState } from "react"
@@ -35,7 +35,7 @@ export function ActionLoginTelegram({className, ...props}: HTMLProps<HTMLFormEle
             setLogin(response.data as FestaLoginData)
             localStorage.setItem("login", JSON.stringify(response.data))
         },
-        []
+        [setLogin]
     )
 
     const newClassName = classNames(className, {

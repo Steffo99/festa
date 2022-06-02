@@ -161,3 +161,10 @@ input.negative, button.negative {
     column-count: auto;
     column-width: 140px;
 }
+
+.error-block pre {
+    display: inline-block;
+    margin: 0;
+
+    text-align: left;
+}

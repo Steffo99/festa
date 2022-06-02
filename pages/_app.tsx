@@ -19,7 +19,7 @@ const App = ({ Component, pageProps }: AppProps): JSX.Element => {
     const [login, setLogin] = useState<FestaLoginData | null>(null)
     useStoredLogin(setLogin)
 
-    const axios = useAxios(login)
+    const axios = useAxios({}, login)
     
     const swrConfig = {
         fetcher: async (resource: string, init: AxiosRequestConfig<any>) => {

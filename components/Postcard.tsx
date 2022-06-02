@@ -5,6 +5,7 @@ import { useDefinedContext } from "../utils/definedContext";
 export function Postcard() {
     const [postcard, _] = useDefinedContext(PostcardContext)
 
+    /* eslint-disable @next/next/no-img-element */
     return (
         <img
             className="postcard"

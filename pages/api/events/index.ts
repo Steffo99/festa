@@ -2,7 +2,7 @@ import { database } from "../../../utils/prismaClient";
 import { NextApiRequest, NextApiResponse } from "next";
 import { ApiResult } from "../../../types/api";
 import { Model, restInPeace } from "../../../utils/restInPeace";
-import { default as cryptoRandomString} from "crypto-random-string";
+import { default as cryptoRandomString } from "crypto-random-string";
 import { handleInterrupts, Interrupt } from "../../../utils/interrupt";
 import { authorizeUser } from "../../../utils/authorizeUser";
 import { Event } from "@prisma/client";
@@ -12,24 +12,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     handleInterrupts(res, async () => {
         const user = await authorizeUser(req)
 
-        const canEdit = async (_model: Model, obj?: Event) => {
-            if(obj && obj.creatorId !== user.id) {
-                throw new Interrupt(403, {error: "Only the creator can edit an event"})
-            }
+        if (req.body.name.length === 0) {
+            throw new Interrupt(400, { error: "Name is empty" })
         }
 
-        const which = {
-            slug: req.query.slug
-        }
-        const update = {
+        const create = {
+            slug: cryptoRandomString({ length: 12, type: "url-safe" }),
+            creatorId: user.id,
             name: req.body.name
         }
-    
+
         await restInPeace(req, res, {
             model: database.event,
-            retrieve: {which},
-            update: {which, update, before: canEdit},
-            destroy: {which, before: canEdit},
+            create: { create },
         })
     })
 }
