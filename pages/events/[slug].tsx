@@ -39,7 +39,6 @@ export default function PageEventDetail({event}: PageEventDetailProps) {
 
     useEffect(
         () => {
-            console.debug(event.postcard)
             if(event.postcard) {
                 setPostcard(event.postcard)
             }
