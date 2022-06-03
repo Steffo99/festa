@@ -17,7 +17,7 @@ export async function getStaticProps(context: NextPageContext) {
 
 
 export default function PageIndex() {
-    const { t } = useTranslation("common")
+    const { t } = useTranslation()
     const [login, _] = useDefinedContext(LoginContext)
 
     return (

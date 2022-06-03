@@ -11,6 +11,9 @@ export async function handleInterrupts(res: NextApiResponse, f: () => Promise<vo
         if(e instanceof Interrupt) {
             return res.status(e.status).json(e.response)
         }
+        else {
+            console.error(e)
+        }
     }
 }
 

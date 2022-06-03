@@ -211,3 +211,7 @@ input.negative, button.negative {
     max-width: 800px;
     width: 100%;
 }
+
+#page-event-detail h1 {
+    text-align: center;
+}

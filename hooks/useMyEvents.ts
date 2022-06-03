@@ -1,5 +1,6 @@
-import useSWR from "swr";
+import { Event } from "@prisma/client";
+import useSWR, { SWRResponse } from "swr";
 
-export function useMyEvents() {
+export function useMyEvents(): SWRResponse<Event[]> {
     return useSWR("/api/events/mine")
 }
