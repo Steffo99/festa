@@ -3,10 +3,13 @@ import { NextPageContext } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import useSWR from "swr";
 import { ErrorInline } from "../../components/ErrorInline";
 import { Loading } from "../../components/Loading";
+import { PostcardContext } from "../../contexts/postcard";
 import {useEventDetail} from "../../hooks/useEventDetail"
+import { useDefinedContext } from "../../utils/definedContext";
 import { database } from "../../utils/prismaClient";
 
 
@@ -37,6 +40,17 @@ type PageEventDetailProps = {
 
 export default function PageEventDetail({event}: PageEventDetailProps) {
     const {t} = useTranslation()
+    const [_, setPostcard] = useDefinedContext(PostcardContext)
+
+    useEffect(
+        () => {
+            console.debug(event.postcard)
+            if(event.postcard) {
+                setPostcard(event.postcard)
+            }
+        },
+        [event]
+    )
 
     return (
         <main id="page-event-detail" className="page">

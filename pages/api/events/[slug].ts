@@ -18,10 +18,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         }
 
         const which = {
-            slug: req.query.slug
+            slug: req.query.slug,
         }
         const update = {
-            name: req.body.name
+            name: req.body.name,
+            postcard: req.body.postcard ?? null,
         }
     
         await restInPeace(req, res, {

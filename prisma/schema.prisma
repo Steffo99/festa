@@ -83,4 +83,6 @@ model Event {
     creator   User   @relation(fields: [creatorId], references: [id])
     /// The name of the event.
     name      String
+    /// The URL to the postcard of the event.
+    postcard String?
 }

@@ -19,7 +19,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         const create = {
             slug: cryptoRandomString({ length: 12, type: "url-safe" }),
             creatorId: user.id,
-            name: req.body.name
+            name: req.body.name,
+            postcard: req.body.postcard ?? null,
         }
 
         await restInPeace(req, res, {

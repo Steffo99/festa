@@ -5,6 +5,9 @@ import { LoginContext } from '../contexts/login';
 import { useDefinedContext } from '../utils/definedContext';
 import { ActionLoginTelegram } from '../components/ActionLoginTelegram';
 import { ActionEventList } from '../components/ActionEventList';
+import { PostcardContext } from '../contexts/postcard';
+import defaultPostcard from "../public/postcards/adi-goldstein-Hli3R6LKibo-unsplash.jpg"
+import { useEffect } from 'react';
 
 
 export async function getStaticProps(context: NextPageContext) {
@@ -18,7 +21,15 @@ export async function getStaticProps(context: NextPageContext) {
 
 export default function PageIndex() {
     const { t } = useTranslation()
-    const [login, _] = useDefinedContext(LoginContext)
+    const [login, ] = useDefinedContext(LoginContext)
+    const [, setPostcard] = useDefinedContext(PostcardContext)
+
+    useEffect(
+        () => {
+            setPostcard(defaultPostcard)
+        },
+        []
+    )
 
     return (
         <main id="page-index" className="page">
