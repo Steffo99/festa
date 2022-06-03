@@ -1,4 +1,4 @@
-import { Event } from "@prisma/client";
+import { Event, User } from "@prisma/client";
 import { NextPageContext } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -14,7 +14,10 @@ export async function getServerSideProps(context: NextPageContext) {
         return {notFound: true}
     }
 
-    const event = await database.event.findUnique({where: {slug}})
+    const event = await database.event.findUnique({
+        where: {slug},
+        include: {creator: true}
+    })
     if(!event) {
         return {notFound: true}
     }
@@ -29,7 +32,7 @@ export async function getServerSideProps(context: NextPageContext) {
 
 
 type PageEventDetailProps = {
-    event: Event
+    event: Event & {creator: User}
 }
 
 
@@ -48,9 +51,11 @@ export default function PageEventDetail({event}: PageEventDetailProps) {
 
     return (
         <main id="page-event-detail" className="page">
-            <h1>
-                {event.name}
-            </h1>
+            <hgroup>
+                <h1>
+                    {event.name}
+                </h1>
+            </hgroup>
         </main>
     )
 }

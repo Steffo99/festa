@@ -11,21 +11,20 @@ export function EventCreate() {
     const { t } = useTranslation()
     const router = useRouter()
     const [name, setName] = useState<string>("")
-    const createEvent = useAxiosRequest<Event>({
-        method: "POST",
-        url: "/api/events/",
-        data: { name }
-    })
 
-    // This is a pretty bad hack... or not?
-    // Idc, as long as it works
-    useEffect(() => {
-        if (createEvent.error) return
-        if (!createEvent.data) return
-        router.push(`/event/${createEvent.data.slug}`)
-    })
+    const createEvent = useAxiosRequest<Event>(
+        {
+            method: "POST", 
+            url: "/api/events/", 
+            data: { name }
+        }, 
+        (response) => {
+            router.push(`/events/${response.data.slug}`)
+        }
+    )
 
     if (createEvent.running) return <Loading text={t("eventListCreateRunning")} />
+    if (createEvent.data) return <Loading text={t("eventListCreateRedirecting")} />
 
     return <>
         <form

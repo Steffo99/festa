@@ -13,8 +13,8 @@ type ReducerState<T, D = any> = {
     error: any | undefined,
 }
 
-export function useAxiosRequest<T, D = any>(config: AxiosRequestConfig<D> = {}, hookConfig: AxiosRequestConfig<D> = {}) {
-    const axios = useAxios(hookConfig)
+export function useAxiosRequest<T, D = any>(config: AxiosRequestConfig<D> = {}, onSuccess?: (response: AxiosResponse<T>) => void, onError?: (error: any) => void) {
+    const axios = useAxios()
 
     const [state, dispatch] = useReducer(
         (prev: ReducerState<T, D>, action: ReducerAction<T, D>) => {
@@ -56,12 +56,14 @@ export function useAxiosRequest<T, D = any>(config: AxiosRequestConfig<D> = {}, 
             }
             catch (error) {
                 dispatch({ type: "error", error })
+                onError?.(error)
                 return
             }
 
             dispatch({ type: "done", response })
+            onSuccess?.(response)
         },
-        [axios, hookConfig]
+        [axios]
     )
 
     return {
