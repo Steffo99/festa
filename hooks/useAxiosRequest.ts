@@ -52,7 +52,6 @@ export function useAxiosRequest<T, D = any>(config: AxiosRequestConfig<D> = {}, 
             dispatch({ type: "start" })
 
             try {
-                throw {potat: "t"}    
                 var response: AxiosResponse<T, D> = await axios.request({ ...config, ...funcConfig })
             }
             catch (error) {
