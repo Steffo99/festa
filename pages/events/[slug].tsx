@@ -2,13 +2,8 @@ import { Event } from "@prisma/client";
 import { NextPageContext } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useRouter } from "next/router";
 import { useEffect } from "react";
-import useSWR from "swr";
-import { ErrorInline } from "../../components/ErrorInline";
-import { Loading } from "../../components/Loading";
 import { PostcardContext } from "../../contexts/postcard";
-import {useEventDetail} from "../../hooks/useEventDetail"
 import { useDefinedContext } from "../../utils/definedContext";
 import { database } from "../../utils/prismaClient";
 
