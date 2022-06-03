@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { default as OriginalTelegramLoginButton } from 'react-telegram-login'
 
 

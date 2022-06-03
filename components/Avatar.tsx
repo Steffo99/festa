@@ -1,5 +1,5 @@
-import Image, { ImageProps } from "next/image";
-import classNames from "classnames"
+import { default as Image, ImageProps } from "next/image";
+import { default as classNames } from "classnames"
 
 export function Avatar(props: ImageProps) {
     return (

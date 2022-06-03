@@ -9,7 +9,7 @@ type ErrorInlineProps = {
 export function ErrorInline(props: ErrorInlineProps) {
     return (
         <span className="error error-inline negative">
-            <FestaIcon icon={faCircleExclamation}/>
+            <FestaIcon icon={faCircleExclamation} />
             &nbsp;
             <span>
                 {props.text}

@@ -1,5 +1,5 @@
 import { Event } from "@prisma/client"
-import Link from "next/link"
+import { default as Link } from "next/link"
 
 type EventListProps = {
     data: Event[]

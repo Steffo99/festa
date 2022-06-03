@@ -8,29 +8,29 @@ import { useEffect } from "react"
 import { ErrorBlock } from "./ErrorBlock"
 
 export function EventCreate() {
-    const {t} = useTranslation()
+    const { t } = useTranslation()
     const router = useRouter()
     const [name, setName] = useState<string>("")
     const createEvent = useAxiosRequest<Event>({
         method: "POST",
         url: "/api/events/",
-        data: {name}
+        data: { name }
     })
 
     // This is a pretty bad hack... or not?
     // Idc, as long as it works
     useEffect(() => {
-        if(createEvent.error) return
-        if(!createEvent.data) return
+        if (createEvent.error) return
+        if (!createEvent.data) return
         router.push(`/event/${createEvent.data.slug}`)
     })
 
-    if(createEvent.running) return <Loading text={t("eventListCreateRunning")}/>
+    if (createEvent.running) return <Loading text={t("eventListCreateRunning")} />
 
     return <>
-        <form 
+        <form
             className="form-monorow"
-            onSubmit={e => {e.preventDefault(); createEvent.run()}}
+            onSubmit={e => { e.preventDefault(); createEvent.run() }}
             noValidate
         >
             <input
@@ -49,6 +49,6 @@ export function EventCreate() {
                 disabled={!name}
             />
         </form>
-        {createEvent.error ? <ErrorBlock error={createEvent.error} text={t("eventListCreateError")}/> : null}
+        {createEvent.error ? <ErrorBlock error={createEvent.error} text={t("eventListCreateError")} /> : null}
     </>
 }

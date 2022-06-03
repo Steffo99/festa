@@ -1,5 +1,5 @@
 import { FontAwesomeIcon, FontAwesomeIconProps } from "@fortawesome/react-fontawesome";
-import classNames from "classnames";
+import { default as classNames } from "classnames";
 
 export function FestaIcon(props: FontAwesomeIconProps) {
     const newClassName = classNames(props.className, "icon")

@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import { default as classNames } from "classnames";
 import { useTranslation } from "next-i18next";
 import { HTMLProps } from "react";
 import { useMyEvents } from "../hooks/useMyEvents";
@@ -8,16 +8,16 @@ import { EventCreate } from "./EventCreate";
 
 
 export function ActionEventList(props: HTMLProps<HTMLFormElement>) {
-    const {t} = useTranslation()
+    const { t } = useTranslation()
     const { data, error } = useMyEvents()
 
     const newClassName = classNames(props.className, {
         "negative": error,
     })
-    
+
     let contents: JSX.Element
 
-    if(error) {
+    if (error) {
         contents = <>
             <p>
                 {t("eventListError")}
@@ -27,16 +27,16 @@ export function ActionEventList(props: HTMLProps<HTMLFormElement>) {
             </code>
         </>
     }
-    else if(!data) {
-        contents = <Loading text={t("eventListLoading")}/>
+    else if (!data) {
+        contents = <Loading text={t("eventListLoading")} />
     }
     else {
-        if(data.length === 0) {
+        if (data.length === 0) {
             contents = <>
                 <p>
                     {t("eventListCreateFirst")}
                 </p>
-                <EventCreate/>
+                <EventCreate />
             </>
         }
         else {
@@ -44,11 +44,11 @@ export function ActionEventList(props: HTMLProps<HTMLFormElement>) {
                 <p>
                     {t("eventListDescription")}
                 </p>
-                <EventList data={data}/>
+                <EventList data={data} />
                 <p>
                     {t("eventListCreateAnother")}
                 </p>
-                <EventCreate/>
+                <EventCreate />
             </>
         }
     }

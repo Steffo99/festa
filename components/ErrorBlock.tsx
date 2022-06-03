@@ -11,7 +11,7 @@ export function ErrorBlock(props: ErrorBlockProps) {
     return (
         <div className="error error-block negative">
             <p>
-                <FestaIcon icon={faCircleExclamation}/>
+                <FestaIcon icon={faCircleExclamation} />
                 &nbsp;
                 <span>
                     {props.text}

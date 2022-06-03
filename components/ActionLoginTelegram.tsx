@@ -1,5 +1,5 @@
-import {default as axios, AxiosError } from "axios"
-import {default as classNames} from "classnames"
+import { default as axios, AxiosError } from "axios"
+import { default as classNames } from "classnames"
 import { useTranslation } from "next-i18next"
 import { HTMLProps, useCallback, useState } from "react"
 import { LoginContext } from "../contexts/login"
@@ -9,8 +9,8 @@ import { useDefinedContext } from "../utils/definedContext"
 import { TelegramLoginButton } from "./TelegramLoginButton"
 
 
-export function ActionLoginTelegram({className, ...props}: HTMLProps<HTMLFormElement>) {
-    const { t } = useTranslation("common")    
+export function ActionLoginTelegram({ className, ...props }: HTMLProps<HTMLFormElement>) {
+    const { t } = useTranslation("common")
     const [_, setLogin] = useDefinedContext(LoginContext)
     const [working, setWorking] = useState<boolean>(false)
     const [error, setError] = useState<ApiError | null | undefined>(null)
@@ -23,7 +23,7 @@ export function ActionLoginTelegram({className, ...props}: HTMLProps<HTMLFormEle
             try {
                 var response = await axios.post<ApiResult<FestaLoginData>>("/api/login?provider=telegram", data)
             }
-            catch(e) {
+            catch (e) {
                 const axe = e as AxiosError
                 setError(axe?.response?.data as ApiError | undefined)
                 return
@@ -41,11 +41,11 @@ export function ActionLoginTelegram({className, ...props}: HTMLProps<HTMLFormEle
     const newClassName = classNames(className, {
         "negative": error,
     })
-    
+
     let message: JSX.Element
     let contents: JSX.Element
 
-    if(error) {
+    if (error) {
         message = t("formTelegramLoginError")
         contents = (
             <div>
@@ -55,7 +55,7 @@ export function ActionLoginTelegram({className, ...props}: HTMLProps<HTMLFormEle
             </div>
         )
     }
-    else if(working) {
+    else if (working) {
         message = t("formTelegramLoginWorking")
         contents = <></>
     }
@@ -68,7 +68,7 @@ export function ActionLoginTelegram({className, ...props}: HTMLProps<HTMLFormEle
             />
         )
     }
-    
+
     return (
         <div className={newClassName}>
             <p>
