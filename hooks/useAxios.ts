@@ -10,8 +10,6 @@ export function useAxios<D>(config: AxiosRequestConfig<D> = {}, data?: FestaLogi
 
     return useMemo(
         () => {
-            console.debug(config, login)
-
             const ax = axios.create({
                 ...config,
                 headers: {
@@ -19,8 +17,6 @@ export function useAxios<D>(config: AxiosRequestConfig<D> = {}, data?: FestaLogi
                     Authorization: login ? `Bearer ${login.token}` : false,
                 },
             })
-            
-            console.debug(ax)
 
             return ax
         },
