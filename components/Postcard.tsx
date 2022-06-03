@@ -4,13 +4,13 @@ import { useDefinedContext } from "../utils/definedContext";
 export function Postcard() {
     const [postcard, _] = useDefinedContext(PostcardContext)
 
+    const postcardUrl = typeof postcard === "string" ? postcard : postcard.src
+
     /* eslint-disable @next/next/no-img-element */
-    return (
-        <img
+    return <>
+        <div
             className="postcard"
-            src={typeof postcard === "string" ? postcard : postcard.src}
-            alt=""
-            draggable={false}
+            style={{backgroundImage: `url(${postcardUrl})`}}
         />
-    )
+    </>
 }

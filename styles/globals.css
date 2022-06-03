@@ -110,7 +110,9 @@ input.negative, button.negative {
 .postcard {
     width: 100vw;
     height: 100vh;
-    object-fit: cover;
+
+    background-attachment: fixed;
+    background-size: cover;
 
     position: absolute;
     z-index: -1;
