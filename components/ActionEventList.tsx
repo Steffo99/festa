@@ -1,7 +1,7 @@
 import { default as classNames } from "classnames";
 import { useTranslation } from "next-i18next";
 import { HTMLProps } from "react";
-import { useMyEvents } from "../hooks/useMyEvents";
+import { useMyEventsSWR } from "../hooks/swr/useMyEventsSWR";
 import { Loading } from "./Loading";
 import { EventList } from "./EventList";
 import { EventCreate } from "./EventCreate";
@@ -9,7 +9,7 @@ import { EventCreate } from "./EventCreate";
 
 export function ActionEventList(props: HTMLProps<HTMLFormElement>) {
     const { t } = useTranslation()
-    const { data, error } = useMyEvents()
+    const { data, error } = useMyEventsSWR()
 
     const newClassName = classNames(props.className, {
         "negative": error,
