@@ -1,0 +1,3 @@
+.icon {
+    filter: drop-shadow(1px 1px 1px var(--background));
+}

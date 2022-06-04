@@ -1,4 +1,17 @@
 @import "color-schemes.css";
+@import "elements.css";
+@import "mood.css";
+/* Ughhh, there's no way to have readable CSS by using modules and Next? */
+@import "components/views/content.css";
+@import "components/views/landing.css";
+@import "components/views/notice.css";
+
+@import "components/toolbar.css";
+@import "components/icon.css";
+@import "components/list-events.css";
+@import "components/postcard.css";
+@import "components/telegram-login.css";
+
 
 * {
     box-sizing: border-box;
@@ -10,92 +23,9 @@
     text-shadow: none;
 }
 
-body {
-    padding: 0;
-    margin: 0;
-
-    background-color: var(--background);
-
-    color: var(--foreground);
-    font-family: sans-serif;
-    text-shadow: 1px 1px 1px var(--background);
-
-    min-height: 100vh;
-}
-
-hgroup > * {
-    margin: 0;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    text-shadow: 2px 2px 2px var(--background);
-}
-
-a {
-    color: var(--anchor);
-}
-
-a:visited {
-    color: var(--anchor-visited);
-}
-
-a:active {
-    color: var(--anchor-active);
-}
-
-input, button {
-    padding: 8px;
-
-    color: var(--foreground);
-    background-color: var(--interactable);
-
-    border-width: 2px;
-    border-color: var(--border);
-    border-radius: 16px;
-
-    font-size: medium;
-    height: 40px;
-
-    vertical-align: middle;
-}
-
-input[type="text"] {
-    border-style: inset;
-}
-
-input[type="submit"], button {
-    border-style: outset;
-    text-align: center;
-}
-
-input[type="submit"]:active:not([disabled]), button:active:not([disabled]) {
-    border-style: inset;
-}
-
 *[disabled] {
     opacity: 0.2;
     cursor: not-allowed;
-}
-
-.positive {
-    color: var(--positive);
-}
-
-.negative {
-    color: var(--negative);
-}
-
-.square-40 {
-    width: 40px;
-    height: 40px;
-}
-
-input.positive, button.positive {
-    border-color: var(--positive);
-}
-
-input.negative, button.negative {
-    border-color: var(--negative);
 }
 
 .page {
@@ -103,31 +33,6 @@ input.negative, button.negative {
     padding: 12px;
 }
 
-.container-btn-telegram > div {
-    height: 40px;
-}
-
-.postcard {
-    width: 100vw;
-    height: 100vh;
-
-    background-attachment: fixed;
-    background-size: cover;
-
-    position: absolute;
-    z-index: -1;
-
-    user-select: none;
-    pointer-events: none;
-}
-
-.icon {
-    filter: drop-shadow(1px 1px 1px var(--background));
-}
-
-.icon.fa-pulse {
-    filter: drop-shadow(1px 1px 1px var(--background));
-}
 
 .form-monorow {
     max-width: 600px;
@@ -150,70 +55,9 @@ input.negative, button.negative {
     flex-grow: 0;
 }
 
-.list-events {
-    max-height: 20vh;
-    padding-left: 20px;
-    padding-bottom: 12px;
-
-    text-align: left;
-
-    overflow-y: scroll;
-
-    column-count: auto;
-    column-width: 140px;
-}
-
 .error-block pre {
     display: inline-block;
     margin: 0;
 
     text-align: left;
-}
-
-#page-index {
-    display: grid;
-    grid-template-columns: 100%;
-    grid-template-rows: auto 1fr;
-
-    justify-content: stretch;
-    text-align: center;
-
-    gap: 32px;
-}
-
-#page-index .hero-titles {
-    align-self: center;
-    grid-row: 1;
-}
-
-#page-index .hero-titles h1 {
-    font-size: 10rem;
-}
-
-#page-index .hero-titles h2 {
-    font-size: 2.5rem;
-}
-
-@media (max-width: 640px) or (max-height: 640px) {
-    #page-index .hero-titles h1 {
-        font-size: 5rem;
-    }
-
-    #page-index .hero-titles h2 {
-        font-size: 1.5rem;
-    }
-}
-
-#page-index .hero-action {
-    align-self: start;
-    justify-self: center;
-
-    grid-row: 2;
-
-    max-width: 800px;
-    width: 100%;
-}
-
-#page-event-detail hgroup {
-    text-align: center;
 }

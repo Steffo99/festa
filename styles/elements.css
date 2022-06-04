@@ -1,0 +1,71 @@
+body {
+    padding: 0;
+    margin: 0;
+
+    background-color: var(--background);
+
+    color: var(--foreground);
+    font-family: sans-serif;
+    text-shadow: 1px 1px 1px var(--background);
+
+    min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-shadow: 2px 2px 2px var(--background);
+    margin: 0;
+}
+
+a {
+    color: var(--anchor);
+}
+
+a:visited {
+    color: var(--anchor-visited);
+}
+
+a:active {
+    color: var(--anchor-active);
+}
+
+input, button, textarea {
+    padding: 8px;
+
+    color: var(--foreground);
+    background-color: var(--interactable);
+
+    border-width: 2px;
+    border-color: var(--border);
+    border-radius: 16px;
+
+    font-size: 1em;
+
+    vertical-align: middle;
+
+}
+
+input[type="text"] {
+    border-style: inset;
+
+    width: 100%;
+}
+
+button, input[type="submit"] {
+    border-style: outset;
+    text-align: center;
+
+    width: 100%;
+}
+
+button:active:not([disabled]), input[type="submit"]:active:not([disabled]) {
+    border-style: inset;
+}
+
+textarea {
+    border-style: inset;
+    border-radius: 16px 16px 0 16px;
+
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+}

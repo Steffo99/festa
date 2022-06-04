@@ -76,13 +76,15 @@ model Token {
 /// The core of the project, a single instance of people gathering in a certain place at a certain time.
 model Event {
     /// An unique url-safe string identifying the event, and allowing it to be accessed at `/events/SLUG`.
-    slug      String @id
+    slug        String  @id
     /// The id of the {@link User} who created the event.
-    creatorId String @db.Uuid
+    creatorId   String  @db.Uuid
     /// The {@link User} who created the event.
-    creator   User   @relation(fields: [creatorId], references: [id])
+    creator     User    @relation(fields: [creatorId], references: [id])
     /// The name of the event.
-    name      String
+    name        String
     /// The URL to the postcard of the event.
-    postcard String?
+    postcard    String?
+    /// The description of the event. It will be parsed in Markdown!
+    description String  @default("")
 }

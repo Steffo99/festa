@@ -1,5 +1,5 @@
 import { faAsterisk } from "@fortawesome/free-solid-svg-icons";
-import { FestaIcon } from "./FestaIcon";
+import { FestaIcon } from "./extensions/FestaIcon";
 
 type LoadingProps = {
     text: string

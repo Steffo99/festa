@@ -1,0 +1,15 @@
+.positive {
+    color: var(--positive);
+}
+
+.negative {
+    color: var(--negative);
+}
+
+input.positive, button.positive {
+    border-color: var(--positive);
+}
+
+input.negative, button.negative {
+    border-color: var(--negative);
+}

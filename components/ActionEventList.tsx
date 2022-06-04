@@ -3,7 +3,7 @@ import { useTranslation } from "next-i18next";
 import { HTMLProps } from "react";
 import { useMyEventsSWR } from "../hooks/swr/useMyEventsSWR";
 import { Loading } from "./Loading";
-import { EventList } from "./EventList";
+import { ListEvents } from "./ListEvents";
 import { EventCreate } from "./EventCreate";
 
 
@@ -44,7 +44,7 @@ export function ActionEventList(props: HTMLProps<HTMLFormElement>) {
                 <p>
                     {t("eventListDescription")}
                 </p>
-                <EventList data={data} />
+                <ListEvents data={data} />
                 <p>
                     {t("eventListCreateAnother")}
                 </p>

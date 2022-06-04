@@ -5,7 +5,7 @@ import { useState } from "react"
 import { useAxiosRequest } from "../hooks/useAxiosRequest"
 import { Loading } from "./Loading"
 import { useEffect } from "react"
-import { ErrorBlock } from "./ErrorBlock"
+import { ErrorBlock } from "./errors/ErrorBlock"
 
 export function EventCreate() {
     const { t } = useTranslation()

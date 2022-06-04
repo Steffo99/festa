@@ -1,13 +1,12 @@
 import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
-import { FestaIcon } from "./FestaIcon";
+import { FestaIcon } from "../extensions/FestaIcon";
 
 type ErrorBlockProps = {
-    error: JSON,
+    error: Error,
     text: string
 }
 
 export function ErrorBlock(props: ErrorBlockProps) {
-
     return (
         <div className="error error-block negative">
             <p>
@@ -18,8 +17,10 @@ export function ErrorBlock(props: ErrorBlockProps) {
                 </span>
             </p>
             <pre>
-                <code lang="json">
-                    {JSON.stringify(props.error, undefined, 4)}
+                <code>
+                    <b>{props.error.name}</b> 
+                    :&nbsp;
+                    {props.error.message}
                 </code>
             </pre>
         </div>

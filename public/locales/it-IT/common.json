@@ -22,5 +22,7 @@
     "eventListCreateSubmitLabel": "Crea",
     "eventListCreateRunning": "Creazione in corso...",
     "eventListCreateRedirecting": "Caricamento dell'evento in corso...",
-    "eventListCreateError": "Si è verificato il seguente errore nella creazione del tuo evento:"
+    "eventListCreateError": "Si è verificato il seguente errore nella creazione del tuo evento:",
+    "toggleEditingEdit": "Modifica pagina",
+    "toggleEditingView": "Visualizza anteprima"
 }

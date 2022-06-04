@@ -3,19 +3,21 @@ import type { AppProps } from 'next/app'
 import { LoginContext } from '../contexts/login'
 import { useState } from 'react'
 import defaultPostcard from "../public/postcards/adi-goldstein-Hli3R6LKibo-unsplash.jpg"
-import { Postcard } from '../components/Postcard'
-import { PostcardContext } from '../contexts/postcard'
+import { PostcardRenderer } from '../components/postcard/PostcardRenderer'
+import { PostcardContext } from '../components/postcard/PostcardContext'
 import { StaticImageData } from 'next/image'
-import { appWithTranslation } from 'next-i18next'
+import { appWithTranslation, useTranslation } from 'next-i18next'
 import { FestaLoginData } from '../types/user'
-import {useStoredLogin} from "../hooks/useStoredLogin"
+import { useStoredLogin } from "../hooks/useStoredLogin"
 import { SWRConfig } from 'swr'
 import { AxiosRequestConfig } from 'axios'
 import { useAxios } from '../hooks/useAxios'
+import { ErrorBoundary } from '../components/errors/ErrorBoundary'
 
 
 const App = ({ Component, pageProps }: AppProps): JSX.Element => {
-    const [postcard, setPostcard] = useState<string | StaticImageData>(defaultPostcard)
+    const {t} = useTranslation()
+    const [postcard, setPostcard] = useState<string>(defaultPostcard.src)
     const [login, setLogin] = useState<FestaLoginData | null>(null)
     useStoredLogin(setLogin)
 
@@ -30,16 +32,18 @@ const App = ({ Component, pageProps }: AppProps): JSX.Element => {
         }
     }
 
-    return (
+    return <>
+        <ErrorBoundary text={t("genericError")}>
         <PostcardContext.Provider value={[postcard, setPostcard]}>
         <LoginContext.Provider value={[login, setLogin]}>
         <SWRConfig value={swrConfig}>
-            <Postcard/>
+            <PostcardRenderer/>
             <Component {...pageProps} />
         </SWRConfig>
         </LoginContext.Provider>
         </PostcardContext.Provider>
-    )
+        </ErrorBoundary>
+    </>
 }
 
 export default appWithTranslation(App)

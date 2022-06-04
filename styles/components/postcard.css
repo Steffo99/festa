@@ -1,0 +1,15 @@
+.postcard {
+    width: 100vw;
+    height: 100vh;
+
+    background-attachment: fixed;
+    background-size: cover;
+    z-index: -1;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    user-select: none;
+    pointer-events: none;
+}

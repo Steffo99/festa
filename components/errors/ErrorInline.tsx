@@ -1,8 +1,8 @@
 import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
-import { FestaIcon } from "./FestaIcon";
+import { FestaIcon } from "../extensions/FestaIcon";
 
 type ErrorInlineProps = {
-    error: JSON,
+    error: Error,
     text?: string
 }
 
@@ -11,10 +11,14 @@ export function ErrorInline(props: ErrorInlineProps) {
         <span className="error error-inline negative">
             <FestaIcon icon={faCircleExclamation} />
             &nbsp;
-            <span>
-                {props.text}
-            </span>
-            &nbsp;
+            {props.text ?
+                <>
+                    <span>
+                        {props.text}
+                    </span>
+                    &nbsp;
+                </>
+            : null}
             <code lang="json">
                 {JSON.stringify(props.error)}
             </code>

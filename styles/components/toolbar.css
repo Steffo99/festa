@@ -1,0 +1,31 @@
+.toolbar {
+    display: flex;
+
+    justify-content: flex-start;
+    align-content: flex-start;
+
+    position: absolute;
+}
+
+.toolbar-top {
+    top: 8px;
+}
+
+.toolbar-bottom {
+    bottom: 8px;
+}
+
+.toolbar-left {
+    left: 8px;
+    flex-direction: row;
+}
+
+.toolbar-right {
+    right: 8px;
+    flex-direction: row-reverse;
+}
+
+.toolbar > * {
+    width: 40px;
+    height: 40px;
+}

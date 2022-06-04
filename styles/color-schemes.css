@@ -1,4 +1,4 @@
-/* Light theme / unsupported */
+@media (prefers-color-scheme: light) {
     body {
         --background: #fafafa;
         --foreground: black;
@@ -17,9 +17,9 @@
     .postcard {
         filter: blur(7px) contrast(25%) brightness(175%);
     }
+}
 
 /* Dark theme */
-@media (prefers-color-scheme: dark) {
     body {
         --background: #050505;
         --foreground: white;
@@ -38,4 +38,3 @@
     .postcard {
         filter: blur(7px) contrast(50%) brightness(50%);
     }
-}

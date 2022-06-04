@@ -1,0 +1,12 @@
+.list-events {
+    max-height: 20vh;
+    padding-left: 20px;
+    padding-bottom: 12px;
+
+    text-align: left;
+
+    overflow-y: scroll;
+
+    column-count: auto;
+    column-width: 140px;
+}
