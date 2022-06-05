@@ -6,11 +6,12 @@
 @import "components/views/landing.css";
 @import "components/views/notice.css";
 
-@import "components/toolbar.css";
 @import "components/icon.css";
 @import "components/list-events.css";
 @import "components/postcard.css";
+@import "components/square.css";
 @import "components/telegram-login.css";
+@import "components/toolbar.css";
 
 
 * {

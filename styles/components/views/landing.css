@@ -15,7 +15,6 @@
 
 .view-landing-titles {
     grid-area: titles;
-    align-self: center;
 }
 
 .view-landing-titles-title {

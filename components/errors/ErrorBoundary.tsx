@@ -1,4 +1,5 @@
 import { Component, ErrorInfo, ReactNode } from "react";
+import { ViewNotice } from "../view/ViewNotice";
 import { ErrorBlock } from "./ErrorBlock";
 
 type ErrorBoundaryProps = {
@@ -28,9 +29,10 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
         if(this.state.error) {
             return (
                 <ViewNotice
-                <main id="page-error-fatal" className="page">
-                    <ErrorBlock text={this.props.text} error={this.state.error}/>
-                </main>
+                    notice={
+                        <ErrorBlock text={this.props.text} error={this.state.error}/>
+                    }
+                />
             )
         }
         else {

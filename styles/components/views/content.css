@@ -8,6 +8,9 @@
     grid-template-rows: auto 1fr;
 
     justify-content: stretch;
+
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .view-content-title {

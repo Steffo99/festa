@@ -13,6 +13,8 @@
     "eventsInputSubmitLabel": "Crea evento",
     "genericLoading": "Caricamento...",
     "genericError": "Si è verificato il seguente errore:",
+    "notFoundError": "La pagina che hai richiesto non è stata trovata.",
+    "internalServerError": "Si è verificato un errore nella gestione della tua richiesta.",
     "eventListError": "Si è verificato il seguente errore durante il recupero dei tuoi eventi:",
     "eventListLoading": "Caricamento della lista degli eventi creati in corso...",
     "eventListDescription": "Questi sono gli eventi che hai creato:",

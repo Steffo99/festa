@@ -1,6 +1,10 @@
 .view-notice {
-    display: flex;
+    display: grid;
+    flex-direction: column;
 
     justify-content: center;
     align-content: center;
+
+    min-width: 100vw;
+    min-height: 100vh;
 }

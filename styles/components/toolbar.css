@@ -24,8 +24,3 @@
     right: 8px;
     flex-direction: row-reverse;
 }
-
-.toolbar > * {
-    width: 40px;
-    height: 40px;
-}
