@@ -29,9 +29,9 @@
     cursor: not-allowed;
 }
 
-.page {
+main {
     min-height: 100vh;
-    padding: 12px;
+    padding: 8px;
 }
 
 

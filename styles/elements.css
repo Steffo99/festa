@@ -43,7 +43,7 @@ input, button, textarea {
 
 }
 
-input[type="text"] {
+input[type="text"], input[type="file"] {
     border-style: inset;
 
     width: 100%;
