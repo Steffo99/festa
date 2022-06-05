@@ -14,6 +14,7 @@
     "genericLoading": "Caricamento...",
     "genericError": "Si è verificato il seguente errore:",
     "notFoundError": "La pagina che hai richiesto non è stata trovata.",
+    "notFoundBackHome": "Torna alla home",
     "internalServerError": "Si è verificato un errore nella gestione della tua richiesta.",
     "eventListError": "Si è verificato il seguente errore durante il recupero dei tuoi eventi:",
     "eventListLoading": "Caricamento della lista degli eventi creati in corso...",
