@@ -8,6 +8,6 @@ Run:
 
 ```console
 $ yarn install
-$ yarn dev
-$ open http://nitro.localhost
+$ yarn app:dev
+$ open http://localhost:3000
 ```
