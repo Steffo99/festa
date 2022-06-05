@@ -1,22 +1,23 @@
 /* Dark theme */
-:root, :host {
-    --background: #050505;
-    --foreground: white;
-    --border: gray;
-    --interactable: #050505b5;
-    --selection: #3333dd;
+    :root, :host {
+        --background: #050505;
+        --foreground: white;
+        --border: gray;
+        --interactable: #050505b5;
+        --selection: #3333dd;
 
-    --anchor: #8888ff;
-    --anchor-visited: #aa88ff;
-    --anchor-active: #ff8888;
-    
-    --positive: #88ff88;
-    --negative: #ff8888;
-}
+        --anchor: #8888ff;
+        --anchor-visited: #aa88ff;
+        --anchor-active: #ff8888;
+        
+        --positive: #88ff88;
+        --negative: #ff8888;
+    }
 
-.postcard {
-    filter: blur(7px) contrast(50%) brightness(50%);
-}
+    .postcard {
+        filter: blur(7px) contrast(50%) brightness(50%);
+    }
+
 
 @media (prefers-color-scheme: light) {
     :root, :host {
