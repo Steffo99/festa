@@ -15,6 +15,7 @@
 
 .view-landing-titles {
     grid-area: titles;
+    text-shadow: 2px 2px 4px var(--background);
 }
 
 .view-landing-titles-title {
