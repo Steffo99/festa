@@ -67,7 +67,7 @@ local.steffo.eu.        0       IN      A       192.168.1.135
 
 > If you don't own a domain name, you can use your computer's [hosts file](https://en.wikipedia.org/wiki/Hosts_(file)) to configure a `HOSTNAME.localhost` domain.
 
-Your development server will also need to be reverse-proxied to be accessible at that domain, for example using [Caddy](https://caddyserver.com/)_
+Your development server will also need to be reverse-proxied to be accessible at that domain, for example using [Caddy](https://caddyserver.com/).
 
 ```caddy
 local.steffo.eu:80 {
