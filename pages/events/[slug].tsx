@@ -13,6 +13,7 @@ import { database } from "../../utils/prismaClient";
 import { Postcard } from "../../components/postcard/Postcard";
 import { ViewContent } from "../../components/view/ViewContent";
 import { EditablePostcard } from "../../components/editable/EditablePostcard";
+import { ViewEvent } from "../../components/view/ViewEvent";
 
 
 export async function getServerSideProps(context: NextPageContext) {
@@ -46,6 +47,7 @@ type PageEventDetailProps = {
 export default function PageEventDetail({event}: PageEventDetailProps) {
     const {t} = useTranslation()
     const editState = useState<boolean>(false)
+    const [title, setTitle] = useState<string>(event.name)
     const [description, setDescription] = useState<string>(event.description)
     const [postcard, setPostcard] = useState<string | null>(event.postcard)
 
@@ -69,23 +71,32 @@ export default function PageEventDetail({event}: PageEventDetailProps) {
             <title key="title">{event.name} - {t("siteTitle")}</title>
         </Head>
         <EditingContext.Provider value={editState}>
-            <ToolBar vertical="top" horizontal="right">
+            <ToolBar vertical="bottom" horizontal="right">
                 <ToolToggleEditing/>
             </ToolBar>
-            <ViewContent
+            <ViewEvent
                 title={
-                    <EditableText value={event.name}/>
-                }
-                content={<>
-                    <EditableMarkdown 
-                        value={description} 
-                        onChange={e => setDescription((e.target as HTMLTextAreaElement).value)}
+                    <EditableText 
+                        value={title}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
+                        placeholder={t("eventDetailsTitlePlaceholder")}
                     />
+                }
+                postcard={
                     <EditablePostcard
                         value={postcard ?? undefined}
                         onChange={setPostcardBlob}
+                        placeholder={t("eventDetailsPostcardPlaceholder")}
                     />
-                </>}
+                }
+                description={
+                    <EditableMarkdown 
+                        value={description} 
+                        onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
+                        rows={3}
+                        placeholder={t("eventDetailsDescriptionPlaceholder")}
+                    />
+                }
             />
         </EditingContext.Provider>
     </>
