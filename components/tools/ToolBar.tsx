@@ -9,7 +9,7 @@ type ToolBarProps = {
 
 export function ToolBar({vertical, horizontal, children}: ToolBarProps) {
     return (
-        <div className={classNames("toolbar", `toolbar-${vertical}`, `toolbar-${horizontal}`)} aria-role="toolbar">
+        <div className={classNames("toolbar", `toolbar-${vertical}`, `toolbar-${horizontal}`)} role="toolbar">
             {children}
         </div>
     )
