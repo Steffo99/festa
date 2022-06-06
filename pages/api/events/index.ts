@@ -21,6 +21,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             creatorId: user.id,
             name: req.body.name,
             postcard: req.body.postcard ?? null,
+            description: req.body.description,
+            startingAt: req.body.startingAt,
+            endingAt: req.body.endingAt,
         }
 
         await restInPeace(req, res, {

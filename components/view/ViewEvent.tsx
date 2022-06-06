@@ -1,9 +1,11 @@
 import { ReactNode } from "react"
+import { FormDateRange } from "../FormDateRange"
 
 type ViewEventProps = {
-    title: ReactNode
-    postcard: ReactNode
-    description: ReactNode
+    title: ReactNode,
+    postcard: ReactNode,
+    description: ReactNode,
+    datetime: ReactNode,
 }
 
 
@@ -19,6 +21,9 @@ export function ViewEvent(props: ViewEventProps) {
             <div className="view-event-description">
                 {props.description}
             </div>
+            <FormDateRange 
+                className="view-event-daterange"
+            />
         </main>
     )
 }

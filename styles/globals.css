@@ -15,6 +15,7 @@
 @import "components/toolbar.css";
 @import "components/form-monorow.css";
 @import "components/error.css";
+@import "components/form-daterange.css";
 
 
 * {
@@ -27,7 +28,7 @@
     text-shadow: none;
 }
 
-*[disabled] {
+*[disabled], .disabled {
     opacity: 0.2;
     cursor: not-allowed;
 }

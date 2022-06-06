@@ -1,0 +1,15 @@
+.form-daterange {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    gap: 4px;
+}
+
+.form-daterange-start, .form-daterange-end {
+    flex-grow: 1;
+}
+
+.form-daterange-icon, .form-daterange-connector {
+    flex-grow: 0;
+}

@@ -14,6 +14,8 @@ import { Postcard } from "../../components/postcard/Postcard";
 import { ViewContent } from "../../components/view/ViewContent";
 import { EditablePostcard } from "../../components/editable/EditablePostcard";
 import { ViewEvent } from "../../components/view/ViewEvent";
+import { EditableDateTime } from "../../components/editable/EditableDateTime";
+import { FormDateRange } from "../../components/FormDateRange";
 
 
 export async function getServerSideProps(context: NextPageContext) {
@@ -50,6 +52,8 @@ export default function PageEventDetail({event}: PageEventDetailProps) {
     const [title, setTitle] = useState<string>(event.name)
     const [description, setDescription] = useState<string>(event.description)
     const [postcard, setPostcard] = useState<string | null>(event.postcard)
+    const [startingAt, setStartingAt] = useState<string | null>(event.startingAt?.toISOString() ?? null)
+    const [endingAt, setEndingAt] = useState<string | null>(event.endingAt?.toISOString() ?? null)
 
     const setPostcardBlob = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
@@ -95,6 +99,18 @@ export default function PageEventDetail({event}: PageEventDetailProps) {
                         onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
                         rows={3}
                         placeholder={t("eventDetailsDescriptionPlaceholder")}
+                    />
+                }
+                datetime={
+                    <FormDateRange
+                        startProps={{
+                            value: startingAt ?? undefined,
+                            onChange: (e: ChangeEvent<HTMLInputElement>) => setStartingAt(e.target.value),
+                        }}
+                        endProps={{
+                            value: endingAt ?? undefined,
+                            onChange: (e: ChangeEvent<HTMLInputElement>) => setEndingAt(e.target.value),
+                        }}
                     />
                 }
             />
