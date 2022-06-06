@@ -5,6 +5,7 @@
 @import "components/views/content.css";
 @import "components/views/landing.css";
 @import "components/views/notice.css";
+@import "components/views/event.css";
 
 @import "components/icon.css";
 @import "components/list-events.css";
@@ -12,6 +13,8 @@
 @import "components/square.css";
 @import "components/telegram-login.css";
 @import "components/toolbar.css";
+@import "components/form-monorow.css";
+@import "components/error.css";
 
 
 * {
@@ -27,38 +30,4 @@
 *[disabled] {
     opacity: 0.2;
     cursor: not-allowed;
-}
-
-main {
-    min-height: 100vh;
-    padding: 8px;
-}
-
-
-.form-monorow {
-    max-width: 600px;
-
-    margin-left: auto;
-    margin-right: auto;
-
-    display: flex;
-    flex-direction: row;
-    gap: 4px;
-    justify-content: center;
-    align-items: center;
-}
-
-.form-monorow input {
-    flex-grow: 1;
-}
-
-.form-monorow input[type="submit"] {
-    flex-grow: 0;
-}
-
-.error-block pre {
-    display: inline-block;
-    margin: 0;
-
-    text-align: left;
 }

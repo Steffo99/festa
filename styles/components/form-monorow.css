@@ -1,0 +1,20 @@
+.form-monorow {
+    max-width: 600px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-monorow *:first-child {
+    flex-grow: 1;
+}
+
+.form-monorow *:last-child {
+    flex-grow: 0;
+}

@@ -11,6 +11,12 @@ body {
     min-height: 100vh;
 }
 
+main {
+    padding: 8px;
+
+    min-height: 100vh;
+}
+
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
 }
@@ -41,19 +47,19 @@ input, button, textarea {
 
     vertical-align: middle;
 
+    text-align: inherit;
+    font-weight: inherit;
+
+    width: 100%;
 }
 
 input[type="text"], input[type="file"] {
     border-style: inset;
-
-    width: 100%;
 }
 
 button, input[type="submit"] {
     border-style: outset;
     text-align: center;
-
-    width: 100%;
 }
 
 button:active:not([disabled]), input[type="submit"]:active:not([disabled]) {
@@ -63,8 +69,6 @@ button:active:not([disabled]), input[type="submit"]:active:not([disabled]) {
 textarea {
     border-style: inset;
     border-radius: 16px 16px 0 16px;
-
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;
+    
+    resize: vertical;
 }
