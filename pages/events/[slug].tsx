@@ -75,7 +75,7 @@ export default function PageEventDetail({event}: PageEventDetailProps) {
             <title key="title">{event.name} - {t("siteTitle")}</title>
         </Head>
         <EditingContext.Provider value={editState}>
-            <ToolBar vertical="bottom" horizontal="right">
+            <ToolBar vertical="vadapt" horizontal="right">
                 <ToolToggleEditing/>
             </ToolBar>
             <ViewEvent

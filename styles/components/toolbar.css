@@ -24,3 +24,14 @@
     right: 8px;
     flex-direction: row-reverse;
 }
+
+.toolbar-vadapt {
+    top: 8px;
+}
+
+@media (max-width: 800px) {
+    .toolbar-vadapt {
+        top: unset;
+        bottom: 8px;
+    }
+}

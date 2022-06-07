@@ -6,12 +6,25 @@
         "x1 x2 de x3 x4"
         "x1 x2 dr x3 x4"
     ;
-    grid-template-columns: 3fr 1fr 800px 1fr 3fr;
+    grid-template-columns: 1fr 80px 640px 80px 1fr;
     grid-template-rows: auto auto 1fr auto;
 
     row-gap: 4px;
 
     margin: 0 auto;
+}
+
+@media (max-width: 800px) {
+    .view-event {
+        grid-template-areas: 
+            "ti"
+            "po"
+            "de"
+            "dr"
+        ;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto 1fr auto;
+    }
 }
 
 .view-event-title {

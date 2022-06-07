@@ -2,7 +2,7 @@ import {default as classNames} from "classnames"
 import { ReactNode } from "react"
 
 type ToolBarProps = {
-    vertical: "top" | "bottom",
+    vertical: "top" | "bottom" | "vadapt",
     horizontal: "left" | "right",
     children: ReactNode,
 }
