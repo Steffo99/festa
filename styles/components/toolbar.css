@@ -5,33 +5,40 @@
     align-content: flex-start;
 
     position: absolute;
+
+    z-index: 2;
+
+    gap: 2px;
 }
 
 .toolbar-top {
     top: 8px;
+    flex-direction: column;
 }
 
 .toolbar-bottom {
     bottom: 8px;
+    flex-direction: column-reverse;
 }
 
 .toolbar-left {
     left: 8px;
-    flex-direction: row;
 }
 
 .toolbar-right {
     right: 8px;
-    flex-direction: row-reverse;
 }
 
 .toolbar-vadapt {
     top: 8px;
+    flex-direction: column;
 }
 
 @media (max-width: 800px) {
     .toolbar-vadapt {
         top: unset;
         bottom: 8px;
+
+        flex-direction: column-reverse;
     }
 }

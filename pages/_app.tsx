@@ -18,6 +18,7 @@ import { ErrorBoundary } from '../components/errors/ErrorBoundary'
 const App = ({ Component, pageProps }: AppProps): JSX.Element => {
     const {t} = useTranslation()
     const [postcard, setPostcard] = useState<string>(defaultPostcard.src)
+    const [postcardVisible, setPostcardVisible] = useState<boolean>(false)
     const [login, setLogin] = useState<FestaLoginData | null>(null)
     useStoredLogin(setLogin)
 
@@ -34,7 +35,7 @@ const App = ({ Component, pageProps }: AppProps): JSX.Element => {
 
     return <>
         <ErrorBoundary text={t("genericError")}>
-        <PostcardContext.Provider value={[postcard, setPostcard]}>
+        <PostcardContext.Provider value={{postcard, setPostcard, visible: postcardVisible, setVisible: setPostcardVisible}}>
         <LoginContext.Provider value={[login, setLogin]}>
         <SWRConfig value={swrConfig}>
             <PostcardRenderer/>

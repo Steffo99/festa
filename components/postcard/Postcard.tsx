@@ -8,7 +8,7 @@ type PostcardProps = {
 }
 
 export function Postcard({src}: PostcardProps) {
-    const [, setPostcard] = useDefinedContext(PostcardContext)
+    const {setPostcard} = useDefinedContext(PostcardContext)
 
     useEffect(
         () => {

@@ -16,6 +16,7 @@ import { EditablePostcard } from "../../components/editable/EditablePostcard";
 import { ViewEvent } from "../../components/view/ViewEvent";
 import { EditableDateTime } from "../../components/editable/EditableDateTime";
 import { FormDateRange } from "../../components/FormDateRange";
+import { ToolToggleVisible } from "../../components/tools/ToolToggleVisible";
 
 
 export async function getServerSideProps(context: NextPageContext) {
@@ -77,6 +78,7 @@ export default function PageEventDetail({event}: PageEventDetailProps) {
         <EditingContext.Provider value={editState}>
             <ToolBar vertical="vadapt" horizontal="right">
                 <ToolToggleEditing/>
+                <ToolToggleVisible/>
             </ToolBar>
             <ViewEvent
                 title={
