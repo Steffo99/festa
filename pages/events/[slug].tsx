@@ -17,6 +17,7 @@ import { ViewEvent } from "../../components/view/ViewEvent";
 import { EditableDateTime } from "../../components/editable/EditableDateTime";
 import { FormDateRange } from "../../components/FormDateRange";
 import { ToolToggleVisible } from "../../components/tools/ToolToggleVisible";
+import { EditableDateRange } from "../../components/editable/EditableDateRange";
 
 
 export async function getServerSideProps(context: NextPageContext) {
@@ -103,15 +104,15 @@ export default function PageEventDetail({event}: PageEventDetailProps) {
                         placeholder={t("eventDetailsDescriptionPlaceholder")}
                     />
                 }
-                datetime={
-                    <FormDateRange
+                daterange={
+                    <EditableDateRange
                         startProps={{
-                            value: startingAt ?? undefined,
-                            onChange: (e: ChangeEvent<HTMLInputElement>) => setStartingAt(e.target.value),
+                            value: startingAt,
+                            onChange: (e: ChangeEvent<HTMLInputElement>) => setStartingAt(e.target.value)
                         }}
                         endProps={{
-                            value: endingAt ?? undefined,
-                            onChange: (e: ChangeEvent<HTMLInputElement>) => setEndingAt(e.target.value),
+                            value: endingAt,
+                            onChange: (e: ChangeEvent<HTMLInputElement>) => setEndingAt(e.target.value)
                         }}
                     />
                 }

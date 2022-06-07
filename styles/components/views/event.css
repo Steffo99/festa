@@ -5,9 +5,10 @@
         "x1 x2 po x3 x4"
         "x1 x2 de x3 x4"
         "x1 x2 dr x3 x4"
+        "xx xx xx xx xx"
     ;
     grid-template-columns: 1fr 80px 640px 80px 1fr;
-    grid-template-rows: auto auto 1fr auto;
+    grid-template-rows: auto auto auto auto 1fr;
 
     row-gap: 4px;
 
@@ -21,9 +22,10 @@
             "po"
             "de"
             "dr"
+            "xx"
         ;
         grid-template-columns: 1fr;
-        grid-template-rows: auto auto 1fr auto;
+        grid-template-rows: auto auto auto auto 1fr;
     }
 }
 

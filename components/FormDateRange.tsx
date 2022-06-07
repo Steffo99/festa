@@ -1,6 +1,8 @@
+import classNames from "classnames"
 import { ReactNode } from "react"
 
 type FormDateRangeProps = {
+    preview: boolean,
     icon: ReactNode,
     start: ReactNode,
     connector: ReactNode,
@@ -10,7 +12,10 @@ type FormDateRangeProps = {
 
 export function FormDateRange(props: FormDateRangeProps) {
     return (
-        <div className="form-daterange">
+        <div className={classNames({
+            "form-daterange": true,
+            "form-daterange-preview": props.preview,
+        })}>
             <div className="form-daterange-icon">
                 {props.icon}
             </div>

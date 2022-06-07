@@ -12,7 +12,7 @@ export function ToolToggleEditing() {
         <button 
             aria-label={editing ? t("toggleEditingView") : t("toggleEditingEdit")}
             onClick={() => setEditing(!editing)}
-            className="square-40"
+            className="toolbar-tool"
         >
             <FestaIcon icon={editing ? faBinoculars : faPencil}/>
         </button>

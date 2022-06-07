@@ -12,7 +12,7 @@ export function ToolToggleVisible() {
         <button 
             aria-label={visible ? t("toggleVisibleHide") : t("toggleVisibleShow")}
             onClick={() => setVisible(!visible)}
-            className="square-40"
+            className="toolbar-tool"
         >
             <FestaIcon icon={visible ? faEyeSlash : faEye}/>
         </button>

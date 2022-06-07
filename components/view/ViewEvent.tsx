@@ -5,7 +5,7 @@ type ViewEventProps = {
     title: ReactNode,
     postcard: ReactNode,
     description: ReactNode,
-    datetime: ReactNode,
+    daterange: ReactNode,
 }
 
 
@@ -21,9 +21,9 @@ export function ViewEvent(props: ViewEventProps) {
             <div className="view-event-description">
                 {props.description}
             </div>
-            <FormDateRange 
-                className="view-event-daterange"
-            />
+            <div className="view-event-daterange">
+                {props.daterange}
+            </div>
         </main>
     )
 }

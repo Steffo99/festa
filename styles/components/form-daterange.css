@@ -6,10 +6,25 @@
     gap: 4px;
 }
 
+.form-daterange-icon {
+    margin-right: 4px;
+}
+
+.form-daterange-connector {
+    margin-right: 2px;
+}
+
 .form-daterange-start, .form-daterange-end {
     flex-grow: 1;
 }
 
 .form-daterange-icon, .form-daterange-connector {
+    flex-grow: 0;
+}
+
+.form-daterange-preview {
+}
+
+.form-daterange-preview .form-daterange-start, .form-daterange-preview .form-daterange-end {
     flex-grow: 0;
 }
