@@ -4,7 +4,7 @@ import { useDefinedContext } from "../../utils/definedContext";
 import { Postcard } from "../postcard/Postcard";
 
 
-export function EditablePostcard({value, ...props}: HTMLProps<HTMLInputElement>) {
+export function EditablePostcard({value, ...props}: HTMLProps<HTMLInputElement> & {value: string | undefined}) {
     const [editing,] = useDefinedContext(EditingContext)
 
     return <>
