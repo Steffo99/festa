@@ -21,7 +21,7 @@ export function Postcard({src}: PostcardProps) {
                 }
             }
         },
-        [src]
+        [src, setPostcard]
     )
 
     return null
