@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "db:push": "dotenv -e .env.local prisma db push",
-    "db:generate": "dotenv -e .env.local prisma generate",
-    "db:studio": "dotenv -e .env.local cross-env BROWSER=none prisma studio",
-    "app:dev": "cross-env NODE_OPTIONS='--inspect' next dev",
+    "db:generate:development": "dotenv -e .env.development -e .env.local prisma generate",
+    "db:generate:production": "dotenv -e .env.production -e .env.local prisma generate --data-proxy",
+    "db:studio": "dotenv -e .env.development dotenv -e .env.local cross-env BROWSER=none prisma studio",
+    "app:dev": "next dev",
     "app:build": "next build",
     "app:start": "next start",
     "app:lint": "next lint"
