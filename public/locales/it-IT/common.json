@@ -31,5 +31,6 @@
     "eventDetailsTitlePlaceholder": "Titolo",
     "eventDetailsDescriptionPlaceholder": "Descrizione evento",
     "eventDetailsPostcardPlaceholder": "Cartolina",
-    "workInProgress": "Questa pagina è ancora in sviluppo e potrebbe contenere errori o testo inaspettato."
+    "workInProgress": "Questa pagina è ancora in sviluppo e potrebbe contenere errori o testo inaspettato.",
+    "dateNaN": "Non specificata"
 }

@@ -51,8 +51,8 @@ export default function PageEventDetail({event}: PageEventDetailProps) {
     const [title, setTitle] = useState<string>(event.name)
     const [description, setDescription] = useState<string>(event.description)
     const [postcard, setPostcard] = useState<string | null>(event.postcard)
-    const [startingAt, setStartingAt] = useState<string | null>(event.startingAt?.toISOString() ?? null)
-    const [endingAt, setEndingAt] = useState<string | null>(event.endingAt?.toISOString() ?? null)
+    const [startingAt, setStartingAt] = useState<string>(event.startingAt?.toISOString() ?? "")
+    const [endingAt, setEndingAt] = useState<string>(event.endingAt?.toISOString() ?? "")
 
     const setPostcardBlob = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
@@ -105,11 +105,11 @@ export default function PageEventDetail({event}: PageEventDetailProps) {
                 daterange={
                     <EditableDateRange
                         startProps={{
-                            value: startingAt ?? undefined,
+                            value: startingAt ?? "",
                             onChange: (e: ChangeEvent<HTMLInputElement>) => setStartingAt(e.target.value)
                         }}
                         endProps={{
-                            value: endingAt ?? undefined,
+                            value: endingAt ?? "",
                             onChange: (e: ChangeEvent<HTMLInputElement>) => setEndingAt(e.target.value)
                         }}
                     />
