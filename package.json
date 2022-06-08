@@ -3,14 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "db:push": "dotenv -e .env.local prisma db push",
-    "db:generate:development": "dotenv -e .env.development -e .env.local prisma generate",
-    "db:generate:production": "dotenv -e .env.production -e .env.local prisma generate --data-proxy",
-    "db:studio": "dotenv -e .env.development dotenv -e .env.local cross-env BROWSER=none prisma studio",
-    "app:dev": "next dev",
-    "app:build": "next build",
-    "app:start": "next start",
-    "app:lint": "next lint"
+    "db-push": "dotenv -e .env.development -e .env.local prisma db push",
+    "db-generate": "dotenv -e .env.development -e .env.local prisma generate",
+    "db-studio": "dotenv -e .env.development -e .env.local prisma studio",
+    "dev": "dotenv -e .env.development -e .env.local next dev",
+    "lint": "dotenv -e .env.development -e .env.local next lint",
+    "build": "dotenv -e .env.development -e .env.local next build",
+    "start": "dotenv -e .env.development -e .env.local next start",
+    "vercel-build": "dotenv -e .env.production -e .env.local prisma generate --data-proxy && dotenv -e .env.production -e .env.local prisma db push --accept-data-loss --skip-generate && next build"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
