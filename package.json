@@ -10,7 +10,7 @@
     "lint": "dotenv -e .env.development -e .env.local next lint",
     "build": "dotenv -e .env.development -e .env.local next build",
     "start": "dotenv -e .env.development -e .env.local next start",
-    "vercel-build": "dotenv -e .env.production -e .env.local prisma generate --data-proxy && dotenv -e .env.production -e .env.local prisma db push --accept-data-loss --skip-generate && next build"
+    "vercel-build": "dotenv -e .env.production -e .env.local prisma generate && dotenv -e .env.production -e .env.local prisma db push --accept-data-loss --skip-generate && next build"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
