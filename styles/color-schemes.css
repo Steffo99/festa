@@ -15,10 +15,6 @@
         --warning: #ffff88;
     }
 
-    .postcard {
-        filter: blur(7px) contrast(50%) brightness(50%);
-    }
-
 
 @media (prefers-color-scheme: light) {
     :root, :host {
@@ -35,9 +31,5 @@
         --positive: #008800;
         --negative: #880000;
         --warning: #666600;
-    }
-
-    .postcard {
-        filter: blur(7px) contrast(25%) brightness(175%);
     }
 }
