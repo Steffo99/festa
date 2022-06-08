@@ -1,6 +1,4 @@
-import { database } from "./prismaClient"
-import { AccountTelegram, Token, User } from "@prisma/client"
-import nodecrypto from "crypto"
+import { default as nodecrypto } from "crypto"
 import { TelegramLoginData } from "../types/user"
 
 
