@@ -105,11 +105,11 @@ export default function PageEventDetail({event}: PageEventDetailProps) {
                 daterange={
                     <EditableDateRange
                         startProps={{
-                            value: startingAt,
+                            value: startingAt ?? undefined,
                             onChange: (e: ChangeEvent<HTMLInputElement>) => setStartingAt(e.target.value)
                         }}
                         endProps={{
-                            value: endingAt,
+                            value: endingAt ?? undefined,
                             onChange: (e: ChangeEvent<HTMLInputElement>) => setEndingAt(e.target.value)
                         }}
                     />
