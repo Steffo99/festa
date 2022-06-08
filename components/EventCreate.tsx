@@ -4,8 +4,10 @@ import { useRouter } from "next/router"
 import { useState } from "react"
 import { useAxiosRequest } from "../hooks/useAxiosRequest"
 import { Loading } from "./Loading"
-import { useEffect } from "react"
 import { ErrorBlock } from "./errors/ErrorBlock"
+import { FestaIcon } from "./extensions/FestaIcon"
+import { faPlus } from "@fortawesome/free-solid-svg-icons"
+import { FormMonorow } from "./form/FormMonorow"
 
 export function EventCreate() {
     const { t } = useTranslation()
@@ -27,8 +29,7 @@ export function EventCreate() {
     if (createEvent.data) return <Loading text={t("eventListCreateRedirecting")} />
 
     return <>
-        <form
-            className="form-monorow"
+        <FormMonorow
             onSubmit={e => { e.preventDefault(); createEvent.run() }}
             noValidate
         >
@@ -39,15 +40,15 @@ export function EventCreate() {
                 onChange={e => setName(e.target.value)}
                 required
             />
-            <input
-                type="submit"
+            <button
                 aria-label={t("eventListCreateSubmitLabel")}
-                className="positive square-40"
-                value="→"
+                className="positive"
                 onClick={e => createEvent.run()}
                 disabled={!name}
-            />
-        </form>
+            >
+                <FestaIcon icon={faPlus}/>
+            </button>
+        </FormMonorow>
         {createEvent.error ? <ErrorBlock error={createEvent.error} text={t("eventListCreateError")} /> : null}
     </>
 }

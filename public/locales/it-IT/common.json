@@ -30,5 +30,6 @@
     "eventDetailsToggleEditingView": "Visualizza anteprima",
     "eventDetailsTitlePlaceholder": "Titolo",
     "eventDetailsDescriptionPlaceholder": "Descrizione evento",
-    "eventDetailsPostcardPlaceholder": "Cartolina"
+    "eventDetailsPostcardPlaceholder": "Cartolina",
+    "workInProgress": "Questa pagina è ancora in sviluppo e potrebbe contenere errori o testo inaspettato."
 }

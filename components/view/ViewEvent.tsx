@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import { FormDateRange } from "../FormDateRange"
+import { FormDateRange } from "../form/FormDateRange"
 
 type ViewEventProps = {
     title: ReactNode,

@@ -12,6 +12,7 @@
         
         --positive: #88ff88;
         --negative: #ff8888;
+        --warning: #ffff88;
     }
 
     .postcard {
@@ -33,6 +34,7 @@
 
         --positive: #008800;
         --negative: #880000;
+        --warning: #666600;
     }
 
     .postcard {

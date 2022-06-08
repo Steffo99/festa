@@ -3,7 +3,7 @@ import { HTMLProps } from "react"
 import { EditingContext } from "../../contexts/editing"
 import { useDefinedContext } from "../../utils/definedContext"
 import { FestaIcon } from "../extensions/FestaIcon"
-import { FormDateRange } from "../FormDateRange"
+import { FormDateRange } from "../form/FormDateRange"
 
 
 type EditableDateRangeProps = {

@@ -3,21 +3,18 @@ import { NextPageContext } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
-import { ChangeEvent, FormEventHandler, useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useState } from "react";
 import { ToolBar } from "../../components/tools/ToolBar";
 import { EditableMarkdown } from "../../components/editable/EditableMarkdown";
 import { EditableText } from "../../components/editable/EditableText";
 import { ToolToggleEditing } from "../../components/tools/ToolToggleEditing";
 import { EditingContext } from "../../contexts/editing";
 import { database } from "../../utils/prismaClient";
-import { Postcard } from "../../components/postcard/Postcard";
-import { ViewContent } from "../../components/view/ViewContent";
 import { EditablePostcard } from "../../components/editable/EditablePostcard";
 import { ViewEvent } from "../../components/view/ViewEvent";
-import { EditableDateTime } from "../../components/editable/EditableDateTime";
-import { FormDateRange } from "../../components/FormDateRange";
 import { ToolToggleVisible } from "../../components/tools/ToolToggleVisible";
 import { EditableDateRange } from "../../components/editable/EditableDateRange";
+import { WorkInProgress } from "../../components/WorkInProgress";
 
 
 export async function getServerSideProps(context: NextPageContext) {
@@ -76,6 +73,7 @@ export default function PageEventDetail({event}: PageEventDetailProps) {
         <Head>
             <title key="title">{event.name} - {t("siteTitle")}</title>
         </Head>
+        <WorkInProgress/>
         <EditingContext.Provider value={editState}>
             <ToolBar vertical="vadapt" horizontal="right">
                 <ToolToggleEditing/>
@@ -96,14 +94,14 @@ export default function PageEventDetail({event}: PageEventDetailProps) {
                         placeholder={t("eventDetailsPostcardPlaceholder")}
                     />
                 }
-                description={
+                description={<>
                     <EditableMarkdown 
                         value={description} 
                         onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
                         rows={3}
                         placeholder={t("eventDetailsDescriptionPlaceholder")}
                     />
-                }
+                </>}
                 daterange={
                     <EditableDateRange
                         startProps={{
