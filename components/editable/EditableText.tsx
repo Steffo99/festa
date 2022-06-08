@@ -1,14 +1,17 @@
 import { HTMLProps } from "react";
-import { EditingContext } from "../contexts/editing";
+import { EditingContext } from "./EditingContext";
 import { useDefinedContext } from "../../utils/definedContext";
 
 
-export function EditableText({value, ...props}: HTMLProps<HTMLInputElement>) {
+/**
+ * Controlled input component which displays an `input[type="text"]` in editing mode, and a `span` displaying the input in preview mode.
+ */
+export function EditableText(props: HTMLProps<HTMLInputElement> & {value: string}) {
     const [editing,] = useDefinedContext(EditingContext)
 
     return editing ? (
-        <input type="text" value={value} {...props}/>
+        <input type="text" {...props}/>
     ) : (
-        <span>{value}</span>
+        <span>{props.value}</span>
     )
 }

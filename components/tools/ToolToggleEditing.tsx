@@ -1,6 +1,6 @@
 import { faBinoculars, faPencil } from "@fortawesome/free-solid-svg-icons"
 import { useTranslation } from "next-i18next"
-import { EditingContext } from "../contexts/editing"
+import { EditingContext } from "../editable/EditingContext"
 import { useDefinedContext } from "../../utils/definedContext"
 import { FestaIcon } from "../extensions/FestaIcon"
 
