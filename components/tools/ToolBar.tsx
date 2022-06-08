@@ -1,4 +1,4 @@
-import {default as classNames} from "classnames"
+import { default as classNames } from "classnames"
 import { ReactNode } from "react"
 
 type ToolBarProps = {

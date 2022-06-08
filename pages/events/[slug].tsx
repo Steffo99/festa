@@ -2,7 +2,7 @@ import { Event, User } from "@prisma/client";
 import { NextPageContext } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import Head from "next/head";
+import { default as Head } from "next/head";
 import { ChangeEvent, useCallback, useState } from "react";
 import { ToolBar } from "../../components/tools/ToolBar";
 import { EditableMarkdown } from "../../components/editable/EditableMarkdown";

@@ -1,10 +1,8 @@
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { NextPageContext } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import Link from "next/link";
+import { default as Link } from "next/link";
 import { ErrorBlock } from "../components/errors/ErrorBlock";
-import { FestaIcon } from "../components/extensions/FestaIcon";
 import { Postcard } from "../components/postcard/Postcard";
 import { ViewNotice } from "../components/view/ViewNotice";
 import errorPostcard from "../public/postcards/markus-spiske-iar-afB0QQw-unsplash-red.jpg"

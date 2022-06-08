@@ -1,5 +1,4 @@
-import { ReactNode } from "react"
-import ReactMarkdown from "react-markdown"
+import { default as ReactMarkdown } from "react-markdown"
 
 type FestaMarkdownProps = {
     markdown: string,

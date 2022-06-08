@@ -5,7 +5,7 @@ import { LoginContext } from '../contexts/login'
 import { useDefinedContext } from '../utils/definedContext'
 import { ActionLoginTelegram } from '../components/ActionLoginTelegram'
 import { ActionEventList } from '../components/ActionEventList'
-import {default as Head} from 'next/head'
+import { default as Head } from 'next/head'
 import defaultPostcard from "../public/postcards/adi-goldstein-Hli3R6LKibo-unsplash.jpg"
 import { Postcard } from '../components/postcard/Postcard'
 import { ViewLanding } from '../components/view/ViewLanding'
