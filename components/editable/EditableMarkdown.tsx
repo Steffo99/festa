@@ -1,5 +1,5 @@
 import { HTMLProps } from "react";
-import { EditingContext } from "../../contexts/editing";
+import { EditingContext } from "../contexts/editing";
 import { useDefinedContext } from "../../utils/definedContext";
 import { FestaMarkdown } from "../extensions/FestaMarkdown";
 

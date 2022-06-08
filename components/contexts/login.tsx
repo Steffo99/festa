@@ -1,5 +1,5 @@
-import { FestaLoginData } from "../types/user";
-import { createStateContext } from "../utils/stateContext";
+import { FestaLoginData } from "../../types/user";
+import { createStateContext } from "../../utils/stateContext";
 
 
 /**

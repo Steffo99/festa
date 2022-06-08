@@ -8,7 +8,7 @@ import { ToolBar } from "../../components/tools/ToolBar";
 import { EditableMarkdown } from "../../components/editable/EditableMarkdown";
 import { EditableText } from "../../components/editable/EditableText";
 import { ToolToggleEditing } from "../../components/tools/ToolToggleEditing";
-import { EditingContext } from "../../contexts/editing";
+import { EditingContext } from "../../components/contexts/editing";
 import { database } from "../../utils/prismaClient";
 import { EditablePostcard } from "../../components/editable/EditablePostcard";
 import { ViewEvent } from "../../components/view/ViewEvent";

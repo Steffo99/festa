@@ -1,7 +1,7 @@
 import { NextPageContext } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { LoginContext } from '../contexts/login'
+import { LoginContext } from '../components/contexts/login'
 import { useDefinedContext } from '../utils/definedContext'
 import { ActionLoginTelegram } from '../components/ActionLoginTelegram'
 import { ActionEventList } from '../components/ActionEventList'

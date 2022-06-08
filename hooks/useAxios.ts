@@ -1,6 +1,6 @@
 import { AxiosInstance, AxiosRequestConfig, default as axios } from "axios";
 import { useContext, useMemo } from "react";
-import { LoginContext } from "../contexts/login";
+import { LoginContext } from "../components/contexts/login";
 import { FestaLoginData } from "../types/user";
 
 export function useAxios<D>(config: AxiosRequestConfig<D> = {}, data?: FestaLoginData | null): AxiosInstance {

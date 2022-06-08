@@ -1,5 +1,5 @@
 import { useTranslation } from "next-i18next"
-import { LoginContext } from "../contexts/login"
+import { LoginContext } from "./contexts/login"
 import { useDefinedContext } from "../utils/definedContext"
 
 export function LogoutLink() {
