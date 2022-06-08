@@ -6,7 +6,7 @@ import classNames from "classnames";
 export function PostcardRenderer() {
     const {postcard, visible} = useDefinedContext(PostcardContext)
 
-    return <>
+    return (
         <div
             className={classNames({
                 "postcard": true,
@@ -16,5 +16,5 @@ export function PostcardRenderer() {
                 backgroundImage: `url(${postcard})`
             }}
         />
-    </>
+    )
 }
