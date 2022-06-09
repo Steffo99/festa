@@ -28,7 +28,7 @@
     "eventListCreateError": "Si è verificato il seguente errore nella creazione del tuo evento:",
     "eventDetailsToggleEditingEdit": "Modifica pagina",
     "eventDetailsToggleEditingView": "Visualizza anteprima",
-    "eventDetailsTitlePlaceholder": "Titolo",
+    "eventDetailsNamePlaceholder": "Nome evento",
     "eventDetailsDescriptionPlaceholder": "Descrizione evento",
     "eventDetailsPostcardPlaceholder": "Cartolina",
     "workInProgress": "Questa pagina è ancora in sviluppo e potrebbe contenere errori o testo inaspettato.",

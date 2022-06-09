@@ -7,8 +7,8 @@ import { ActionLoginTelegram } from '../components/ActionLoginTelegram'
 import { ActionEventList } from '../components/ActionEventList'
 import { default as Head } from 'next/head'
 import defaultPostcard from "../public/postcards/adi-goldstein-Hli3R6LKibo-unsplash.jpg"
-import { Postcard } from '../components/postcard/Postcard'
 import { ViewLanding } from '../components/view/ViewLanding'
+import { usePostcardImage } from '../components/postcard/usePostcardImage'
 
 
 export async function getStaticProps(context: NextPageContext) {
@@ -22,15 +22,14 @@ export async function getStaticProps(context: NextPageContext) {
 
 export default function PageIndex() {
     const { t } = useTranslation()
-    const [login, ] = useDefinedContext(LoginContext)
+    const [login,] = useDefinedContext(LoginContext)
+
+    usePostcardImage(`url(${defaultPostcard.src})`)
 
     return <>
         <Head>
             <title key="title">{t("siteTitle")}</title>
         </Head>
-        <Postcard 
-            src={defaultPostcard}
-        />
         <ViewLanding
             title={t("siteTitle")}
             subtitle={t("siteSubtitle")}
@@ -39,7 +38,7 @@ export default function PageIndex() {
                     <ActionEventList
                         className="hero-action"
                     />
-                :
+                    :
                     <ActionLoginTelegram
                         className="hero-action"
                     />

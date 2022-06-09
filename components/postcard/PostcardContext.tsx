@@ -1,11 +1,36 @@
 import { createDefinedContext } from "../../utils/definedContext";
 
 
-export type PostcardContextValue = {
-    postcard: string,
-    setPostcard: React.Dispatch<React.SetStateAction<string>>,
-    visible: boolean,
-    setVisible: React.Dispatch<React.SetStateAction<boolean>>,
+/**
+ * The string to be used as the [`background-image`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-image) CSS property of the postcard.
+ */
+export type PostcardImage = string;
+
+
+/**
+ * How the postcard is displayed on the page.
+ */
+export enum PostcardVisibility {
+    /**
+     * The postcard is filtered, blurred, and rendered behind all elements on the page.
+     */
+    BACKGROUND = "background",
+
+    /**
+     * The postcard is fully visible and rendered above all other elements.
+     */
+    FOREGROUND = "foreground",
+}
+
+
+/**
+ * Contents of the {@link PostcardContext}.
+ */
+type PostcardContextValue = {
+    image: PostcardImage,
+    setImage: React.Dispatch<React.SetStateAction<PostcardImage>>,
+    visibility: PostcardVisibility,
+    setVisibility: React.Dispatch<React.SetStateAction<PostcardVisibility>>,
 }
 
 

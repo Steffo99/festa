@@ -5,8 +5,6 @@
     background-attachment: fixed;
     background-size: cover;
     background-position: 50% 50%;
-    z-index: -1;
-    filter: blur(7px) contrast(50%) brightness(50%);
 
     position: fixed;
     top: 0;
@@ -16,13 +14,18 @@
     pointer-events: none;
 }
 
+.postcard-vis-background {
+    z-index: -1;
+    filter: blur(7px) contrast(50%) brightness(50%);
+}
+
 @media (prefers-color-scheme: light) {
-    .postcard {
+    .postcard-vis-background {
         filter: blur(7px) contrast(25%) brightness(175%);
     }
 }
 
-.postcard-visible {
+.postcard-vis-foreground {
     z-index: 1;
     filter: none;
 }

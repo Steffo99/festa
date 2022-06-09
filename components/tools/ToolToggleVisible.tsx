@@ -2,19 +2,32 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 import { useTranslation } from "next-i18next"
 import { useDefinedContext } from "../../utils/definedContext"
 import { FestaIcon } from "../extensions/FestaIcon"
-import { PostcardContext } from "../postcard/PostcardContext"
+import { PostcardContext, PostcardVisibility } from "../postcard/PostcardContext"
 
 export function ToolToggleVisible() {
-    const {t} = useTranslation()
-    const {visible, setVisible} = useDefinedContext(PostcardContext)
+    const { t } = useTranslation()
+    const { visibility, setVisibility } = useDefinedContext(PostcardContext)
 
-    return (
-        <button 
-            aria-label={visible ? t("toggleVisibleHide") : t("toggleVisibleShow")}
-            onClick={() => setVisible(!visible)}
-            className="toolbar-tool"
-        >
-            <FestaIcon icon={visible ? faEyeSlash : faEye}/>
-        </button>
-    )
+    if (visibility === PostcardVisibility.BACKGROUND) {
+        return (
+            <button
+                aria-label={t("toggleVisibleShow")}
+                onClick={() => setVisibility(PostcardVisibility.FOREGROUND)}
+                className="toolbar-tool"
+            >
+                <FestaIcon icon={faEye} />
+            </button>
+        )
+    }
+    else {
+        return (
+            <button
+                aria-label={t("toggleVisibleHide")}
+                onClick={() => setVisibility(PostcardVisibility.BACKGROUND)}
+                className="toolbar-tool"
+            >
+                <FestaIcon icon={faEyeSlash} />
+            </button>
+        )
+    }
 }

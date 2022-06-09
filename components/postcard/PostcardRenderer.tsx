@@ -4,16 +4,15 @@ import classNames from "classnames";
 
 
 export function PostcardRenderer() {
-    const {postcard, visible} = useDefinedContext(PostcardContext)
+    const { image, visibility } = useDefinedContext(PostcardContext)
+
+    console.debug("[PostcardRenderer] Re-rendering with:", image)
 
     return (
         <div
-            className={classNames({
-                "postcard": true,
-                "postcard-visible": visible,
-            })}
+            className={classNames("postcard", `postcard-vis-${visibility}`)}
             style={{
-                backgroundImage: `url(${postcard})`
+                backgroundImage: image,
             }}
         />
     )

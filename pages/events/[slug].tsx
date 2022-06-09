@@ -3,7 +3,7 @@ import { NextPageContext } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { default as Head } from "next/head";
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, useMemo, useState } from "react";
 import { ToolBar } from "../../components/tools/ToolBar";
 import { EditableMarkdown } from "../../components/editable/EditableMarkdown";
 import { EditableText } from "../../components/editable/EditableText";
@@ -13,11 +13,9 @@ import { database } from "../../utils/prismaClient";
 import { EditableFilePicker } from "../../components/editable/EditableFilePicker";
 import { ViewEvent } from "../../components/view/ViewEvent";
 import { ToolToggleVisible } from "../../components/tools/ToolToggleVisible";
-import { EditableDateRange } from "../../components/editable/EditableDateRange";
 import { WorkInProgress } from "../../components/WorkInProgress";
-import { FormDateRange } from "../../components/form/FormDateRange";
-import { Postcard } from "../../components/postcard/Postcard";
-import { useFilePickerState } from "../../hooks/useFilePickerState";
+import { usePostcardImage } from "../../components/postcard/usePostcardImage";
+import defaultPostcard from "../../public/postcards/adi-goldstein-Hli3R6LKibo-unsplash.jpg"
 
 
 export async function getServerSideProps(context: NextPageContext) {
@@ -26,17 +24,17 @@ export async function getServerSideProps(context: NextPageContext) {
         return { notFound: true }
     }
 
-    const event = await database.event.findUnique({
+    const initialEvent = await database.event.findUnique({
         where: { slug },
         include: { creator: true }
     })
-    if (!event) {
+    if (!initialEvent) {
         return { notFound: true }
     }
 
     return {
         props: {
-            event,
+            initialEvent,
             ...(await serverSideTranslations(context.locale ?? "it-IT", ["common"]))
         }
     }
@@ -44,25 +42,23 @@ export async function getServerSideProps(context: NextPageContext) {
 
 
 type PageEventDetailProps = {
-    event: Event & { creator: User }
+    initialEvent: Event & { creator: User }
 }
 
 
-export default function PageEventDetail({ event }: PageEventDetailProps) {
+export default function PageEventDetail({ initialEvent }: PageEventDetailProps) {
     const { t } = useTranslation()
     const editState = useState<boolean>(false)
-    const [title, setTitle] = useState<string>(event.name)
-    const [description, setDescription] = useState<string>(event.description)
-    const [postcard, setPostcard] = useState<File | "">("")
-    const [startingAt, setStartingAt] = useState<string>(event.startingAt?.toISOString() ?? "")
-    const [endingAt, setEndingAt] = useState<string>(event.endingAt?.toISOString() ?? "")
+    const [event, setEvent] = useState<Event>(initialEvent)
+
+    const displayedPostcard = event.postcard || defaultPostcard.src
+    usePostcardImage(`url(${displayedPostcard})`)
 
     return <>
         <Head>
-            <title key="title">{event.name} - {t("siteTitle")}</title>
+            <title key="title">{initialEvent.name} - {t("siteTitle")}</title>
         </Head>
         <WorkInProgress />
-        <Postcard src={postcard ? URL.createObjectURL(postcard) : event.postcard ?? undefined} />
         <EditingContext.Provider value={editState}>
             <ToolBar vertical="vadapt" horizontal="right">
                 <ToolToggleEditing />
@@ -71,25 +67,24 @@ export default function PageEventDetail({ event }: PageEventDetailProps) {
             <ViewEvent
                 title={
                     <EditableText
-                        value={title}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
-                        placeholder={t("eventDetailsTitlePlaceholder")}
+                        value={event.name}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => setEvent({ ...event, name: e.target.value })}
+                        placeholder={t("eventDetailsNamePlaceholder")}
                     />
                 }
                 postcard={
                     <EditableFilePicker
-                        value={postcard}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => e.target.files ? setPostcard(e.target.files[0] ?? null) : setPostcard(null)}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => setEvent({ ...event, postcard: URL.createObjectURL(e.target.files![0]) })}
                         placeholder={t("eventDetailsPostcardPlaceholder")}
                     />
                 }
-                description={<>
+                description={
                     <EditableMarkdown
-                        value={description}
-                        onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
+                        value={event.description}
+                        onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setEvent({ ...event, description: e.target.value })}
                         placeholder={t("eventDetailsDescriptionPlaceholder")}
                     />
-                </>}
+                }
                 daterange={<></>}
             />
         </EditingContext.Provider>
