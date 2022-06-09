@@ -1,13 +1,13 @@
 import { useTranslation } from "next-i18next"
 
-type HumanDateProps = {
-    date: Date
+type FestaMomentProps = {
+    date: Date,
 }
 
 /**
  * Component that formats a {@link Date} to a machine-readable and human-readable HTML `time[datetime]` element. 
  */
-export function FestaMoment({ date }: HumanDateProps) {
+export function FestaMoment({ date }: FestaMomentProps) {
     const { t } = useTranslation()
 
     if (Number.isNaN(date.getTime())) {
