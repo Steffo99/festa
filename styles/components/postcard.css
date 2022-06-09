@@ -14,18 +14,18 @@
     pointer-events: none;
 }
 
-.postcard-vis-background {
+.postcard-background {
     z-index: -1;
     filter: blur(7px) contrast(50%) brightness(50%);
 }
 
 @media (prefers-color-scheme: light) {
-    .postcard-vis-background {
+    .postcard-background {
         filter: blur(7px) contrast(25%) brightness(175%);
     }
 }
 
-.postcard-vis-foreground {
+.postcard-foreground {
     z-index: 1;
     filter: none;
 }

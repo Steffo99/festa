@@ -10,7 +10,7 @@ export function PostcardRenderer() {
 
     return (
         <div
-            className={classNames("postcard", `postcard-vis-${visibility}`)}
+            className={classNames("postcard", `postcard-${visibility}`)}
             style={{
                 backgroundImage: image,
             }}
