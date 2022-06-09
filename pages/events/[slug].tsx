@@ -3,7 +3,7 @@ import { NextPageContext } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { default as Head } from "next/head";
-import { ChangeEvent, useMemo, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { ToolBar } from "../../components/tools/ToolBar";
 import { EditableMarkdown } from "../../components/editable/EditableMarkdown";
 import { EditableText } from "../../components/editable/EditableText";
