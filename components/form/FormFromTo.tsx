@@ -10,22 +10,22 @@ type FormDateRangeProps = {
 }
 
 
-export function FormDateRange(props: FormDateRangeProps) {
+export function FormFromTo(props: FormDateRangeProps) {
     return (
         <div className={classNames({
-            "form-daterange": true,
-            "form-daterange-preview": props.preview,
+            "form-fromto": true,
+            "form-fromto-preview": props.preview,
         })}>
-            <div className="form-daterange-icon">
+            <div className="form-fromto-icon">
                 {props.icon}
             </div>
-            <div className="form-daterange-start">
+            <div className="form-fromto-start">
                 {props.start}
             </div>
-            <div className="form-daterange-connector">
+            <div className="form-fromto-connector">
                 {props.connector}
             </div>
-            <div className="form-daterange-end">
+            <div className="form-fromto-end">
                 {props.end}
             </div>
         </div>

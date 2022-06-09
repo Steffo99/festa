@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import { FormDateRange } from "../form/FormDateRange"
+import { FormFromTo } from "../form/FormFromTo"
 
 type ViewEventProps = {
     title: ReactNode,
