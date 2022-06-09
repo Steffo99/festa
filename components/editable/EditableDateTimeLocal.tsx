@@ -1,5 +1,5 @@
 import { HTMLProps } from "react";
-import { HumanDate } from "../HumanDate";
+import { FestaMoment } from "../extensions/FestaMoment";
 import { Editable } from "./Editable";
 
 export function EditableDateTimeLocal(props: HTMLProps<HTMLInputElement> & { value: Date }) {
@@ -9,7 +9,7 @@ export function EditableDateTimeLocal(props: HTMLProps<HTMLInputElement> & { val
                 <input type="datetime-local" {...props} value={props.value.toISOString()} />
             }
             preview={
-                <HumanDate date={props.value} />
+                <FestaMoment date={props.value} />
             }
         />
     )

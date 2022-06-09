@@ -4,11 +4,13 @@ type HumanDateProps = {
     date: Date
 }
 
+/**
+ * Component that formats a {@link Date} to a machine-readable and human-readable HTML `time[datetime]` element. 
+ */
+export function FestaMoment({ date }: HumanDateProps) {
+    const { t } = useTranslation()
 
-export function HumanDate({date}: HumanDateProps) {
-    const {t} = useTranslation()
-
-    if(Number.isNaN(date.getTime())) {
+    if (Number.isNaN(date.getTime())) {
         return (
             <span className="disabled">
                 {t("dateNaN")}
