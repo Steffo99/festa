@@ -7,7 +7,7 @@ import { Editable } from "./Editable";
  * 
  * Value is the file's [fakepath](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#value), as a string.
  */
-export function EditableFilePicker(props: HTMLProps<HTMLInputElement> & { value: File | "" }) {
+export function EditableFilePicker(props: HTMLProps<HTMLInputElement> & { value?: undefined }) {
     return (
         <Editable
             editing={
