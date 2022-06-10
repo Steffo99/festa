@@ -1,33 +1,37 @@
 import classNames from "classnames"
-import { ReactNode } from "react"
+import { HTMLProps, memo } from "react"
 
-type FormDateRangeProps = {
+
+export type FormFromToProps = HTMLProps<HTMLDivElement> & {
     preview: boolean,
-    icon: ReactNode,
-    start: ReactNode,
-    connector: ReactNode,
-    end: ReactNode,
 }
 
-
-export function FormFromTo(props: FormDateRangeProps) {
+export const FormFromTo = memo((props: FormFromToProps) => {
     return (
-        <div className={classNames({
-            "form-fromto": true,
-            "form-fromto-preview": props.preview,
-        })}>
-            <div className="form-fromto-icon">
-                {props.icon}
-            </div>
-            <div className="form-fromto-start">
-                {props.start}
-            </div>
-            <div className="form-fromto-connector">
-                {props.connector}
-            </div>
-            <div className="form-fromto-end">
-                {props.end}
-            </div>
-        </div>
+        <div
+            {...props}
+            className={classNames(
+                "form-fromto",
+                props.preview ? "form-fromto-preview" : null,
+                props.className
+            )}
+        />
     )
+})
+
+
+export type FormFromToPartProps = HTMLProps<HTMLDivElement> & {
+    part: "icon" | "start" | "connector" | "end"
 }
+
+export const FormFromToPart = memo((props: FormFromToPartProps) => {
+    return (
+        <div
+            {...props}
+            className={classNames(
+                `form-fromto-${props.part}`,
+                props.className,
+            )}
+        />
+    )
+})

@@ -1,5 +1,5 @@
 import { HTMLProps } from "react";
-import { Editable } from "./Editable";
+import { BaseEditable } from "./BaseEditable";
 
 
 /**
@@ -7,7 +7,7 @@ import { Editable } from "./Editable";
  */
 export function EditableText(props: HTMLProps<HTMLInputElement> & { value: string }) {
     return (
-        <Editable
+        <BaseEditable
             editing={
                 <input type="text" {...props} />
             }

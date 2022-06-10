@@ -1,13 +1,13 @@
 import { HTMLProps } from "react";
 import { FestaMarkdown } from "../extensions/FestaMarkdown";
-import { Editable } from "./Editable";
+import { BaseEditable } from "./BaseEditable";
 
 /**
  * Controlled input component which displays a `textarea` in editing mode, and renders the input in Markdown using {@link FestaMarkdown} in preview mode.
  */
 export function EditableMarkdown(props: HTMLProps<HTMLTextAreaElement> & { value: string }) {
     return (
-        <Editable
+        <BaseEditable
             editing={
                 <textarea {...props} />
             }

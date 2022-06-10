@@ -1,7 +1,7 @@
 import { HTMLProps } from "react";
 import { toDatetimeLocal } from "../../utils/dateFields";
 import { FestaMoment } from "../extensions/FestaMoment";
-import { Editable } from "./Editable";
+import { BaseEditable } from "./BaseEditable";
 
 
 export type EditableDateTimeLocalProps = Omit<HTMLProps<HTMLInputElement>, "value" | "max" | "min"> & { value: Date | null, max?: Date, min?: Date }
@@ -9,7 +9,7 @@ export type EditableDateTimeLocalProps = Omit<HTMLProps<HTMLInputElement>, "valu
 
 export function EditableDateTimeLocal(props: EditableDateTimeLocalProps) {
     return (
-        <Editable
+        <BaseEditable
             editing={
                 <input
                     type="datetime-local"

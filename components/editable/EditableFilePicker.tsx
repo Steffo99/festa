@@ -1,5 +1,5 @@
 import { HTMLProps } from "react";
-import { Editable } from "./Editable";
+import { BaseEditable } from "./BaseEditable";
 
 
 /**
@@ -9,7 +9,7 @@ import { Editable } from "./Editable";
  */
 export function EditableFilePicker(props: HTMLProps<HTMLInputElement> & { value?: undefined }) {
     return (
-        <Editable
+        <BaseEditable
             editing={
                 <input type="file" {...props} />
             }

@@ -8,7 +8,7 @@ type EditableProps = {
 }
 
 
-export function Editable({editing, preview}: EditableProps) {
+export function BaseEditable({ editing, preview }: EditableProps) {
     const [isEditing,] = useDefinedContext(EditingContext)
 
     return isEditing ? editing : preview
