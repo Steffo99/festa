@@ -28,7 +28,11 @@ export function ActionEventList(props: HTMLProps<HTMLFormElement>) {
         </>
     }
     else if (!data) {
-        contents = <Loading text={t("eventListLoading")} />
+        contents = <>
+            <p>
+                <Loading text={t("eventListLoading")} />
+            </p>
+        </>
     }
     else {
         if (data.length === 0) {

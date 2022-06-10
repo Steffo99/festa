@@ -1,7 +1,7 @@
 import { useTranslation } from "next-i18next"
 
 type FestaMomentProps = {
-    date: Date,
+    date: Date | null,
 }
 
 /**
@@ -10,7 +10,7 @@ type FestaMomentProps = {
 export function FestaMoment({ date }: FestaMomentProps) {
     const { t } = useTranslation()
 
-    if (Number.isNaN(date.getTime())) {
+    if (!date || Number.isNaN(date.getTime())) {
         return (
             <span className="disabled">
                 {t("dateNaN")}
@@ -18,9 +18,22 @@ export function FestaMoment({ date }: FestaMomentProps) {
         )
     }
 
+    const now = new Date()
+    const machine = date.toISOString()
+
+    let human
+    // If the date is less than 24 hours away, display just the time
+    if (date.getTime() - now.getTime() < 86_400_000) {
+        human = date.toLocaleTimeString()
+    }
+    // Otherwise, display the full date
+    else {
+        human = date.toLocaleString()
+    }
+
     return (
-        <time dateTime={date.toISOString()}>
-            {date.toLocaleString()}
+        <time dateTime={machine}>
+            {human}
         </time>
     )
 }

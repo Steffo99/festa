@@ -16,6 +16,8 @@ import { ToolToggleVisible } from "../../components/tools/ToolToggleVisible";
 import { WorkInProgress } from "../../components/WorkInProgress";
 import { usePostcardImage } from "../../components/postcard/usePostcardImage";
 import defaultPostcard from "../../public/postcards/adi-goldstein-Hli3R6LKibo-unsplash.jpg"
+import { EditableEventDuration } from "../../components/editable/EditableEventDuration";
+import { fromDatetimeLocal } from "../../utils/dateFields";
 
 
 export async function getServerSideProps(context: NextPageContext) {
@@ -54,6 +56,8 @@ export default function PageEventDetail({ initialEvent }: PageEventDetailProps) 
     const displayedPostcard = event.postcard || defaultPostcard.src
     usePostcardImage(`url(${displayedPostcard})`)
 
+    console.debug("Event:", event)
+
     return <>
         <Head>
             <title key="title">{initialEvent.name} - {t("siteTitle")}</title>
@@ -85,7 +89,18 @@ export default function PageEventDetail({ initialEvent }: PageEventDetailProps) 
                         placeholder={t("eventDetailsDescriptionPlaceholder")}
                     />
                 }
-                daterange={<></>}
+                daterange={
+                    <EditableEventDuration {...{
+                        startProps: {
+                            value: event.startingAt,
+                            onChange: (e: ChangeEvent<HTMLInputElement>) => setEvent({ ...event, startingAt: fromDatetimeLocal(e.target.value) }),
+                        },
+                        endProps: {
+                            value: event.endingAt,
+                            onChange: (e: ChangeEvent<HTMLInputElement>) => setEvent({ ...event, endingAt: fromDatetimeLocal(e.target.value) }),
+                        }
+                    }} />
+                }
             />
         </EditingContext.Provider>
     </>
