@@ -80,6 +80,7 @@ export default function PageEventDetail({ initialEvent }: PageEventDetailProps) 
                     <EditableFilePicker
                         onChange={(e: ChangeEvent<HTMLInputElement>) => setEvent({ ...event, postcard: URL.createObjectURL(e.target.files![0]) })}
                         placeholder={t("eventDetailsPostcardPlaceholder")}
+                        accept={"image/*"}
                     />
                 }
                 description={
