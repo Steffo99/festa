@@ -1,0 +1,47 @@
+.viewEvent {
+    display: grid;
+    grid-template-areas:
+        "x1 ti ti ti x4"
+        "x1 x2 po x3 x4"
+        "x1 x2 de x3 x4"
+        "x1 x2 dr x3 x4"
+        "xx xx xx xx xx"
+    ;
+    grid-template-columns: 1fr 80px 640px 80px 1fr;
+    grid-template-rows: auto auto auto auto 1fr;
+
+    row-gap: 4px;
+
+    margin: 0 auto;
+}
+
+@media (max-width: 800px) {
+    .viewEvent {
+        grid-template-areas:
+            "ti"
+            "po"
+            "de"
+            "dr"
+            "xx"
+        ;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto auto 1fr;
+    }
+}
+
+.viewEventTitle {
+    grid-area: ti;
+    text-align: center;
+}
+
+.viewEventPostcard {
+    grid-area: po;
+}
+
+.viewEventDescription {
+    grid-area: de;
+}
+
+.viewEventDaterange {
+    grid-area: dr;
+}

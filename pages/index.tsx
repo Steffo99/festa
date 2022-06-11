@@ -1,14 +1,14 @@
-import { NextPageContext } from 'next'
+import { NextPage, NextPageContext } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { LoginContext } from '../components/contexts/login'
-import { useDefinedContext } from '../utils/definedContext'
-import { ActionLoginTelegram } from '../components/ActionLoginTelegram'
-import { ActionEventList } from '../components/ActionEventList'
 import { default as Head } from 'next/head'
 import defaultPostcard from "../public/postcards/adi-goldstein-Hli3R6LKibo-unsplash.jpg"
-import { ViewLanding } from '../components/view/ViewLanding'
-import { usePostcardImage } from '../components/postcard/usePostcardImage'
+import { Postcard } from '../components/postcard/changer'
+import { ViewLanding } from '../components/generic/views/landing'
+import { LandingActionLogin } from '../components/landing/actions/login'
+import { useDefinedContext } from '../utils/definedContext'
+import { AuthContext } from '../components/auth/base'
+import { LandingActionEvents } from '../components/landing/actions/events'
 
 
 export async function getStaticProps(context: NextPageContext) {
@@ -20,30 +20,28 @@ export async function getStaticProps(context: NextPageContext) {
 }
 
 
-export default function PageIndex() {
+const PageIndex: NextPage = () => {
     const { t } = useTranslation()
-    const [login,] = useDefinedContext(LoginContext)
-
-    usePostcardImage(`url(${defaultPostcard.src})`)
+    const [auth,] = useDefinedContext(AuthContext)
 
     return <>
         <Head>
             <title key="title">{t("siteTitle")}</title>
         </Head>
+        <Postcard
+            src={defaultPostcard}
+        />
         <ViewLanding
             title={t("siteTitle")}
             subtitle={t("siteSubtitle")}
-            actions={
-                (login ?
-                    <ActionEventList
-                        className="hero-action"
-                    />
-                    :
-                    <ActionLoginTelegram
-                        className="hero-action"
-                    />
-                )
+            actions={auth ?
+                <LandingActionEvents />
+                :
+                <LandingActionLogin />
             }
         />
     </>
 }
+
+
+export default PageIndex

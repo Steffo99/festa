@@ -1,22 +1,7 @@
 @import "color-schemes.css";
 @import "elements.css";
 @import "mood.css";
-/* Ughhh, there's no way to have readable CSS by using modules and Next? */
-@import "components/views/content.css";
-@import "components/views/landing.css";
-@import "components/views/notice.css";
-@import "components/views/event.css";
-
-@import "components/icon.css";
-@import "components/list-events.css";
-@import "components/postcard.css";
-@import "components/square.css";
-@import "components/telegram-login.css";
-@import "components/toolbar.css";
-@import "components/form-monorow.css";
-@import "components/error.css";
-@import "components/form-fromto.css";
-@import "components/work-in-progress.css";
+@import "flex.css";
 
 
 * {

@@ -1,34 +1,74 @@
 import { database } from "../../../utils/prismaClient";
 import { NextApiRequest, NextApiResponse } from "next";
-import { ApiResult } from "../../../types/api";
-import { restInPeace } from "../../../utils/restInPeace";
 import { default as cryptoRandomString } from "crypto-random-string";
-import { handleInterrupts, Interrupt } from "../../../utils/interrupt";
-import { authorizeUser } from "../../../utils/authorizeUser";
-import { Event } from "@prisma/client";
+import { Event, Prisma } from "@prisma/client";
+import { festaNoConfig } from "../../../utils/api/configurator";
+import { festaBearerAuthRequired, FestaToken } from "../../../utils/api/authenticator";
+import { festaJsonSchemaBody } from "../../../utils/api/bodyValidator";
+import { festaAPI } from "../../../utils/api";
+import { festaNoQuery } from "../../../utils/api/queryValidator";
+import { festaRESTGeneric } from "../../../utils/api/executor";
+import { Response } from "../../../utils/api/throwables";
 
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<ApiResult<Event | Event[]>>) {
-    handleInterrupts(res, async () => {
-        const user = await authorizeUser(req)
+type Config = {}
 
-        if (req.body.name.length === 0) {
-            throw new Interrupt(400, { error: "Name is empty" })
-        }
+type Auth = FestaToken
 
-        const create = {
-            slug: cryptoRandomString({ length: 12, type: "url-safe" }),
-            creatorId: user.id,
-            name: req.body.name,
-            postcard: req.body.postcard ?? null,
-            description: req.body.description,
-            startingAt: req.body.startingAt,
-            endingAt: req.body.endingAt,
-        }
+type Query = {}
 
-        await restInPeace(req, res, {
-            model: database.event,
-            create: { create },
-        })
+type Body = {
+    name: string,
+    postcard?: string,
+    description: string,
+    startingAt?: string,
+    endingAt?: string,
+}
+
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    await festaAPI(req, res, {
+
+        configurator: festaNoConfig,
+
+        authenticator: festaBearerAuthRequired,
+
+        queryValidator: festaNoQuery,
+
+        bodyValidator: festaJsonSchemaBody<any>({
+            type: "object",
+            properties: {
+                name: { type: "string", minLength: 1 },
+                postcard: { type: "string", nullable: true },
+                description: { type: "string", nullable: false },
+                startingAt: { type: "string", nullable: true },
+                endingAt: { type: "string", nullable: true },
+            },
+            required: [
+                "name",
+            ]
+        }),
+
+        executor: festaRESTGeneric<Config, Auth, Query, Body, Event, Prisma.EventDelegate<any>, Prisma.EventFindManyArgs, Prisma.EventCreateArgs>({
+            delegate: database.event,
+
+            getListArgs: async ({ }) => {
+                throw Response.error({ status: 405, message: "Cannot list all events" })
+            },
+
+            getCreateArgs: async ({ auth, body }) => {
+                return {
+                    data: {
+                        slug: cryptoRandomString({ length: 12, type: "alphanumeric" }),
+                        creatorId: auth.userId,
+                        name: body!.name,
+                        postcard: body!.postcard ?? null,
+                        description: body!.description,
+                        startingAt: body!.startingAt ?? null,
+                        endingAt: body!.endingAt ?? null,
+                    }
+                }
+            },
+        }),
     })
 }

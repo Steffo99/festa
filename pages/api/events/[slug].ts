@@ -1,38 +1,112 @@
 import { database } from "../../../utils/prismaClient";
 import { NextApiRequest, NextApiResponse } from "next";
-import { ApiResult } from "../../../types/api";
-import { Model, restInPeace } from "../../../utils/restInPeace";
-import { handleInterrupts, Interrupt } from "../../../utils/interrupt";
-import { authorizeUser } from "../../../utils/authorizeUser";
-import { Event } from "@prisma/client";
+import { Event, Prisma } from "@prisma/client";
+import { festaAPI } from "../../../utils/api";
+import { festaNoConfig } from "../../../utils/api/configurator";
+import { festaBearerAuthOptional, FestaToken } from "../../../utils/api/authenticator";
+import { festaJsonSchemaBody } from "../../../utils/api/bodyValidator";
+import { festaRESTSpecific } from "../../../utils/api/executor";
+import { festaJsonSchemaQuery } from "../../../utils/api/queryValidator";
+import { Response } from "../../../utils/api/throwables";
 
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<ApiResult<Event | Event[]>>) {
-    handleInterrupts(res, async () => {
-        const user = await authorizeUser(req)
+type Config = {}
 
-        const canEdit = async (_model: Model, obj?: Event) => {
-            if(obj && obj.creatorId !== user.id) {
-                throw new Interrupt(403, {error: "Only the creator can edit an event"})
+type Auth = FestaToken | undefined
+
+type Query = {
+    slug: string
+}
+
+type Body = {
+    name: string,
+    postcard?: string,
+    description: string,
+    startingAt?: string,
+    endingAt?: string,
+}
+
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    await festaAPI(req, res, {
+
+        configurator: festaNoConfig,
+
+        authenticator: festaBearerAuthOptional,
+
+        queryValidator: festaJsonSchemaQuery<Query>({
+            type: "object",
+            properties: {
+                slug: { type: "string" }
+            },
+            required: [
+                "slug",
+            ]
+        }),
+
+        bodyValidator: festaJsonSchemaBody<Body>({
+            type: "object",
+            properties: {
+                name: { type: "string" },
+                postcard: { type: "string", nullable: true },
+                description: { type: "string" },
+                startingAt: { type: "string", nullable: true },
+                endingAt: { type: "string", nullable: true },
+            },
+            required: [
+                "slug",
+                "name",
+                "description",
+            ]
+        }),
+
+        executor: festaRESTSpecific<Config, Auth, Query, Body, Event, Prisma.EventDelegate<any>, Prisma.EventFindUniqueArgs, Prisma.EventUpdateArgs>({
+            delegate: database.event,
+
+            getFindArgs: async ({ query }) => {
+                return {
+                    where: {
+                        slug: query.slug,
+                    }
+                }
+            },
+
+            beforeUpdate: async ({ auth }, item) => {
+                if (!auth) {
+                    throw Response.error({ status: 403, message: "Authentication is required to edit events" })
+                }
+
+                if (item && item.creatorId !== auth.user.id) {
+                    throw Response.error({ status: 403, message: "Only the creator can edit an event" })
+                }
+            },
+
+            getUpdateArgs: async ({ body, query }) => {
+                return {
+                    where: {
+                        slug: query.slug,
+                    },
+                    data: body!,
+                }
+            },
+
+            beforeDestruction: async ({ auth }, item) => {
+                if (!auth) {
+                    throw Response.error({ status: 403, message: "Authentication is required to destroy events" })
+                }
+
+                if (item && item.creatorId !== auth.user.id) {
+                    throw Response.error({ status: 403, message: "Only the creator can destroy an event" })
+                }
+            },
+
+            getDestroyArgs: async ({ query }) => {
+                return {
+                    where: {
+                        slug: query.slug,
+                    }
+                }
             }
-        }
-
-        const which = {
-            slug: req.query.slug,
-        }
-        const update = {
-            name: req.body.name,
-            postcard: req.body.postcard ?? null,
-            description: req.body.description,
-            startingAt: req.body.startingAt,
-            endingAt: req.body.endingAt,
-        }
-    
-        await restInPeace(req, res, {
-            model: database.event,
-            retrieve: {which},
-            update: {which, update, before: canEdit},
-            destroy: {which, before: canEdit},
-        })
+        }),
     })
 }

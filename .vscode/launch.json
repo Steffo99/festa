@@ -40,7 +40,7 @@
             "name": "Web page",
             "type": "firefox",
             "request": "launch",
-            "url": "http://local.steffo.eu",
+            "url": "http://nitro.home.steffo.eu",
             "pathMappings": [
                 {
                     "url": "webpack://_n_e",
@@ -55,7 +55,11 @@
     "compounds": [
         {
             "name": "Everything!",
-            "configurations": ["Web server", "Web page", "Prisma Studio"],
+            "configurations": [
+                "Web server",
+                "Web page",
+                "Prisma Studio"
+            ],
             "stopAll": true,
             "presentation": {
                 "group": "Full",

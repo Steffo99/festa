@@ -1,0 +1,46 @@
+.viewLanding {
+    display: grid;
+    grid-template-areas:
+        "titles"
+        "actions"
+    ;
+    grid-template-columns: 100%;
+    grid-template-rows: auto 1fr;
+
+    justify-content: stretch;
+    text-align: center;
+
+    gap: 32px;
+}
+
+.viewLandingTitles {
+    grid-area: titles;
+    text-shadow: 2px 2px 4px var(--background);
+}
+
+.viewLandingTitlesTitle {
+    font-size: 10rem;
+}
+
+.viewLandingTitlesSubtitle {
+    font-size: 2.5rem;
+}
+
+@media (max-width: 800px) or (max-height: 600px) {
+    .viewLandingTitlesTitle {
+        font-size: 5rem;
+    }
+
+    .viewLandingTitlesSubtitle {
+        font-size: 1.5rem;
+    }
+}
+
+.viewLandingActions {
+    grid-area: actions;
+    align-self: start;
+    justify-self: center;
+
+    max-width: 800px;
+    width: 100%;
+}

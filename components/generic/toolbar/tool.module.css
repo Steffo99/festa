@@ -1,0 +1,13 @@
+.toolbarTool {
+    width: 50px !important;
+    height: 50px !important;
+    font-size: large;
+}
+
+@media (pointer: fine) {
+    .toolbarTool {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: medium;
+    }
+}

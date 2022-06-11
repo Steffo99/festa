@@ -1,0 +1,23 @@
+.viewContent {
+    display: grid;
+    grid-template-areas:
+        "title"
+        "content"
+    ;
+    grid-template-columns: auto;
+    grid-template-rows: auto 1fr;
+
+    justify-content: stretch;
+
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.viewContentTitle {
+    grid-area: title;
+    text-align: center;
+}
+
+.viewContentContent {
+    grid-area: content;
+}

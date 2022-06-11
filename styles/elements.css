@@ -67,6 +67,10 @@ button:active:not([disabled]), input[type="submit"]:active:not([disabled]) {
 textarea {
     border-style: inset;
     border-radius: 16px 16px 0 16px;
-    
+
     resize: vertical;
+}
+
+pre {
+    white-space: pre-wrap;
 }

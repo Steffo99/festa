@@ -5,16 +5,16 @@ function fixCssLoaderLocalIdent(webpackConfig) {
 
     function innerFix(used) {
 
-        if (used.loader?.match?.(/[/]css-loader/)) {
+        if (used.loader?.match?.(/.*[/]css-loader.*/)) {
 
-            let modules = used.loader.options?.modules
+            if (used.options?.modules) {
 
-            if (modules) {
-                let { getLocalIdent, ...modules } = modules
+                if (used.options.modules.getLocalIdent) {
 
-                modules.localIdentName = "[name]-[local]"
+                    used.options.modules.getLocalIdent = (context, localIdentName, localName) => `festa__${localName}`
 
-                used.loader.options.modules = modules
+                }
+
             }
 
         }
@@ -60,6 +60,7 @@ function webpack(config) {
  * @type {import('next').NextConfig} 
  */
 const nextConfig = {
+    experimental: { images: { layoutRaw: true } },
     reactStrictMode: true,
     webpack,
     i18n,

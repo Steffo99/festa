@@ -1,49 +1,36 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
-import { LoginContext } from '../components/contexts/login'
-import { useState } from 'react'
-import { PostcardRenderer } from '../components/postcard/PostcardRenderer'
-import { PostcardContext } from '../components/postcard/PostcardContext'
+import { AppProps } from 'next/app'
 import { appWithTranslation, useTranslation } from 'next-i18next'
-import { FestaLoginData } from '../types/user'
-import { useStoredLogin } from "../hooks/useStoredLogin"
 import { SWRConfig } from 'swr'
-import { AxiosRequestConfig } from 'axios'
-import { useAxios } from '../hooks/useAxios'
-import { ErrorBoundary } from '../components/errors/ErrorBoundary'
+import { AxiosSWRFetcherProvider, useAxiosSWRFetcher } from '../components/auth/requests'
+import { useStatePostcard } from '../components/postcard/storage'
+import { PageErrorBoundary } from '../components/generic/errors/boundaries'
+import { PostcardContext } from '../components/postcard/base'
+import { useStateAuth } from '../components/auth/storage'
+import { AuthContext } from '../components/auth/base'
+import { PostcardRenderer } from '../components/postcard/renderer'
+import '../styles/globals.css'
 import defaultPostcard from "../public/postcards/adi-goldstein-Hli3R6LKibo-unsplash.jpg"
-import { useStatePostcard } from '../components/postcard/useStatePostcard'
 
 
 const App = ({ Component, pageProps }: AppProps): JSX.Element => {
     const { t } = useTranslation()
-    const postcardState = useStatePostcard()
-    const [login, setLogin] = useState<FestaLoginData | null>(null)
-    useStoredLogin(setLogin)
+    const postcardState = useStatePostcard(defaultPostcard)
+    const authState = useStateAuth()
 
-    const axios = useAxios({}, login)
-
-    const swrConfig = {
-        fetcher: async (resource: string, init: AxiosRequestConfig<any>) => {
-            const response = await axios.get(resource, init)
-            // To test loading uncomment the following line:
-            // await new Promise(res => setTimeout(res, 100000))
-            return response.data
-        }
-    }
-
-    return <>
-        <ErrorBoundary text={t("genericError")}>
-            <PostcardContext.Provider value={postcardState}>
-                <LoginContext.Provider value={[login, setLogin]}>
-                    <SWRConfig value={swrConfig}>
-                        <PostcardRenderer />
-                        <Component {...pageProps} />
-                    </SWRConfig>
-                </LoginContext.Provider>
-            </PostcardContext.Provider>
-        </ErrorBoundary>
-    </>
+    return (
+        <PageErrorBoundary text={t("genericError")}>
+            <AxiosSWRFetcherProvider>
+                <PostcardContext.Provider value={postcardState}>
+                    <AuthContext.Provider value={authState}>
+                        <AxiosSWRFetcherProvider>
+                            <PostcardRenderer />
+                            <Component {...pageProps} />
+                        </AxiosSWRFetcherProvider>
+                    </AuthContext.Provider>
+                </PostcardContext.Provider>
+            </AxiosSWRFetcherProvider>
+        </PageErrorBoundary>
+    )
 }
 
 export default appWithTranslation(App)

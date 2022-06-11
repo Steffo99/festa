@@ -1,0 +1,44 @@
+.toolbar {
+    display: flex;
+
+    justify-content: flex-start;
+    align-content: flex-start;
+
+    position: fixed;
+
+    z-index: 2;
+
+    gap: 2px;
+}
+
+.toolbarTop {
+    top: 8px;
+    flex-direction: column;
+}
+
+.toolbarBottom {
+    bottom: 8px;
+    flex-direction: column-reverse;
+}
+
+.toolbarLeft {
+    left: 8px;
+}
+
+.toolbarRight {
+    right: 8px;
+}
+
+.toolbarVadapt {
+    top: 8px;
+    flex-direction: column;
+}
+
+@media (max-width: 800px) {
+    .toolbarVadapt {
+        top: unset;
+        bottom: 8px;
+
+        flex-direction: column-reverse;
+    }
+}

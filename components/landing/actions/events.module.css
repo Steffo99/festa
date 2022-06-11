@@ -1,0 +1,28 @@
+.landingActionEventsList {
+    max-height: 20vh;
+    padding-left: 20px;
+    padding-bottom: 12px;
+
+    text-align: left;
+
+    overflow-y: scroll;
+
+    column-count: auto;
+    column-width: 140px;
+}
+
+.landingActionEventsFormCreate {
+    display: flex;
+    gap: 4px;
+}
+
+.landingActionEventsFormCreateName {
+    flex-grow: 1;
+}
+
+.landingActionEventsFormCreateSubmit {
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+}
