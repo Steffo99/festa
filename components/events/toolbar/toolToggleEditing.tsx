@@ -7,7 +7,7 @@ import { Tool } from "../../generic/toolbar/tool"
 
 
 /**
- * {@link ToolBar} {@link Tool} which switches between {@link EditingMode}s of the surrounding context.
+ * ToolBar {@link Tool} which switches between {@link EditingMode}s of the surrounding context.
  */
 export function ToolToggleEditing() {
     const { t } = useTranslation()
