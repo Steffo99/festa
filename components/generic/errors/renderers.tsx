@@ -53,6 +53,7 @@ export const ErrorTrace = memo((props: ErrorTraceProps) => {
         </code>
     )
 })
+ErrorTrace.displayName = "ErrorTrace"
 
 
 export type ErrorInlineProps = {
