@@ -1,0 +1,6 @@
+.editableTextView {
+    /* Match the padding of the edit input
+     * 8px padding + 2px border 
+     */
+    padding: 10px;
+}

@@ -2,6 +2,7 @@ import { ComponentPropsWithoutRef } from "react"
 import { FestaMoment } from "../renderers/datetime"
 import { FestaMarkdownRenderer } from "../renderers/markdown"
 import { EditingModeBranch } from "./base"
+import style from "./inputs.module.css"
 
 
 type TextInputProps = ComponentPropsWithoutRef<"input"> & { value: string }
@@ -19,7 +20,9 @@ export const EditableText = (props: TextInputProps) => {
                 <input type="text" {...props} />
             }
             view={
-                <div>{props.value}</div>
+                <div className={style.editableTextView}>
+                    {props.value}
+                </div>
             }
         />
     )
