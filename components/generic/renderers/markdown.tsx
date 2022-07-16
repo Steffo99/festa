@@ -23,3 +23,4 @@ export const FestaMarkdownRenderer = memo(({ code }: FestaMarkdownRendererProps)
         </ReactMarkdown>
     )
 })
+FestaMarkdownRenderer.displayName = "FestaMarkdownRenderer"

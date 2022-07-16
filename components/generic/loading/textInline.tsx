@@ -19,3 +19,4 @@ export const LoadingTextInline = memo((props: LoadingTextInlineProps) => {
         </span>
     )
 })
+LoadingTextInline.displayName = "LoadingTextInline"

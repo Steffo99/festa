@@ -17,3 +17,4 @@ export const TelegramLoginButton = memo((props: TelegramLoginButtonProps) => {
         </div>
     )
 })
+TelegramLoginButton.displayName = "TelegramLoginButton"

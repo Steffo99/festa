@@ -48,3 +48,4 @@ export const ToolBar = memo((props: ToolBarProps) => {
         />
     )
 })
+ToolBar.displayName = "ToolBar"

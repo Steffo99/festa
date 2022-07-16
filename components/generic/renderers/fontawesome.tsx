@@ -13,3 +13,4 @@ export const FestaIcon = memo((props: FontAwesomeIconProps) => {
         />
     )
 })
+FestaIcon.displayName = "FestaIcon"

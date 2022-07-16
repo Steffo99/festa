@@ -19,3 +19,4 @@ export const ViewNotice = memo((props: ViewNoticeProps) => {
         </main>
     )
 })
+ViewNotice.displayName = "ViewNotice"

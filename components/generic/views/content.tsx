@@ -22,3 +22,4 @@ export const ViewContent = memo((props: ViewContentProps) => {
         </main>
     )
 })
+ViewContent.displayName = "ViewContent"

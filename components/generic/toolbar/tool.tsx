@@ -20,3 +20,4 @@ export const Tool = memo((props: ToolProps) => {
         />
     )
 })
+Tool.displayName = "Tool"

@@ -82,6 +82,7 @@ export const ErrorInline = memo((props: ErrorInlineProps) => {
         </span>
     )
 })
+ErrorInline.displayName = "ErrorInline"
 
 
 export type ErrorBlockProps = {
@@ -110,3 +111,4 @@ export const ErrorBlock = memo((props: ErrorBlockProps) => {
         </div>
     )
 })
+ErrorBlock.displayName = "ErrorBlock"

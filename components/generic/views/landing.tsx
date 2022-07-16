@@ -31,3 +31,4 @@ export const ViewLanding = memo((props: ViewLandingProps) => {
         </main>
     )
 })
+ViewLanding.displayName = "ViewLanding"
