@@ -19,7 +19,7 @@ export const EditableText = (props: TextInputProps) => {
                 <input type="text" {...props} />
             }
             view={
-                <span>{props.value}</span>
+                <div>{props.value}</div>
             }
         />
     )
@@ -75,7 +75,9 @@ export const EditableDateTimeLocal = (props: TextInputProps) => {
                 />
             }
             view={
-                <FestaMoment date={new Date(props.value)} />
+                <div>
+                    <FestaMoment date={new Date(props.value)} />
+                </div>
             }
         />
     )
