@@ -1,19 +1,19 @@
 /* Dark theme */
-    :root, :host {
-        --background: #050505;
-        --foreground: white;
-        --border: gray;
-        --interactable: #050505b5;
-        --selection: #3333dd;
+:root, :host {
+    --background: #050505;
+    --foreground: white;
+    --border: gray;
+    --interactable: #050505b5;
+    --selection: #3333dd;
 
-        --anchor: #8888ff;
-        --anchor-visited: #aa88ff;
-        --anchor-active: #ff8888;
-        
-        --positive: #88ff88;
-        --negative: #ff8888;
-        --warning: #ffff88;
-    }
+    --anchor: #8888ff;
+    --anchor-visited: #aa88ff;
+    --anchor-active: #ff8888;
+
+    --positive: #88ff88;
+    --negative: #ff8888;
+    --warning: #ffff88;
+}
 
 
 @media (prefers-color-scheme: light) {
@@ -23,7 +23,7 @@
         --border: gray;
         --interactable: #fafafab5;
         --selection: #7777ff;
-        
+
         --anchor: #4444ff;
         --anchor-visited: #aa44ff;
         --anchor-active: #ff4444;
