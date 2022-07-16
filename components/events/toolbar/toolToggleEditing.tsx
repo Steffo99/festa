@@ -6,10 +6,18 @@ import { FestaIcon } from "../../generic/renderers/fontawesome"
 import { Tool } from "../../generic/toolbar/tool"
 
 
+export type ToolToggleEditingProps = {
+    onViewStart?: () => void,
+    onViewEnd?: () => void,
+    onEditStart?: () => void,
+    onEditEnd?: () => void,
+}
+
+
 /**
  * ToolBar {@link Tool} which switches between {@link EditingMode}s of the surrounding context.
  */
-export function ToolToggleEditing() {
+export function ToolToggleEditing({ onViewStart, onViewEnd, onEditStart, onEditEnd }: ToolToggleEditingProps) {
     const { t } = useTranslation()
     const [editing, setEditing] = useDefinedContext(EditingContext)
 
@@ -17,7 +25,11 @@ export function ToolToggleEditing() {
         return (
             <Tool
                 aria-label={t("toggleEditingView")}
-                onClick={() => setEditing(EditingMode.VIEW)}
+                onClick={() => {
+                    onEditEnd?.()
+                    setEditing(EditingMode.VIEW)
+                    onViewStart?.()
+                }}
             >
                 <FestaIcon icon={faBinoculars} />
             </Tool>
@@ -27,7 +39,11 @@ export function ToolToggleEditing() {
         return (
             <Tool
                 aria-label={t("toggleEditingEdit")}
-                onClick={() => setEditing(EditingMode.EDIT)}
+                onClick={() => {
+                    onViewEnd?.()
+                    setEditing(EditingMode.EDIT)
+                    onEditStart?.()
+                }}
             >
                 <FestaIcon icon={faPencil} />
             </Tool>
