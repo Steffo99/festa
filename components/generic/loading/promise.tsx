@@ -96,7 +96,7 @@ export function usePromise<D, P, E = Error>(func: UsePromiseFunction<D, P>): Use
             dispatch({ type: "fulfill", result })
             return
         },
-        []
+        [func]
     )
 
     return { ...state, run }

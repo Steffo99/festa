@@ -13,7 +13,7 @@ export function usePostcardImage(src: PostcardSource) {
         () => {
             setSrc(src)
         },
-        [src]
+        [src, setSrc]
     )
 }
 

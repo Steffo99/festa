@@ -65,7 +65,7 @@ export function useAxiosRequest<Output = any, Input = any>(config: AxiosRequestC
         async (funcConfig: AxiosRequestConfig<Input> = {}): Promise<AxiosResponse<Output, Input>> => {
             return await axios.request({ ...config, ...funcConfig })
         },
-        [config]
+        [axios, config]
     )
 
     const promiseHook = usePromise(performRequest)
