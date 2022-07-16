@@ -1,6 +1,6 @@
 import { default as classNames } from "classnames"
 import { ComponentPropsWithoutRef, memo, ReactNode } from "react"
-import style from "./base.module.css"
+import style from "./bar.module.css"
 
 
 export type ToolBarProps = ComponentPropsWithoutRef<"div"> & {
@@ -37,7 +37,7 @@ export const ToolBar = memo((props: ToolBarProps) => {
             role="toolbar"
             {...props}
             className={classNames(
-                "toolbar",
+                style.toolbar,
                 props.vertical === "top" ? style.toolbarTop : null,
                 props.vertical === "bottom" ? style.toolbarBottom : null,
                 props.vertical === "vadapt" ? style.toolbarVadapt : null,
