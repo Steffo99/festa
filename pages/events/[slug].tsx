@@ -9,11 +9,13 @@ import useSWR from 'swr'
 import { Event } from '@prisma/client'
 import { EditableText } from '../../components/generic/editable/inputs'
 import { EditingContext, EditingMode } from '../../components/generic/editable/base'
-import { useState } from 'react'
+import { useCallback, useContext, useState } from 'react'
 import { ToolBar } from '../../components/generic/toolbar/bar'
 import { ToolToggleEditing } from '../../components/events/toolbar/toolToggleEditing'
 import { ToolToggleVisibility } from '../../components/postcard/toolbar/toolToggleVisibility'
 import { WIPBanner } from '../../components/generic/wip/banner'
+import { AuthContext } from '../../components/auth/base'
+import { useDefinedContext } from '../../utils/definedContext'
 
 
 export async function getServerSideProps(context: NextPageContext) {
@@ -33,11 +35,19 @@ type PageEventProps = {
 
 const PageEvent: NextPage<PageEventProps> = ({ slug }) => {
     const { t } = useTranslation()
-    const { data, error } = useSWR<Event>(`/api/events/${slug}`)
+    const { data, error, mutate } = useSWR<Event>(`/api/events/${slug}`)
+    const [auth, _setAuth] = useDefinedContext(AuthContext)
 
     const displayTitle = data?.name ?? slug
     const displayPostcard = data?.postcard ?? defaultPostcard
     const displayDescription = data?.description ?? ""
+
+    const saveEdits = useCallback(
+        () => {
+            mutate()
+        },
+        []
+    )
 
 
     return <>
@@ -54,19 +64,25 @@ const PageEvent: NextPage<PageEventProps> = ({ slug }) => {
                 title={<>
                     <EditableText
                         value={displayTitle}
+                        onChange={e => mutate(async state => state ? { ...state, name: e.target.value } : undefined, { revalidate: false })}
                     />
                 </>}
                 postcard={<></>}
                 description={<>
                     <EditableText
                         value={displayDescription}
+                        onChange={e => mutate(async state => state ? { ...state, description: e.target.value } : undefined, { revalidate: false })}
                     />
                 </>}
                 daterange={<></>}
             />
             <ToolBar vertical="vadapt" horizontal="right">
-                <ToolToggleEditing />
                 <ToolToggleVisibility />
+                {data && auth?.userId === data?.creatorId &&
+                    <ToolToggleEditing
+                        onEditEnd={saveEdits}
+                    />
+                }
             </ToolBar>
         </EditingContext.Provider>
     </>
