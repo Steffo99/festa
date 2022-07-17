@@ -57,6 +57,7 @@ export const EditableMarkdown = (props: TextAreaProps) => {
             edit={
                 <textarea
                     className={style.editableMarkdownEdit}
+                    rows={12}
                     {...props}
                 />
             }
