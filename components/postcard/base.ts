@@ -40,19 +40,3 @@ export type PostcardContextContents = {
  * Context containing data about the website's current postcard, the blurred background image.
  */
 export const PostcardContext = createDefinedContext<PostcardContextContents>()
-
-
-/**
- * Hook holding as state the {@link PostcardContextContents}.
- */
-export function useStatePostcard(defaultPostcard: PostcardSource) {
-    const [src, setSrc] = useState<PostcardSource>(defaultPostcard);
-    const [visibility, setVisibility] = useState<PostcardVisibility>(PostcardVisibility.BACKGROUND);
-
-    return {
-        src,
-        setSrc,
-        visibility,
-        setVisibility,
-    };
-}
