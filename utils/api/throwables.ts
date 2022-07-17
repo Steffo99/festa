@@ -65,7 +65,7 @@ export class Response {
      * @param defaultMessage - The message to display if the server is running in production mode and cannot display full error messages or if the error message cannot be determined. 
      */
     static fromUnknownError(obj: unknown, defaultMessage: string = "Unexpected server error occurred") {
-        if (process.env.NODE_ENV === "development") {
+        if (process.env.NODE_ENV !== "development") {
             return this.error({ message: defaultMessage })
         }
 
@@ -141,7 +141,7 @@ export class Response {
                 e.consume(res)
             }
             else {
-                throw e
+                this.fromUnknownError(e).consume(res)
             }
         }
     }
