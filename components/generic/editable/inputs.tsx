@@ -55,7 +55,10 @@ export const EditableMarkdown = (props: TextAreaProps) => {
     return (
         <EditingModeBranch
             edit={
-                <textarea {...props} />
+                <textarea
+                    className={style.editableMarkdownEdit}
+                    {...props}
+                />
             }
             view={
                 <FestaMarkdownRenderer code={props.value} />

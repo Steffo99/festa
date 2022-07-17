@@ -4,3 +4,7 @@
      */
     padding: 10px;
 }
+
+.editableMarkdownEdit {
+    font-family: monospace;
+}
