@@ -6,6 +6,6 @@ import { createDefinedContext } from "./definedContext"
  * 
  * @returns The created context.
  */
-export function createStateContext<T>(): Context<[T, Dispatch<SetStateAction<T>>] | undefined> {
-    return createDefinedContext<[T, React.Dispatch<React.SetStateAction<T>>]>()
+export function createStateContext<T>(): Context<[T, Dispatch<T>] | undefined> {
+    return createDefinedContext<[T, React.Dispatch<T>]>()
 }

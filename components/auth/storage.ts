@@ -1,21 +1,13 @@
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { localStorageSaveJSON, useLocalStorageJSONLoad, useLocalStorageJSONState } from "../generic/storage/json";
 import { AuthContextContents } from "./base";
 
 
 /**
- * Hook holding as state the {@link AuthContextContents}.
- */
-export function useStateAuth() {
-    return useState<AuthContextContents>(null)
-}
-
-
-/**
  * Hook which combines {@link useState}, {@link useLocalStorageJSONLoad}, and {@link localStorageSaveJSON}.
  */
-export function useLocalStorageAuthState(key: string) {
-    const [state, setStateInner] = useState<AuthContextContents | undefined>(undefined);
+export function useLocalStorageAuthState(key: string): [AuthContextContents | null, React.Dispatch<AuthContextContents | null>] {
+    const [state, setStateInner] = useState<AuthContextContents | null>(null);
 
     const validateAndSetState = useCallback(
         (data: any) => {
@@ -36,8 +28,8 @@ export function useLocalStorageAuthState(key: string) {
 
     const setState = useCallback(
         (value: AuthContextContents) => {
-            validateAndSetState(value);
             localStorageSaveJSON(key, value);
+            validateAndSetState(value);
         },
         [key, validateAndSetState]
     );
