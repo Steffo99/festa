@@ -1,4 +1,5 @@
 import { ImageProps } from "next/image"
+import { useState } from "react";
 import { createDefinedContext } from "../../utils/definedContext";
 
 
@@ -41,4 +42,17 @@ export type PostcardContextContents = {
 export const PostcardContext = createDefinedContext<PostcardContextContents>()
 
 
+/**
+ * Hook holding as state the {@link PostcardContextContents}.
+ */
+export function useStatePostcard(defaultPostcard: PostcardSource) {
+    const [src, setSrc] = useState<PostcardSource>(defaultPostcard);
+    const [visibility, setVisibility] = useState<PostcardVisibility>(PostcardVisibility.BACKGROUND);
 
+    return {
+        src,
+        setSrc,
+        visibility,
+        setVisibility,
+    };
+}
