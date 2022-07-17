@@ -14,8 +14,11 @@ export const FestaMarkdownRenderer = memo(({ code }: FestaMarkdownRendererProps)
     return (
         <ReactMarkdown
             components={{
-                h1: "h3",  // h1 is reserved for the site name
-                h2: "h3",  // h2 is reserved for the page name
+                h1: "h2",  // h1 is reserved for the page name
+                h2: "h3",
+                h3: "h4",
+                h4: "h5",
+                h5: "h6",
                 img: undefined, // images reveal the IP of the user to third parties!
             }}
         >
