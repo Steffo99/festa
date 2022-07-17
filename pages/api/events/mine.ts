@@ -5,7 +5,7 @@ import { festaNoConfig } from "../../../utils/api/configurator";
 import { festaBearerAuthRequired, FestaToken } from "../../../utils/api/authenticator";
 import { festaAPI } from "../../../utils/api";
 import { festaNoQuery } from "../../../utils/api/queryValidator";
-import { festaJsonSchemaBody, festaNoBody } from "../../../utils/api/bodyValidator";
+import { festaNoBody } from "../../../utils/api/bodyValidator";
 import { festaRESTGeneric } from "../../../utils/api/executor";
 import { Response } from "../../../utils/api/throwables";
 
