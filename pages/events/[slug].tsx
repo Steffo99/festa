@@ -16,6 +16,7 @@ import { ToolToggleVisibility } from '../../components/postcard/toolbar/toolTogg
 import { WIPBanner } from '../../components/generic/wip/banner'
 import { AuthContext } from '../../components/auth/base'
 import { useDefinedContext } from '../../utils/definedContext'
+import { asleep } from '../../utils/asleep'
 
 
 export async function getServerSideProps(context: NextPageContext) {
@@ -43,7 +44,8 @@ const PageEvent: NextPage<PageEventProps> = ({ slug }) => {
     const displayDescription = data?.description ?? ""
 
     const saveEdits = useCallback(
-        () => {
+        async () => {
+            await asleep(1000)
             mutate()
         },
         []
