@@ -1,6 +1,7 @@
 import { useDefinedContext } from "../../../utils/definedContext";
 import { createStateContext } from "../../../utils/stateContext";
 
+
 /**
  * The mode the editing context is currently in.
  */
@@ -16,15 +17,22 @@ export enum EditingMode {
     EDIT = "edit",
 }
 
+
 /**
  * The context of a previewable `form`.
  */
 export const EditingContext = createStateContext<EditingMode>()
 
 
+/**
+ * Parameters of {@link EditingModeBranch}.
+ * 
+ * @todo Perhaps this should be changed to callbacks, so that elements are _not_ rendered unless they are required.
+ */
 export type EditingModeBranchProps = {
     [Mode in EditingMode]: JSX.Element
 }
+
 
 /**
  * Component branching between its props based on the {@link EditingMode} of its innermost surrounding context.
