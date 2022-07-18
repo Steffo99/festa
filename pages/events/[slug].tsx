@@ -99,7 +99,7 @@ const PageEvent: NextPage<PageEventProps> = ({ slug }) => {
                 <ToolToggleVisibility />
                 {data && auth?.userId === data?.creatorId &&
                     <ToolToggleEditing
-                        onEditEnd={save}
+                        save={save}
                     />
                 }
             </ToolBar>

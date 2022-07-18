@@ -15,5 +15,7 @@
     "landingEventsCreateSubmitLabel": "Crea evento",
     "landingEventsCreatePending": "Creazione dell'evento in corso...",
     "landingEventsCreateRejected": "Creazione dell'evento fallita:",
-    "landingEventsCreateFulfilled": "Evento creato con successo! Trasferimento alla pagina dell'evento in corso..."
+    "landingEventsCreateFulfilled": "Evento creato con successo! Trasferimento alla pagina dell'evento in corso...",
+    "toolToggleEditingSave": "Salva modifiche",
+    "toolToggleEditingEdit": "Modifica"
 }

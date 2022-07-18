@@ -1,4 +1,4 @@
-import { faBinoculars, faPencil } from "@fortawesome/free-solid-svg-icons"
+import { faPencil, faSave } from "@fortawesome/free-solid-svg-icons"
 import { useTranslation } from "next-i18next"
 import { useDefinedContext } from "../../../utils/definedContext"
 import { EditingContext, EditingMode } from "../../generic/editable/base"
@@ -7,42 +7,36 @@ import { Tool } from "../../generic/toolbar/tool"
 
 
 export type ToolToggleEditingProps = {
-    onViewStart?: () => void,
-    onViewEnd?: () => void,
-    onEditStart?: () => void,
-    onEditEnd?: () => void,
+    save: () => void,
 }
 
 
 /**
  * ToolBar {@link Tool} which switches between {@link EditingMode}s of the surrounding context.
  */
-export function ToolToggleEditing({ onViewStart, onViewEnd, onEditStart, onEditEnd }: ToolToggleEditingProps) {
+export function ToolToggleEditing({ save }: ToolToggleEditingProps) {
     const { t } = useTranslation()
     const [editing, setEditing] = useDefinedContext(EditingContext)
 
     if (editing === EditingMode.EDIT) {
         return (
             <Tool
-                aria-label={t("toggleEditingView")}
+                aria-label={t("toolToggleEditingSave")}
                 onClick={() => {
-                    onEditEnd?.()
+                    save()
                     setEditing(EditingMode.VIEW)
-                    onViewStart?.()
                 }}
             >
-                <FestaIcon icon={faBinoculars} />
+                <FestaIcon icon={faSave} />
             </Tool>
         )
     }
     else {
         return (
             <Tool
-                aria-label={t("toggleEditingEdit")}
+                aria-label={t("toolToggleEditingEdit")}
                 onClick={() => {
-                    onViewEnd?.()
                     setEditing(EditingMode.EDIT)
-                    onEditStart?.()
                 }}
             >
                 <FestaIcon icon={faPencil} />
