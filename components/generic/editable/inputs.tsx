@@ -5,7 +5,7 @@ import { EditingModeBranch } from "./base"
 import style from "./inputs.module.css"
 
 
-type TextInputProps = ComponentPropsWithoutRef<"input"> & { value: string, viewPrefix?: ReactNode, viewSuffix?: ReactNode }
+type TextInputProps = ComponentPropsWithoutRef<"input"> & { value: string }
 type FileInputProps = ComponentPropsWithoutRef<"input"> & { value?: undefined }
 type TextAreaProps = ComponentPropsWithoutRef<"textarea"> & { value: string }
 
@@ -21,7 +21,7 @@ export const EditableText = (props: TextInputProps) => {
             }
             view={
                 <div className={style.editableTextView}>
-                    {props.viewPrefix}{props.value}{props.viewSuffix}
+                    {props.value}
                 </div>
             }
         />
