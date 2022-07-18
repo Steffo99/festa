@@ -26,6 +26,7 @@ export function ToolToggleEditing({ save }: ToolToggleEditingProps) {
                     save()
                     setEditing(EditingMode.VIEW)
                 }}
+                className={"positive"}
             >
                 <FestaIcon icon={faSave} />
             </Tool>
