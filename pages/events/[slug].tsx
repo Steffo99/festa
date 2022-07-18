@@ -8,7 +8,7 @@ import useSWR from 'swr'
 import { Event } from '@prisma/client'
 import { EditableMarkdown, EditableText } from '../../components/generic/editable/inputs'
 import { EditingContext, EditingMode } from '../../components/generic/editable/base'
-import { useCallback, useContext, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { ToolBar } from '../../components/generic/toolbar/bar'
 import { ToolToggleEditing } from '../../components/events/toolbar/toolToggleEditing'
 import { ToolToggleVisibility } from '../../components/postcard/toolbar/toolToggleVisibility'
@@ -17,6 +17,9 @@ import { AuthContext } from '../../components/auth/base'
 import { useDefinedContext } from '../../utils/definedContext'
 import { ViewContent } from '../../components/generic/views/content'
 import { useAxios } from '../../components/auth/requests'
+import { faAsterisk } from '@fortawesome/free-solid-svg-icons'
+import { FestaIcon } from '../../components/generic/renderers/fontawesome'
+import { usePromise, UsePromiseStatus } from '../../components/generic/loading/promise'
 
 
 export async function getServerSideProps(context: NextPageContext) {
@@ -35,15 +38,35 @@ type PageEventProps = {
 
 
 const PageEvent: NextPage<PageEventProps> = ({ slug }) => {
-    const { t } = useTranslation()
-    const { data, mutate } = useSWR<Event>(`/api/events/${slug}`)
-    const [auth, _setAuth] = useDefinedContext(AuthContext)
-    const axios = useAxios()
+    const { t } =
+        useTranslation()
+
+    const { data, isValidating, mutate } =
+        useSWR<Event>(`/api/events/${slug}`)
+
+    const [auth, _setAuth] =
+        useDefinedContext(AuthContext)
+
+    const axios =
+        useAxios()
+
+    const { run: patchEditsToAPI, status: patchStatus } =
+        usePromise<Event, Event>((d) => axios.patch(`/api/events/${slug}`, d))
+
+    const isLoading = isValidating || patchStatus === UsePromiseStatus.PENDING
 
     const save = useCallback(
         async () => {
-            await axios.patch(`/api/events/${slug}`, data)
+
+            if (data === undefined) {
+                console.warn("[PageEvent] Tried to save while no data was available.")
+                return
+            }
+
+            patchEditsToAPI(data)
             mutate(data)
+
+            console.info("[PageEvent] Saved successfully!")
         },
         [axios, data]
     )
@@ -62,6 +85,7 @@ const PageEvent: NextPage<PageEventProps> = ({ slug }) => {
                     <EditableText
                         value={data?.name ?? slug}
                         onChange={e => mutate(async state => state ? { ...state, name: e.target.value } : undefined, { revalidate: false })}
+                        viewPrefix={isLoading ? <><FestaIcon icon={faAsterisk} spin /> &nbsp;</> : undefined}
                     />
                 }
                 content={
