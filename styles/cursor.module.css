@@ -1,0 +1,7 @@
+.loadingBlocking {
+    cursor: wait;
+}
+
+.loadingAsync {
+    cursor: progress;
+}
