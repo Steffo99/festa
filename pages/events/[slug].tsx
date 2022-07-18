@@ -20,6 +20,7 @@ import { useAxios } from '../../components/auth/requests'
 import { faAsterisk } from '@fortawesome/free-solid-svg-icons'
 import { FestaIcon } from '../../components/generic/renderers/fontawesome'
 import { usePromise, UsePromiseStatus } from '../../components/generic/loading/promise'
+import { EditingContextProvider } from '../../components/generic/editable/provider'
 
 
 export async function getServerSideProps(context: NextPageContext) {
@@ -38,35 +39,21 @@ type PageEventProps = {
 
 
 const PageEvent: NextPage<PageEventProps> = ({ slug }) => {
-    const { t } =
-        useTranslation()
-
-    const { data, isValidating, mutate } =
-        useSWR<Event>(`/api/events/${slug}`)
-
-    const [auth, _setAuth] =
-        useDefinedContext(AuthContext)
-
-    const axios =
-        useAxios()
-
-    const { run: patchEditsToAPI, status: patchStatus } =
-        usePromise<Event, Event>((d) => axios.patch(`/api/events/${slug}`, d))
-
-    const isLoading = isValidating || patchStatus === UsePromiseStatus.PENDING
+    const { t } = useTranslation()
+    const { data, isValidating, mutate } = useSWR<Event>(`/api/events/${slug}`)
+    const [auth,] = useDefinedContext(AuthContext)
+    const axios = useAxios()
 
     const save = useCallback(
         async () => {
-
             if (data === undefined) {
                 console.warn("[PageEvent] Tried to save while no data was available.")
                 return
             }
 
-            patchEditsToAPI(data)
+            await axios.patch(`/api/events/${slug}`, data)
             mutate(data)
-
-            console.info("[PageEvent] Saved successfully!")
+            console.debug("[PageEvent] Saved updated data successfully!")
         },
         [axios, data]
     )
@@ -79,19 +66,20 @@ const PageEvent: NextPage<PageEventProps> = ({ slug }) => {
             src={data?.postcard || defaultPostcard}
         />
         <WIPBanner />
-        <EditingContext.Provider value={useState<EditingMode>(EditingMode.VIEW)}>
+        <EditingContextProvider>
             <ViewContent
                 title={
                     <EditableText
                         value={data?.name ?? slug}
                         onChange={e => mutate(async state => state ? { ...state, name: e.target.value } : undefined, { revalidate: false })}
-                        viewPrefix={isLoading ? <><FestaIcon icon={faAsterisk} spin /> &nbsp;</> : undefined}
+                        placeholder={t("eventTitlePlaceholder")}
                     />
                 }
                 content={
                     <EditableMarkdown
                         value={data?.description ?? ""}
                         onChange={e => mutate(async state => state ? { ...state, description: e.target.value } : undefined, { revalidate: false })}
+                        placeholder={t("eventDescriptionPlaceholder")}
                     />
                 }
             />
@@ -103,7 +91,7 @@ const PageEvent: NextPage<PageEventProps> = ({ slug }) => {
                     />
                 }
             </ToolBar>
-        </EditingContext.Provider>
+        </EditingContextProvider>
     </>
 }
 
