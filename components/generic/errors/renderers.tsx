@@ -2,114 +2,164 @@ import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FestaIcon } from "../renderers/fontawesome";
 import { default as classNames } from "classnames"
 import style from "./renderers.module.css"
-import { memo } from "react";
+import mood from "../../../styles/mood.module.css"
+import { ComponentPropsWithoutRef, memo } from "react";
 import { AxiosError } from "axios";
 
 
-export type ErrorTraceProps = {
+/**
+ * Props of {@link ErrorTrace}.
+ */
+type ErrorTraceProps = ComponentPropsWithoutRef<"code"> & {
+    /**
+     * The error to render the stack trace of.
+     */
     error: Error,
-    inline: boolean,
+
+    /**
+     * Whether error messages in JSON format should be prettified or not.
+     */
+    prettify: boolean,
 }
 
 
-export const ErrorTrace = memo((props: ErrorTraceProps) => {
-    if (props.error instanceof AxiosError) {
-        if (props.error.response) {
-            if (props.error.response.data) {
-                const json = JSON.stringify(props.error.response.data, undefined, props.inline ? undefined : 4).replaceAll("\\n", "\n")
+/**
+ * Component rendering the details of an {@link Error}.
+ * 
+ * Not to use by itself; should be used to display the error in other error renderers.
+ */
+const ErrorTrace = memo(({ error, prettify, ...props }: ErrorTraceProps) => {
+    if (error instanceof AxiosError) {
+        if (error.response) {
+            if (error.response.data) {
+                const json = JSON.stringify(error.response.data, undefined, prettify ? 4 : undefined).replaceAll("\\n", "\n")
 
                 return (
-                    <code>
-                        <b>API {props.error.response.status}</b>
-                        :&nbsp;
-                        {json}
+                    <code {...props}>
+                        <span>
+                            <b>API {error.response.status}</b>
+                            :&nbsp;
+                        </span>
+                        <span>
+                            {json}
+                        </span>
                     </code>
                 )
             }
 
             return (
-                <code>
-                    <b>HTTP {props.error.response.status}</b>
-                    :&nbsp;
-                    {props.error.message}
+                <code {...props}>
+                    <span>
+                        <b>HTTP {error.response.status}</b>
+                        :&nbsp;
+                    </span>
+                    <span>
+                        {error.message}
+                    </span>
                 </code>
             )
         }
 
         return (
-            <code>
-                <b>{props.error.code}</b>
-                :&nbsp;
-                {props.error.message}
+            <code {...props}>
+                <span>
+                    <b>{error.code}</b>
+                    :&nbsp;
+                </span>
+                <span>
+                    {error.message}
+                </span>
             </code>
         )
     }
 
     return (
-        <code>
-            <b>{props.error.name}</b>
-            :&nbsp;
-            {props.error.message}
+        <code {...props}>
+            <span>
+                <b>{error.name}</b>
+                :&nbsp;
+            </span>
+            <span>
+                {error.message}
+            </span>
         </code>
     )
 })
 ErrorTrace.displayName = "ErrorTrace"
 
 
-export type ErrorInlineProps = {
+/**
+ * Props for "error" renderers.
+ */
+export type ErrorProps = {
     error: Error,
     text?: string
 }
 
+
 /**
- * Component rendering a `span` element containing an error passed to it as props.
+ * Inline component for rendering errors.
  * 
- * May or may not include some text to display to the user.
+ * It displays an error {@link FestaIcon}, followed by some optional text, and finally the {@link ErrorTrace}.
  */
-export const ErrorInline = memo((props: ErrorInlineProps) => {
+export const ErrorInline = memo(({ error, text }: ErrorProps) => {
     return (
-        <span className={classNames("negative", style.error, style.errorInline)}>
-            <FestaIcon icon={faCircleExclamation} />
-            &nbsp;
-            {props.text ?
-                <>
-                    <span>
-                        {props.text}
-                    </span>
-                    &nbsp;
-                </>
-                : null}
-            <ErrorTrace error={props.error} inline={true} />
+        <span className={classNames(mood.negative, style.error, style.errorInline)}>
+            <FestaIcon icon={faCircleExclamation} className={style.errorIcon} />
+            {!!text && <>
+                &nbsp;
+                <span className={style.errorText}>
+                    {text}
+                </span>
+                &nbsp;
+            </>}
+            <ErrorTrace error={error} prettify={false} className={style.errorTrace} />
         </span>
     )
 })
 ErrorInline.displayName = "ErrorInline"
 
 
-export type ErrorBlockProps = {
-    error: Error,
-    text: string
-}
-
 /**
- * Component rendering a `div` element containing an error passed to it as props.
+ * Block component for rendering errors.
  * 
- * Must include some text to display to the user.
+ * It displays an inline error {@link FestaIcon}, followed by some **required** text, with the {@link ErrorTrace} below.
  */
-export const ErrorBlock = memo((props: ErrorBlockProps) => {
+export const ErrorBlock = memo(({ error, text }: ErrorProps & { text: string }) => {
     return (
-        <div className={classNames("negative", style.error, style.errorBlock)}>
+        <div className={classNames(mood.negative, style.error, style.errorBlock)}>
             <p>
-                <FestaIcon icon={faCircleExclamation} />
+                <FestaIcon icon={faCircleExclamation} className={style.errorIcon} />
                 &nbsp;
-                <span>
-                    {props.text}
+                <span className={style.errorText}>
+                    {text}
                 </span>
             </p>
             <pre>
-                <ErrorTrace error={props.error} inline={false} />
+                <ErrorTrace error={error} prettify={false} className={style.errorTrace} />
             </pre>
         </div>
     )
 })
 ErrorBlock.displayName = "ErrorBlock"
+
+
+/**
+ * Block component for rendering errors at the center of the page.
+ * 
+ * It displays an inline error {@link FestaIcon}, followed by some **required** text, with the {@link ErrorTrace} below.
+ */
+export const ErrorMain = memo(({ error, text }: ErrorProps & { text: string }) => {
+    return (
+        <div className={classNames(mood.negative, style.error, style.errorMain)}>
+            <FestaIcon icon={faCircleExclamation} className={style.errorIcon} />
+            <p className={style.errorText}>
+                {text}
+            </p>
+            <pre>
+                <ErrorTrace error={error} prettify={false} className={style.errorTrace} />
+            </pre>
+        </div>
+    )
+})
+ErrorMain.displayName = "ErrorMain"

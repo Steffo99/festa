@@ -19,8 +19,12 @@ import { ViewContent } from '../../components/generic/views/content'
 import { useAxios } from '../../components/auth/requests'
 import { faAsterisk } from '@fortawesome/free-solid-svg-icons'
 import { FestaIcon } from '../../components/generic/renderers/fontawesome'
-import { usePromise, UsePromiseStatus } from '../../components/generic/loading/promise'
+import { promiseMultiplexer, usePromise, UsePromiseStatus } from '../../components/generic/loading/promise'
 import { EditingContextProvider } from '../../components/generic/editable/provider'
+import { swrMultiplexer } from '../../components/generic/loading/swr'
+import { LoadingMain, LoadingInline } from '../../components/generic/loading/renderers'
+import { ViewNotice } from '../../components/generic/views/notice'
+import { ErrorBlock } from '../../components/generic/errors/renderers'
 
 
 export async function getServerSideProps(context: NextPageContext) {
@@ -40,52 +44,75 @@ type PageEventProps = {
 
 const PageEvent: NextPage<PageEventProps> = ({ slug }) => {
     const { t } = useTranslation()
-    const { data, isValidating, mutate } = useSWR<Event>(`/api/events/${slug}`)
+    const swrHook = useSWR<Event>(`/api/events/${slug}`)
     const [auth,] = useDefinedContext(AuthContext)
     const axios = useAxios()
 
     const save = useCallback(
         async () => {
-            if (data === undefined) {
+            if (swrHook.data === undefined) {
                 console.warn("[PageEvent] Tried to save while no data was available.")
                 return
             }
 
-            await axios.patch(`/api/events/${slug}`, data)
-            mutate(data)
+            await axios.patch(`/api/events/${slug}`, swrHook.data)
+            swrHook.mutate(swrHook.data)
             console.debug("[PageEvent] Saved updated data successfully!")
         },
-        [axios, data]
+        [axios, swrHook]
     )
 
     return <>
         <Head>
-            <title key="title">{data?.name ?? slug} - {t("siteTitle")}</title>
+            <title key="title">{swrHook.data?.name ?? slug} - {t("siteTitle")}</title>
         </Head>
         <Postcard
-            src={data?.postcard || defaultPostcard}
+            src={swrHook.data?.postcard || defaultPostcard}
         />
         <WIPBanner />
         <EditingContextProvider>
-            <ViewContent
-                title={
-                    <EditableText
-                        value={data?.name ?? slug}
-                        onChange={e => mutate(async state => state ? { ...state, name: e.target.value } : undefined, { revalidate: false })}
-                        placeholder={t("eventTitlePlaceholder")}
+            {swrMultiplexer({
+                hook: swrHook,
+                loading: () => (
+                    <ViewNotice
+                        notice={
+                            <LoadingMain text={t("eventLoading")} />
+                        }
                     />
-                }
-                content={
-                    <EditableMarkdown
-                        value={data?.description ?? ""}
-                        onChange={e => mutate(async state => state ? { ...state, description: e.target.value } : undefined, { revalidate: false })}
-                        placeholder={t("eventDescriptionPlaceholder")}
+                ),
+                ready: (data) => (
+                    <ViewContent
+                        title={
+                            <EditableText
+                                value={data?.name ?? slug}
+                                onChange={e => swrHook.mutate(async state => state ? { ...state, name: e.target.value } : undefined, { revalidate: false })}
+                                placeholder={t("eventTitlePlaceholder")}
+                            />
+                        }
+                        content={
+                            <EditableMarkdown
+                                value={data?.description ?? ""}
+                                onChange={e => swrHook.mutate(async state => state ? { ...state, description: e.target.value } : undefined, { revalidate: false })}
+                                placeholder={t("eventDescriptionPlaceholder")}
+                            />
+                        }
                     />
-                }
-            />
+                ),
+                error: (error) => (
+                    <ViewNotice
+                        notice={
+                            <ErrorBlock
+                                text={t("eventError")}
+                                error={error}
+                            />
+                        }
+                    />
+                )
+            })}
+
             <ToolBar vertical="vadapt" horizontal="right">
                 <ToolToggleVisibility />
-                {data && auth?.userId === data?.creatorId &&
+                {swrHook.data && auth?.userId === swrHook.data?.creatorId &&
                     <ToolToggleEditing
                         save={save}
                     />

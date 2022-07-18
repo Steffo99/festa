@@ -6,6 +6,7 @@ import { usePromise, UsePromiseStatus } from "../../generic/loading/promise"
 import { FestaIcon } from "../../generic/renderers/fontawesome"
 import { Tool } from "../../generic/toolbar/tool"
 import cursor from "../../../styles/cursor.module.css"
+import mood from "../../../styles/mood.module.css"
 
 
 export type ToolToggleEditingProps = {
@@ -43,7 +44,7 @@ export function ToolToggleEditing(props: ToolToggleEditingProps) {
                     save()
                     setEditing(EditingMode.VIEW)
                 }}
-                className={"positive"}
+                className={mood.positive}
             >
                 <FestaIcon icon={faSave} />
             </Tool>

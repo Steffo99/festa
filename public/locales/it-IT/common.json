@@ -19,5 +19,9 @@
     "toolToggleEditingSave": "Salva modifiche",
     "toolToggleEditingEdit": "Modifica",
     "eventNamePlaceholder": "Nome evento",
-    "eventDescriptionPlaceholder": "Descrizione evento in **Markdown**"
+    "eventDescriptionPlaceholder": "Descrizione evento in **Markdown**",
+    "eventLoading": "Caricamento dei dettagli dell'evento in corso...",
+    "eventError": "Si è verificato il seguente errore nel recupero dei dettagli dell'evento:",
+    "debugLoading": "Questo è un esempio di caricamento full-page.",
+    "debugError": "Questo è un esempio di errore full-page."
 }

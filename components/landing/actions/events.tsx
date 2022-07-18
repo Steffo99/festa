@@ -10,9 +10,10 @@ import { useAxiosRequest } from "../../auth/requests"
 import { ErrorBlock } from "../../generic/errors/renderers"
 import { promiseMultiplexer } from "../../generic/loading/promise"
 import { swrMultiplexer } from "../../generic/loading/swr"
-import { LoadingTextInline } from "../../generic/loading/textInline"
+import { LoadingInline } from "../../generic/loading/renderers"
 import { FestaIcon } from "../../generic/renderers/fontawesome"
 import style from "./events.module.css"
+import mood from "../../../styles/mood.module.css"
 
 
 /**
@@ -88,7 +89,7 @@ const LandingActionEventsFormCreate = () => {
                 <button
                     aria-label={t("landingEventsCreateSubmitLabel")}
                     disabled={!name}
-                    className={classNames(style.landingActionEventsFormCreateSubmit, "positive")}
+                    className={classNames(style.landingActionEventsFormCreateSubmit, mood.positive)}
                     onClick={e => {
                         e.preventDefault()
                         run({ data: { name } })
@@ -100,7 +101,7 @@ const LandingActionEventsFormCreate = () => {
         ),
         pending: ({ }) => (
             <p>
-                <LoadingTextInline text={t("landingEventsCreatePending")} />
+                <LoadingInline text={t("landingEventsCreatePending")} />
             </p>
         ),
         rejected: ({ error }) => (
@@ -111,7 +112,7 @@ const LandingActionEventsFormCreate = () => {
         fulfilled: ({ result }) => {
             return (
                 <p>
-                    <LoadingTextInline text={t("landingEventsCreateFulfilled", name)} />
+                    <LoadingInline text={t("landingEventsCreateFulfilled", name)} />
                 </p>
             )
         },
@@ -127,7 +128,7 @@ export const LandingActionEvents = () => {
         hook: apiHook,
         loading: () => (
             <p>
-                <LoadingTextInline text={t("landingEventsLoading")} />
+                <LoadingInline text={t("landingEventsLoading")} />
             </p>
         ),
         ready: (data) => (<>

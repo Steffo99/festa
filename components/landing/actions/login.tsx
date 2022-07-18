@@ -3,7 +3,7 @@ import { useAxiosRequest } from "../../auth/requests"
 import { TelegramLoginButton } from "../../auth/telegram/loginButton"
 import { ErrorBlock } from "../../generic/errors/renderers"
 import { promiseMultiplexer } from "../../generic/loading/promise"
-import { LoadingTextInline } from "../../generic/loading/textInline"
+import { LoadingInline } from "../../generic/loading/renderers"
 import { useDefinedContext } from "../../../utils/definedContext"
 import { AuthContext } from "../../auth/base"
 import { useRouter } from "next/router"
@@ -32,7 +32,7 @@ export const LandingActionLogin = () => {
         </>,
         pending: ({ }) => (
             <p>
-                <LoadingTextInline text={t("landingLoginTelegramPending")} />
+                <LoadingInline text={t("landingLoginTelegramPending")} />
             </p>
         ),
         fulfilled: ({ result }) => {
@@ -40,7 +40,7 @@ export const LandingActionLogin = () => {
 
             return (
                 <p>
-                    <LoadingTextInline text={t("landingLoginTelegramFulfilled")} />
+                    <LoadingInline text={t("landingLoginTelegramFulfilled")} />
                 </p>
             )
         },

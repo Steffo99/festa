@@ -1,0 +1,11 @@
+.loadingMain {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.loadingMain > .loadingIcon {
+    font-size: 4em;
+}
