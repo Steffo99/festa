@@ -25,12 +25,16 @@ import { swrMultiplexer } from '../../components/generic/loading/swr'
 import { LoadingMain, LoadingInline } from '../../components/generic/loading/renderers'
 import { ViewNotice } from '../../components/generic/views/notice'
 import { ErrorBlock } from '../../components/generic/errors/renderers'
+import { database } from '../../utils/prismaClient'
 
 
 export async function getServerSideProps(context: NextPageContext) {
+    const slug = context.query.slug as string
+
     return {
         props: {
-            slug: context.query.slug,
+            slug,
+            event: await database.event.findUnique({ where: { slug } }),
             ...(await serverSideTranslations(context.locale ?? "it-IT", ["common"]))
         }
     }
@@ -38,13 +42,14 @@ export async function getServerSideProps(context: NextPageContext) {
 
 
 type PageEventProps = {
-    slug: string
+    slug: string,
+    event: Event,
 }
 
 
-const PageEvent: NextPage<PageEventProps> = ({ slug }) => {
+const PageEvent: NextPage<PageEventProps> = ({ slug, event }) => {
     const { t } = useTranslation()
-    const swrHook = useSWR<Event>(`/api/events/${slug}`)
+    const swrHook = useSWR<Event>(`/api/events/${slug}`, { fallback: event })
     const [auth,] = useDefinedContext(AuthContext)
     const axios = useAxios()
 
