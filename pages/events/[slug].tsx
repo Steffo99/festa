@@ -6,8 +6,6 @@ import defaultPostcard from "../../public/postcards/adi-goldstein-Hli3R6LKibo-un
 import { Postcard } from '../../components/postcard/changer'
 import useSWR from 'swr'
 import { Event } from '@prisma/client'
-import { EditableMarkdown, EditableText } from '../../components/generic/editable/inputs'
-import { EditingContext, EditingMode } from '../../components/generic/editable/base'
 import { useCallback, useState } from 'react'
 import { ToolBar } from '../../components/generic/toolbar/bar'
 import { ToolToggleEditing } from '../../components/events/toolbar/toolToggleEditing'
@@ -15,17 +13,10 @@ import { ToolToggleVisibility } from '../../components/postcard/toolbar/toolTogg
 import { WIPBanner } from '../../components/generic/wip/banner'
 import { AuthContext } from '../../components/auth/base'
 import { useDefinedContext } from '../../utils/definedContext'
-import { ViewContent } from '../../components/generic/views/content'
 import { useAxios } from '../../components/auth/requests'
-import { faAsterisk } from '@fortawesome/free-solid-svg-icons'
-import { FestaIcon } from '../../components/generic/renderers/fontawesome'
-import { promiseMultiplexer, usePromise, UsePromiseStatus } from '../../components/generic/loading/promise'
-import { EditingContextProvider } from '../../components/generic/editable/provider'
-import { swrMultiplexer } from '../../components/generic/loading/swr'
-import { LoadingMain, LoadingInline } from '../../components/generic/loading/renderers'
-import { ViewNotice } from '../../components/generic/views/notice'
-import { ErrorBlock } from '../../components/generic/errors/renderers'
 import { database } from '../../utils/prismaClient'
+import { EventsActionEdit } from '../../components/events/actions/edit'
+import { EventsActionView } from '../../components/events/actions/view'
 
 
 export async function getServerSideProps(context: NextPageContext) {
@@ -34,7 +25,7 @@ export async function getServerSideProps(context: NextPageContext) {
     return {
         props: {
             slug,
-            event: await database.event.findUnique({ where: { slug } }),
+            fallbackData: await database.event.findUnique({ where: { slug } }),
             ...(await serverSideTranslations(context.locale ?? "it-IT", ["common"]))
         }
     }
@@ -43,87 +34,51 @@ export async function getServerSideProps(context: NextPageContext) {
 
 type PageEventProps = {
     slug: string,
-    event: Event,
+    fallbackData: Event,
 }
 
 
-const PageEvent: NextPage<PageEventProps> = ({ slug, event }) => {
+const PageEvent: NextPage<PageEventProps> = ({ slug, fallbackData }) => {
     const { t } = useTranslation()
-    const swrHook = useSWR<Event>(`/api/events/${slug}`, { fallback: event })
-    const [auth,] = useDefinedContext(AuthContext)
     const axios = useAxios()
+
+    const { data, mutate } = useSWR<Event>(`/api/events/${slug}`, { fallbackData })
+    const [auth,] = useDefinedContext(AuthContext)
+    const [eventEditing, eventSetEditing] = useState<boolean>(false)
 
     const save = useCallback(
         async () => {
-            if (swrHook.data === undefined) {
-                console.warn("[PageEvent] Tried to save while no data was available.")
-                return
-            }
-
-            await axios.patch(`/api/events/${slug}`, swrHook.data)
-            swrHook.mutate(swrHook.data)
-            console.debug("[PageEvent] Saved updated data successfully!")
+            const response = await axios.patch<Event>(`/api/events/${slug}`, data!)
+            mutate(response.data, { revalidate: false })
         },
-        [axios, swrHook]
+        [axios, data]
     )
+
+    const eventName = data?.name ?? slug
+    const eventPostcard = data?.postcard || defaultPostcard
+    const eventCanEdit = auth && data && auth.userId === data.creatorId
 
     return <>
         <Head>
-            <title key="title">{swrHook.data?.name ?? slug} - {t("siteTitle")}</title>
+            <title key="title">{eventName} - {t("siteTitle")}</title>
         </Head>
-        <Postcard
-            src={swrHook.data?.postcard || defaultPostcard}
-        />
+        <Postcard src={eventPostcard} />
         <WIPBanner />
-        <EditingContextProvider>
-            {swrMultiplexer({
-                hook: swrHook,
-                loading: () => (
-                    <ViewNotice
-                        notice={
-                            <LoadingMain text={t("eventLoading")} />
-                        }
-                    />
-                ),
-                ready: (data) => (
-                    <ViewContent
-                        title={
-                            <EditableText
-                                value={data?.name ?? slug}
-                                onChange={e => swrHook.mutate(async state => state ? { ...state, name: e.target.value } : undefined, { revalidate: false })}
-                                placeholder={t("eventTitlePlaceholder")}
-                            />
-                        }
-                        content={
-                            <EditableMarkdown
-                                value={data?.description ?? ""}
-                                onChange={e => swrHook.mutate(async state => state ? { ...state, description: e.target.value } : undefined, { revalidate: false })}
-                                placeholder={t("eventDescriptionPlaceholder")}
-                            />
-                        }
-                    />
-                ),
-                error: (error) => (
-                    <ViewNotice
-                        notice={
-                            <ErrorBlock
-                                text={t("eventError")}
-                                error={error}
-                            />
-                        }
-                    />
-                )
-            })}
-
-            <ToolBar vertical="vadapt" horizontal="right">
-                <ToolToggleVisibility />
-                {swrHook.data && auth?.userId === swrHook.data?.creatorId &&
-                    <ToolToggleEditing
-                        save={save}
-                    />
-                }
-            </ToolBar>
-        </EditingContextProvider>
+        <ToolBar vertical="vadapt" horizontal="right">
+            <ToolToggleVisibility />
+            {eventCanEdit &&
+                <ToolToggleEditing
+                    editing={eventEditing}
+                    setEditing={eventSetEditing}
+                    save={save}
+                />
+            }
+        </ToolBar>
+        {eventEditing ?
+            <EventsActionEdit data={data!} mutate={mutate} />
+            :
+            <EventsActionView data={data!} />
+        }
     </>
 }
 
