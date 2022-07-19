@@ -55,8 +55,9 @@ export const AxiosSWRFetcherProvider = ({ children }: AxiosSWRFetcherProviderPro
                     throw error
                 },
             }}
-            children={children}
-        />
+        >
+            {children}
+        </SWRConfig>
     )
 }
 
