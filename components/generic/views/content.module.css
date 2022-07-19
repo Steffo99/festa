@@ -7,6 +7,8 @@
     grid-template-columns: auto;
     grid-template-rows: auto 1fr;
 
+    gap: 4px;
+
     justify-content: stretch;
 
     max-width: 800px;
