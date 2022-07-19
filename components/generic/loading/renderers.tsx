@@ -2,6 +2,7 @@ import { faAsterisk } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
 import { memo } from "react";
 import { FestaIcon } from "../renderers/fontawesome";
+import { ViewNotice } from "../views/notice";
 import style from "./renderers.module.css"
 
 
@@ -60,3 +61,16 @@ export const LoadingMain = memo(({ text }: LoadingProps) => {
     )
 })
 LoadingMain.displayName = "LoadingMain"
+
+
+/**
+ * {@link ViewNotice} component displaying a {@link LoadingMain}.
+ */
+export const LoadingView = memo((props: LoadingProps) => {
+    return (
+        <ViewNotice
+            notice={<LoadingMain {...props} />}
+        />
+    )
+})
+LoadingView.displayName = "LoadingView"

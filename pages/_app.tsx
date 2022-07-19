@@ -9,7 +9,7 @@ import { PostcardRenderer } from '../components/postcard/renderer'
 import { config as fontAwesomeConfig } from '@fortawesome/fontawesome-svg-core'
 import { PostcardContextProvider } from '../components/postcard/provider'
 import defaultPostcard from "../public/postcards/adi-goldstein-Hli3R6LKibo-unsplash.jpg"
-import { LoadingBoundaryPage } from '../components/generic/loading/boundaries'
+import { LoadingBoundaryMain } from '../components/generic/loading/boundaries'
 
 
 fontAwesomeConfig.autoAddCss = false
@@ -26,9 +26,9 @@ const App = ({ Component, pageProps }: AppProps): JSX.Element => {
                         <AxiosSWRFetcherProvider>
                             <PostcardRenderer />
                             <ErrorBoundaryView text={t("genericError")}>
-                                <LoadingBoundaryPage>
+                                <LoadingBoundaryMain>
                                     <Component {...pageProps} />
-                                </LoadingBoundaryPage>
+                                </LoadingBoundaryMain>
                             </ErrorBoundaryView>
                         </AxiosSWRFetcherProvider>
                     </AuthContextProvider>
