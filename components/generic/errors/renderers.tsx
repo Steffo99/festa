@@ -5,6 +5,7 @@ import style from "./renderers.module.css"
 import mood from "../../../styles/mood.module.css"
 import { ComponentPropsWithoutRef, memo } from "react";
 import { AxiosError } from "axios";
+import { ViewNotice } from "../views/notice";
 
 
 /**
@@ -149,13 +150,15 @@ ErrorBlock.displayName = "ErrorBlock"
  * 
  * It displays an inline error {@link FestaIcon}, followed by some **required** text, with the {@link ErrorTrace} below.
  */
-export const ErrorMain = memo(({ error, text }: ErrorProps & { text: string }) => {
+export const ErrorMain = memo(({ error, text }: ErrorProps) => {
     return (
         <div className={classNames(mood.negative, style.error, style.errorMain)}>
             <FestaIcon icon={faCircleExclamation} className={style.errorIcon} />
-            <p className={style.errorText}>
-                {text}
-            </p>
+            {text &&
+                <p className={style.errorText}>
+                    {text}
+                </p>
+            }
             <pre>
                 <ErrorTrace error={error} prettify={false} className={style.errorTrace} />
             </pre>
@@ -163,3 +166,15 @@ export const ErrorMain = memo(({ error, text }: ErrorProps & { text: string }) =
     )
 })
 ErrorMain.displayName = "ErrorMain"
+
+
+/**
+ * {@link ViewNotice} component for rendering {@link ErrorMain}.
+ */
+export const ErrorView = memo((props: ErrorProps) => {
+    return (
+        <ViewNotice
+            notice={<ErrorMain {...props} />}
+        />
+    )
+})
