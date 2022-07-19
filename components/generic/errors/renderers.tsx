@@ -178,3 +178,4 @@ export const ErrorView = memo((props: ErrorProps) => {
         />
     )
 })
+ErrorView.displayName = "ErrorView"
