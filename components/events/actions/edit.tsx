@@ -11,6 +11,9 @@ export type EventsActionViewProps = {
 
 
 export const EventsActionEdit = ({ data, mutate }: EventsActionViewProps) => {
+    const name = data.name
+    const description = data.description
+
     return (
         <ViewContent
             title={
@@ -18,11 +21,11 @@ export const EventsActionEdit = ({ data, mutate }: EventsActionViewProps) => {
                     () => (
                         <input
                             type="text"
-                            value={data.name}
+                            value={name}
                             onChange={e => mutate({ ...data, name: e.target.value }, { revalidate: false })}
                         />
                     ),
-                    [data.name]
+                    [mutate, name]
                 )
             }
             content={<>
@@ -30,11 +33,11 @@ export const EventsActionEdit = ({ data, mutate }: EventsActionViewProps) => {
                     () => (
                         <textarea
                             rows={12}
-                            value={data.description}
+                            value={description}
                             onChange={e => mutate({ ...data, description: e.target.value }, { revalidate: false })}
                         />
                     ),
-                    [data.description]
+                    [mutate, description]
                 )}
             </>}
         />
