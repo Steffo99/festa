@@ -48,9 +48,15 @@ export type AxiosSWRFetcherProviderProps = {
  */
 export const AxiosSWRFetcherProvider = ({ children }: AxiosSWRFetcherProviderProps) => {
     return (
-        <SWRConfig value={{ fetcher: useAxiosSWRFetcher() }}>
-            {children}
-        </SWRConfig>
+        <SWRConfig
+            value={{
+                fetcher: useAxiosSWRFetcher(),
+                onError: (error, key) => {
+                    throw error
+                },
+            }}
+            children={children}
+        />
     )
 }
 
