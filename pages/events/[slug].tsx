@@ -51,7 +51,7 @@ const PageEvent: NextPage<PageEventProps> = ({ slug, fallbackData }) => {
             const response = await axios.patch<Event>(`/api/events/${slug}`, data!)
             mutate(response.data, { revalidate: false })
         },
-        [axios, data]
+        [axios, data, mutate, slug]
     )
 
     const eventName = data?.name ?? slug
