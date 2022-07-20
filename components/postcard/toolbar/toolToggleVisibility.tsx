@@ -11,13 +11,13 @@ import { PostcardContext, PostcardVisibility } from "../base"
  */
 export function ToolToggleVisibility() {
     const { t } = useTranslation()
-    const { visibility, setVisibility } = useDefinedContext(PostcardContext)
+    const { visibility, changeVisibility } = useDefinedContext(PostcardContext)
 
     if (visibility === PostcardVisibility.BACKGROUND) {
         return (
             <Tool
                 aria-label={t("toggleVisibleShow")}
-                onClick={() => setVisibility(PostcardVisibility.FOREGROUND)}
+                onClick={() => changeVisibility(PostcardVisibility.FOREGROUND)}
             >
                 <FestaIcon icon={faEye} />
             </Tool>
@@ -27,7 +27,7 @@ export function ToolToggleVisibility() {
         return (
             <Tool
                 aria-label={t("toggleVisibleHide")}
-                onClick={() => setVisibility(PostcardVisibility.BACKGROUND)}
+                onClick={() => changeVisibility(PostcardVisibility.BACKGROUND)}
             >
                 <FestaIcon icon={faEyeSlash} />
             </Tool>
