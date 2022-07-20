@@ -26,6 +26,9 @@ type UsePostcardStorageState = {
     previousSrc: PostcardSource,
 }
 
+/**
+ * Reducer for {@link usePostcardStorage}.
+ */
 function reducerUsePostcardStorage(prev: UsePostcardStorageState, action: UsePostcardStorageAction): UsePostcardStorageState {
     switch (action.type) {
         case "change":
@@ -37,6 +40,18 @@ function reducerUsePostcardStorage(prev: UsePostcardStorageState, action: UsePos
             }
         case "display":
             return { ...prev, visibility: action.visibility }
+    }
+}
+
+/**
+ * Convert a {@link PostcardSource} to a string suitable for use in `<img>` tags.
+ */
+function getProperSrc(obj: PostcardSource): string {
+    if (typeof obj === "string") {
+        return obj
+    }
+    else {
+        return obj.src
     }
 }
 
@@ -75,8 +90,8 @@ export function usePostcardStorage(defaultPostcard: PostcardSource): PostcardCon
     )
 
     return {
-        previousSrc,
-        currentSrc,
+        previousSrc: getProperSrc(previousSrc),
+        currentSrc: getProperSrc(currentSrc),
         changePostcard,
         resetPostcard,
         changeVisibility,

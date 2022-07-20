@@ -1,11 +1,11 @@
-import { ComponentPropsWithoutRef } from "react";
+import { StaticImageData } from "next/image";
 import { createDefinedContext } from "../../utils/definedContext";
 
 
 /**
  * The string to be used as the `src` of the postcard.
  */
-export type PostcardSource = string
+export type PostcardSource = string | StaticImageData
 
 
 /**
@@ -29,8 +29,8 @@ export enum PostcardVisibility {
  */
 export type PostcardContextContents = {
     visibility: PostcardVisibility,
-    previousSrc: PostcardSource,
-    currentSrc: PostcardSource,
+    previousSrc: string,
+    currentSrc: string,
     changePostcard: (src: PostcardSource) => void,
     resetPostcard: () => void,
     changeVisibility: (visibility: PostcardVisibility) => void,

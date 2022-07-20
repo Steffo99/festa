@@ -25,6 +25,6 @@
     "eventError": "Si è verificato il seguente errore nel recupero dei dettagli dell'evento:",
     "debugLoading": "Questo è un esempio di caricamento full-page.",
     "debugError": "Questo è un esempio di errore full-page.",
-    "debugPostcardText": "Questo è un esempio di transizione nello sfondo.",
+    "debugPostcardText": "Questo è un esempio di transizione dello sfondo.",
     "debugPostcardButton": "Hmmm."
 }

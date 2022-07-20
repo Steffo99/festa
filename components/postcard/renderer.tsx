@@ -1,9 +1,8 @@
 import { default as classNames } from "classnames"
 import style from "./renderer.module.css"
 import { useDefinedContext } from "../../utils/definedContext"
-import { PostcardContext, PostcardVisibility } from "./base"
-import { LegacyRef, useEffect, useRef, useState } from "react"
-import { asleep } from "../../utils/asleep"
+import { PostcardContext, PostcardSource, PostcardVisibility } from "./base"
+import { LegacyRef, useEffect, useRef } from "react"
 
 
 export function PostcardRenderer() {

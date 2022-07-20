@@ -12,12 +12,7 @@ export function usePostcardImage(src: PostcardSource | StaticImageData) {
 
     useEffect(
         () => {
-            if (typeof src === "string") {
-                changePostcard(src)
-            }
-            else {
-                changePostcard(src.src)
-            }
+            changePostcard(src)
         },
         [src, changePostcard]
     )
