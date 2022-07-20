@@ -17,7 +17,7 @@ export async function getStaticProps(context: NextPageContext) {
 }
 
 
-const Page500: NextPage = (props) => {
+const PageDebugLoading: NextPage = (props) => {
     const { t } = useTranslation()
 
     return <>
@@ -33,4 +33,4 @@ const Page500: NextPage = (props) => {
 }
 
 
-export default Page500
+export default PageDebugLoading
