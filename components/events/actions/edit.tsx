@@ -38,7 +38,7 @@ export const EventsActionEdit = ({ data, mutate, save, setEditing }: EventsActio
                                 placeholder={t("eventNamePlaceholder")}
                             />
                         ),
-                        [mutate, name]
+                        [t, mutate, name]
                     )
                 }
                 content={<>
@@ -51,7 +51,7 @@ export const EventsActionEdit = ({ data, mutate, save, setEditing }: EventsActio
                                 placeholder={t("eventDescriptionPlaceholder")}
                             />
                         ),
-                        [mutate, description]
+                        [t, mutate, description]
                     )}
                     {useMemo(
                         () => (
@@ -62,7 +62,7 @@ export const EventsActionEdit = ({ data, mutate, save, setEditing }: EventsActio
                                 placeholder={t("eventPostcardPlaceholder")}
                             />
                         ),
-                        [mutate, postcard]
+                        [t, mutate, postcard]
                     )}
                 </>}
             />
