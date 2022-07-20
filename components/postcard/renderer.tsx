@@ -11,8 +11,6 @@ export function PostcardRenderer(props: Partial<ImageProps>) {
     return (
         <Image
             src={src}
-            width={"100vw"}
-            height={"100vh"}
             layout="raw"
             alt=""
             {...props}
