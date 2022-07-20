@@ -42,9 +42,9 @@ const PageEvent: NextPage<PageEventProps> = ({ slug, fallbackData }) => {
     const { t } = useTranslation()
     const axios = useAxios()
 
-    const { data, mutate } = useSWR<Event>(`/api/events/${slug}`, { fallbackData })
-    const [auth,] = useDefinedContext(AuthContext)
     const [eventEditing, eventSetEditing] = useState<boolean>(false)
+    const { data, mutate } = useSWR<Event>(`/api/events/${slug}`, { fallbackData, revalidateOnFocus: eventEditing, revalidateOnReconnect: eventEditing, refreshInterval: eventEditing ? 0 : 30000 })
+    const [auth,] = useDefinedContext(AuthContext)
 
     const save = useCallback(
         async () => {
