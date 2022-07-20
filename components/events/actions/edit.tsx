@@ -1,5 +1,5 @@
 import { Event } from "@prisma/client"
-import { useMemo } from "react"
+import { useCallback, useMemo } from "react"
 import { KeyedMutator } from "swr"
 import { ViewContent } from "../../generic/views/content"
 
@@ -22,7 +22,7 @@ export const EventsActionEdit = ({ data, mutate }: EventsActionViewProps) => {
                         <input
                             type="text"
                             value={name}
-                            onChange={e => mutate({ ...data, name: e.target.value }, { revalidate: false })}
+                            onChange={e => mutate((prev) => ({ ...prev!, name: e.target.value }), { revalidate: false })}
                         />
                     ),
                     [mutate, name]
@@ -34,7 +34,7 @@ export const EventsActionEdit = ({ data, mutate }: EventsActionViewProps) => {
                         <textarea
                             rows={12}
                             value={description}
-                            onChange={e => mutate({ ...data, description: e.target.value }, { revalidate: false })}
+                            onChange={e => mutate((prev) => ({ ...prev!, description: e.target.value }), { revalidate: false })}
                         />
                     ),
                     [mutate, description]
