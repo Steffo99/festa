@@ -20,6 +20,7 @@
     "toolToggleEditingEdit": "Modifica",
     "eventNamePlaceholder": "Nome evento",
     "eventDescriptionPlaceholder": "Descrizione evento in **Markdown**",
+    "eventPostcardPlaceholder": "https://images.unsplash.com/photo-1234567890abcd-1234567890ab",
     "eventLoading": "Caricamento dei dettagli dell'evento in corso...",
     "eventError": "Si è verificato il seguente errore nel recupero dei dettagli dell'evento:",
     "debugLoading": "Questo è un esempio di caricamento full-page.",

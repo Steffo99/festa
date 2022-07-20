@@ -1,4 +1,5 @@
 import { Event } from "@prisma/client"
+import { useTranslation } from "next-i18next"
 import { Dispatch, useMemo } from "react"
 import { KeyedMutator } from "swr"
 import { UsePromise } from "../../generic/loading/promise"
@@ -14,8 +15,11 @@ export type EventsActionViewProps = {
 
 
 export const EventsActionEdit = ({ data, mutate, save, setEditing }: EventsActionViewProps) => {
+    const { t } = useTranslation()
+
     const name = data.name
     const description = data.description
+    const postcard = data.postcard
 
     return (
         <form onSubmit={e => {
@@ -31,6 +35,7 @@ export const EventsActionEdit = ({ data, mutate, save, setEditing }: EventsActio
                                 type="text"
                                 value={name}
                                 onChange={e => mutate((prev) => ({ ...prev!, name: e.target.value }), { revalidate: false })}
+                                placeholder={t("eventNamePlaceholder")}
                             />
                         ),
                         [mutate, name]
@@ -43,9 +48,21 @@ export const EventsActionEdit = ({ data, mutate, save, setEditing }: EventsActio
                                 rows={12}
                                 value={description}
                                 onChange={e => mutate((prev) => ({ ...prev!, description: e.target.value }), { revalidate: false })}
+                                placeholder={t("eventDescriptionPlaceholder")}
                             />
                         ),
                         [mutate, description]
+                    )}
+                    {useMemo(
+                        () => (
+                            <input
+                                type="text"
+                                value={postcard ?? ""}
+                                onChange={e => mutate((prev) => ({ ...prev!, postcard: e.target.value || null }), { revalidate: false })}
+                                placeholder={t("eventPostcardPlaceholder")}
+                            />
+                        ),
+                        [mutate, postcard]
                     )}
                 </>}
             />

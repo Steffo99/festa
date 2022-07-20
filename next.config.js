@@ -60,7 +60,19 @@ function webpack(config) {
  * @type {import('next').NextConfig} 
  */
 const nextConfig = {
-    experimental: { images: { layoutRaw: true } },
+    experimental: {
+        images: {
+            allowFutureImage: true,
+            remotePatterns: [
+                {
+                    protocol: "https",
+                    hostname: "images.unsplash.com",
+                    port: "",
+                    pathname: "/photo-*"
+                }
+            ]
+        }
+    },
     reactStrictMode: true,
     webpack,
     i18n,
