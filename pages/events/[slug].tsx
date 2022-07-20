@@ -17,6 +17,7 @@ import { useAxios } from '../../components/auth/requests'
 import { database } from '../../utils/prismaClient'
 import { EventsActionEdit } from '../../components/events/actions/edit'
 import { EventsActionView } from '../../components/events/actions/view'
+import { usePromise } from '../../components/generic/loading/promise'
 
 
 export async function getServerSideProps(context: NextPageContext) {
@@ -46,13 +47,13 @@ const PageEvent: NextPage<PageEventProps> = ({ slug, fallbackData }) => {
     const { data, mutate } = useSWR<Event>(`/api/events/${slug}`, { fallbackData, revalidateOnFocus: eventEditing, revalidateOnReconnect: eventEditing, refreshInterval: eventEditing ? 0 : 30000 })
     const [auth,] = useDefinedContext(AuthContext)
 
-    const save = useCallback(
+    const save = usePromise<void, void>(useCallback(
         async () => {
             const response = await axios.patch<Event>(`/api/events/${slug}`, data!)
             mutate(response.data, { revalidate: false })
         },
         [axios, data, mutate, slug]
-    )
+    ))
 
     const eventName = data?.name ?? slug
     const eventPostcard = data?.postcard || defaultPostcard
@@ -75,7 +76,7 @@ const PageEvent: NextPage<PageEventProps> = ({ slug, fallbackData }) => {
             }
         </ToolBar>
         {eventEditing ?
-            <EventsActionEdit data={data!} mutate={mutate} />
+            <EventsActionEdit data={data!} mutate={mutate} save={save} setEditing={eventSetEditing} />
             :
             <EventsActionView data={data!} />
         }

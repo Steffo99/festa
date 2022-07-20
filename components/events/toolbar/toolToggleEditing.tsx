@@ -1,6 +1,6 @@
 import { faAsterisk, faPencil, faSave } from "@fortawesome/free-solid-svg-icons"
 import { useTranslation } from "next-i18next"
-import { usePromise, UsePromiseStatus } from "../../generic/loading/promise"
+import { UsePromise, usePromise, UsePromiseStatus } from "../../generic/loading/promise"
 import { FestaIcon } from "../../generic/renderers/fontawesome"
 import { Tool } from "../../generic/toolbar/tool"
 import cursor from "../../../styles/cursor.module.css"
@@ -11,19 +11,17 @@ import { Dispatch } from "react"
 export type ToolToggleEditingProps = {
     editing: boolean,
     setEditing: Dispatch<boolean>,
-    save: () => Promise<void>,
+    save: UsePromise<void, void>,
 }
 
 
 /**
  * ToolBar {@link Tool} which allows the user to start editing an event and then save their changes.
  */
-export function ToolToggleEditing({ editing, setEditing, save: upperSave }: ToolToggleEditingProps) {
+export function ToolToggleEditing({ editing, setEditing, save }: ToolToggleEditingProps) {
     const { t } = useTranslation()
 
-    const { run: save, status: saveStatus } = usePromise<void, void>(upperSave)
-
-    if (saveStatus === UsePromiseStatus.PENDING) {
+    if (save.status === UsePromiseStatus.PENDING) {
         return (
             <Tool
                 aria-label={t("toolToggleEditingSaving")}
@@ -39,7 +37,7 @@ export function ToolToggleEditing({ editing, setEditing, save: upperSave }: Tool
             <Tool
                 aria-label={t("toolToggleEditingSave")}
                 onClick={() => {
-                    save()
+                    save.run()
                     setEditing(false)
                 }}
                 className={mood.positive}
