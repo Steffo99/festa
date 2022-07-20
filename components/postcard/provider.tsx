@@ -1,6 +1,6 @@
 import React from "react"
 import { PostcardContext, PostcardSource } from "./base"
-import { useStatePostcard } from "./storage"
+import { usePostcardStorage } from "./storage"
 
 
 export type PostcardContextProviderProps = {
@@ -11,7 +11,7 @@ export type PostcardContextProviderProps = {
 
 export const PostcardContextProvider = ({ defaultPostcard, children }: PostcardContextProviderProps) => {
     return (
-        <PostcardContext.Provider value={useStatePostcard(defaultPostcard)}>
+        <PostcardContext.Provider value={usePostcardStorage(defaultPostcard)}>
             {children}
         </PostcardContext.Provider>
     )

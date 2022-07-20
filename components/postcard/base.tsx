@@ -1,12 +1,11 @@
-import { ImageProps } from "next/image"
-import { useState } from "react";
+import { ComponentPropsWithoutRef } from "react";
 import { createDefinedContext } from "../../utils/definedContext";
 
 
 /**
  * The string to be used as the `src` of the postcard.
  */
-export type PostcardSource = ImageProps["src"]
+export type PostcardSource = string
 
 
 /**
@@ -29,10 +28,12 @@ export enum PostcardVisibility {
  * Contents of the {@link PostcardContext}.
  */
 export type PostcardContextContents = {
-    src: PostcardSource,
-    setSrc: React.Dispatch<React.SetStateAction<PostcardSource>>,
     visibility: PostcardVisibility,
-    setVisibility: React.Dispatch<React.SetStateAction<PostcardVisibility>>,
+    previousSrc: PostcardSource,
+    currentSrc: PostcardSource,
+    changePostcard: (src: PostcardSource) => void,
+    resetPostcard: () => void,
+    changeVisibility: (visibility: PostcardVisibility) => void,
 }
 
 

@@ -11,12 +11,9 @@
 
     user-select: none;
     pointer-events: none;
-
-    z-index: -1;
 }
 
 .postcardBackground {
-    z-index: -1;
     filter: blur(7px) contrast(50%) brightness(50%);
 }
 
@@ -27,6 +24,39 @@
 }
 
 .postcardForeground {
-    z-index: 1;
     filter: none;
+}
+
+.postcardPrevious.postcardBackground {
+    z-index: -2;
+}
+
+.postcardCurrent.postcardBackground {
+    z-index: -1;
+}
+
+.postcardPrevious.postcardForeground {
+    z-index: 1;
+}
+
+.postcardCurrent.postcardForeground {
+    z-index: 2;
+}
+
+.postcardAppearing {
+    opacity: 0;
+    animation: appear 1s linear infinite;
+}
+
+.postcardAppeared {
+    opacity: 1;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }

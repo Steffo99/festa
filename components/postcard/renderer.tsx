@@ -1,30 +1,53 @@
 import { default as classNames } from "classnames"
 import style from "./renderer.module.css"
-import Image, { ImageProps } from "next/future/image"
 import { useDefinedContext } from "../../utils/definedContext"
 import { PostcardContext, PostcardVisibility } from "./base"
+import { LegacyRef, useEffect, useRef, useState } from "react"
+import { asleep } from "../../utils/asleep"
 
 
-export function PostcardRenderer(props: Partial<ImageProps>) {
-    const { src, visibility } = useDefinedContext(PostcardContext)
+export function PostcardRenderer() {
+    const { previousSrc, currentSrc, visibility } = useDefinedContext(PostcardContext)
+    const currentRef: LegacyRef<HTMLImageElement> = useRef(null)
 
-    // Hehe, dirty hack that might actually work
-    const width = typeof window === "undefined" ? undefined : window.innerWidth
-    const height = typeof window === "undefined" ? undefined : window.innerHeight
+    useEffect(
+        () => {
+            if (currentRef.current) {
+                currentRef.current.animate(
+                    [
+                        { opacity: 0 },
+                        { opacity: 1 },
+                    ],
+                    {
+                        duration: 1000
+                    }
+                )
+            }
+        },
+        [currentRef, currentSrc]
+    )
 
-    return (
-        <Image
-            src={src}
+    return <>
+        <img
+            src={previousSrc}
             alt=""
-            priority={true}
-            {...props}
-            width={width}
-            height={height}
             className={classNames(
                 style.postcard,
+                style.postcardPrevious,
                 visibility === PostcardVisibility.BACKGROUND ? style.postcardBackground : null,
                 visibility === PostcardVisibility.FOREGROUND ? style.postcardForeground : null,
             )}
         />
-    )
+        <img
+            src={currentSrc}
+            alt=""
+            ref={currentRef}
+            className={classNames(
+                style.postcard,
+                style.postcardCurrent,
+                visibility === PostcardVisibility.BACKGROUND ? style.postcardBackground : null,
+                visibility === PostcardVisibility.FOREGROUND ? style.postcardForeground : null,
+            )}
+        />
+    </>
 }
