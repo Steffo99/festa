@@ -3,7 +3,6 @@ import style from "./content.module.css"
 
 
 export type ViewContentProps = {
-    title: ReactNode
     content: ReactNode
 }
 
@@ -13,12 +12,7 @@ export type ViewContentProps = {
 export const ViewContent = memo((props: ViewContentProps) => {
     return (
         <main className={style.viewContent}>
-            <h1 className={style.viewContentTitle}>
-                {props.title}
-            </h1>
-            <div className={style.viewContentContent}>
-                {props.content}
-            </div>
+            {props.content}
         </main>
     )
 })

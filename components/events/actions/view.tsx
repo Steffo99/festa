@@ -2,6 +2,7 @@ import { Event } from "@prisma/client"
 import { memo } from "react"
 import { FestaMarkdownRenderer } from "../../generic/renderers/markdown"
 import { ViewContent } from "../../generic/views/content"
+import style from "./view.module.css"
 
 
 export type EventsActionViewProps = {
@@ -13,12 +14,15 @@ export const EventsActionView = memo(({ data }: EventsActionViewProps) => {
     return (
         <form>
             <ViewContent
-                title={<div style={{ padding: "10px" }}>
-                    {data.name}
-                </div>}
-                content={<div>
-                    <FestaMarkdownRenderer code={data.description} />
-                </div>}
+                content={<>
+                    <h1 className={style.padAsInput}>
+                        {data.name}
+                    </h1>
+                    <FestaMarkdownRenderer
+                        className={style.padAsInput}
+                        code={data.description}
+                    />
+                </>}
             />
         </form>
     )

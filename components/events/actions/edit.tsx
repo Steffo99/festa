@@ -28,20 +28,20 @@ export const EventsActionEdit = ({ data, mutate, save, setEditing }: EventsActio
             setEditing(false)
         }}>
             <ViewContent
-                title={
-                    useMemo(
-                        () => (
-                            <input
-                                type="text"
-                                value={name}
-                                onChange={e => mutate((prev) => ({ ...prev!, name: e.target.value }), { revalidate: false })}
-                                placeholder={t("eventNamePlaceholder")}
-                            />
-                        ),
-                        [t, mutate, name]
-                    )
-                }
                 content={<>
+                    <h1>
+                        {useMemo(
+                            () => (
+                                <input
+                                    type="text"
+                                    value={name}
+                                    onChange={e => mutate((prev) => ({ ...prev!, name: e.target.value }), { revalidate: false })}
+                                    placeholder={t("eventNamePlaceholder")}
+                                />
+                            ),
+                            [t, mutate, name]
+                        )}
+                    </h1>
                     {useMemo(
                         () => (
                             <textarea

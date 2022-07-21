@@ -19,6 +19,10 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0;
 }
 
+h1 {
+    text-align: center;
+}
+
 a {
     color: var(--anchor);
 }
@@ -70,8 +74,17 @@ textarea {
     border-radius: 16px 16px 0 16px;
 
     resize: vertical;
+    margin: 0;
 }
 
 pre {
     white-space: pre-wrap;
+}
+
+p:first-child {
+    margin-top: 0;
+}
+
+p:last-child {
+    margin-bottom: 0;
 }
