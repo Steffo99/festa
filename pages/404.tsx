@@ -2,7 +2,7 @@ import { NextPage, NextPageContext } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { default as Link } from "next/link";
-import { ErrorBlock } from "../components/generic/errors/renderers";
+import { ErrorBlock, ErrorMain } from "../components/generic/errors/renderers";
 import { ViewNotice } from "../components/generic/views/notice";
 import { Postcard } from "../components/postcard/changer";
 import errorPostcard from "../public/postcards/markus-spiske-iar-afB0QQw-unsplash-red.jpg"
@@ -26,7 +26,7 @@ const Page404: NextPage = (props) => {
         />
         <ViewNotice
             notice={<>
-                <ErrorBlock
+                <ErrorMain
                     text={t("notFoundError")}
                     error={new Error("HTTP 404 (Not found)")}
                 />
