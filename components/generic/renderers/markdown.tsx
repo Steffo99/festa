@@ -1,4 +1,4 @@
-import { memo } from "react"
+import { Fragment, memo } from "react"
 import { default as ReactMarkdown } from "react-markdown"
 import { ReactMarkdownOptions } from "react-markdown/lib/react-markdown"
 
@@ -21,7 +21,7 @@ export const FestaMarkdownRenderer = memo(({ code, ...props }: FestaMarkdownRend
                 h3: "h4",
                 h4: "h5",
                 h5: "h6",
-                img: undefined, // images reveal the IP of the user to third parties!
+                img: ({ }) => (<></>), // images reveal the IP of the user to third parties!
                 ...props.components,
             }}
         >
