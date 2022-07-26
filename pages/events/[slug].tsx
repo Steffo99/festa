@@ -26,7 +26,7 @@ export async function getServerSideProps(context: NextPageContext) {
     return {
         props: {
             slug,
-            fallbackData: await database.event.findUnique({ where: { slug } }),
+            defaultData: await database.event.findUnique({ where: { slug } }),
             ...(await serverSideTranslations(context.locale ?? "it-IT", ["common"]))
         }
     }
@@ -35,24 +35,24 @@ export async function getServerSideProps(context: NextPageContext) {
 
 type PageEventProps = {
     slug: string,
-    fallbackData: Event,
+    defaultData: Event,
 }
 
 
-const PageEvent: NextPage<PageEventProps> = ({ slug, fallbackData }) => {
+const PageEvent: NextPage<PageEventProps> = ({ slug, defaultData }) => {
     const { t } = useTranslation()
     const axios = useAxios()
 
     const [eventEditing, eventSetEditing] = useState<boolean>(false)
-    const { data, mutate } = useSWR<Event>(`/api/events/${slug}`, { fallbackData, revalidateOnFocus: eventEditing, revalidateOnReconnect: eventEditing, refreshInterval: eventEditing ? 0 : 30000 })
+    const [data, setData] = useState<Event>(defaultData)
     const [auth,] = useDefinedContext(AuthContext)
 
     const save = usePromise<void, void>(useCallback(
         async () => {
             const response = await axios.patch<Event>(`/api/events/${slug}`, data!)
-            mutate(response.data, { revalidate: false })
+            setData(response.data)
         },
-        [axios, data, mutate, slug]
+        [axios, data, setData, slug]
     ))
 
     const eventName = data?.name ?? slug
@@ -76,7 +76,7 @@ const PageEvent: NextPage<PageEventProps> = ({ slug, fallbackData }) => {
             }
         </ToolBar>
         {eventEditing ?
-            <EventsActionEdit data={data!} mutate={mutate} save={save} setEditing={eventSetEditing} />
+            <EventsActionEdit data={data!} setData={setData} save={save} setEditing={eventSetEditing} />
             :
             <EventsActionView data={data!} />
         }

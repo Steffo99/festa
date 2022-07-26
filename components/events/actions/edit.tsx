@@ -1,6 +1,6 @@
 import { Event } from "@prisma/client"
 import { useTranslation } from "next-i18next"
-import { Dispatch, useMemo } from "react"
+import { Dispatch, SetStateAction, useMemo } from "react"
 import { KeyedMutator } from "swr"
 import { UsePromise } from "../../generic/loading/promise"
 import { ViewContent } from "../../generic/views/content"
@@ -8,13 +8,13 @@ import { ViewContent } from "../../generic/views/content"
 
 export type EventsActionViewProps = {
     data: Event,
-    mutate: KeyedMutator<Event>,
+    setData: Dispatch<SetStateAction<Event>>,
     save: UsePromise<void, void>,
     setEditing: Dispatch<boolean>,
 }
 
 
-export const EventsActionEdit = ({ data, mutate, save, setEditing }: EventsActionViewProps) => {
+export const EventsActionEdit = ({ data, setData, save, setEditing }: EventsActionViewProps) => {
     const { t } = useTranslation()
 
     const name = data.name
@@ -35,11 +35,11 @@ export const EventsActionEdit = ({ data, mutate, save, setEditing }: EventsActio
                                 <input
                                     type="text"
                                     value={name}
-                                    onChange={e => mutate((prev) => ({ ...prev!, name: e.target.value }), { revalidate: false })}
+                                    onChange={e => setData(prev => ({ ...prev!, name: e.target.value }))}
                                     placeholder={t("eventNamePlaceholder")}
                                 />
                             ),
-                            [t, mutate, name]
+                            [t, setData, name]
                         )}
                     </h1>
                     {useMemo(
@@ -47,22 +47,22 @@ export const EventsActionEdit = ({ data, mutate, save, setEditing }: EventsActio
                             <textarea
                                 rows={12}
                                 value={description}
-                                onChange={e => mutate((prev) => ({ ...prev!, description: e.target.value }), { revalidate: false })}
+                                onChange={e => setData(prev => ({ ...prev!, description: e.target.value }))}
                                 placeholder={t("eventDescriptionPlaceholder")}
                             />
                         ),
-                        [t, mutate, description]
+                        [t, setData, description]
                     )}
                     {useMemo(
                         () => (
                             <input
                                 type="text"
                                 value={postcard ?? ""}
-                                onChange={e => mutate((prev) => ({ ...prev!, postcard: e.target.value || null }), { revalidate: false })}
+                                onChange={e => setData(prev => ({ ...prev!, postcard: e.target.value || null }))}
                                 placeholder={t("eventPostcardPlaceholder")}
                             />
                         ),
-                        [t, mutate, postcard]
+                        [t, setData, postcard]
                     )}
                 </>}
             />
