@@ -78,7 +78,7 @@ const LandingActionEventsFormCreate = () => {
                 router.push(`/events/${createHook.data!.slug}`)
             }
         },
-        [router]
+        [createHook, router]
     )
 
     return promiseMultiplexer({
