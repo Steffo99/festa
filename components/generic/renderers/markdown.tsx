@@ -2,6 +2,7 @@ import { Fragment, memo } from "react"
 import { default as ReactMarkdown } from "react-markdown"
 import { ReactMarkdownOptions } from "react-markdown/lib/react-markdown"
 import { default as remarkGfm } from "remark-gfm"
+import { default as remarkGemoji } from "remark-gemoji"
 
 type FestaMarkdownRendererProps = Omit<ReactMarkdownOptions, "children"> & {
     code: string,
@@ -27,6 +28,7 @@ export const FestaMarkdownRenderer = memo(({ code, ...props }: FestaMarkdownRend
             }}
             remarkPlugins={[
                 remarkGfm,
+                remarkGemoji,
             ]}
         >
             {code}
