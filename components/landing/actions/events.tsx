@@ -4,11 +4,11 @@ import classNames from "classnames"
 import { useTranslation } from "next-i18next"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { default as useSWR } from "swr"
 import { useAxiosRequest } from "../../auth/requests"
 import { ErrorBlock } from "../../generic/errors/renderers"
-import { promiseMultiplexer } from "../../generic/loading/promise"
+import { promiseMultiplexer, UsePromiseStatus } from "../../generic/loading/promise"
 import { swrMultiplexer } from "../../generic/loading/swr"
 import { LoadingInline } from "../../generic/loading/renderers"
 import { FestaIcon } from "../../generic/renderers/fontawesome"
@@ -73,6 +73,16 @@ const LandingActionEventsFormCreate = () => {
 
     const createHook = useAxiosRequest<Event, Partial<Event>>({ method: "POST", url: "/api/events/" })
 
+    useEffect(
+        () => {
+            if (createHook.status === UsePromiseStatus.FULFILLED) {
+                console.debug(`[LandingActionEventsFormCreate] Moving you to /events/${createHook.data!.slug}`)
+                router.push(`/events/${createHook.data!.slug}`)
+            }
+        },
+        [router]
+    )
+
     return promiseMultiplexer({
         hook: createHook,
         ready: ({ run }) => (
@@ -109,13 +119,11 @@ const LandingActionEventsFormCreate = () => {
                 <ErrorBlock text={t("landingEventsCreateRejected")} error={error} />
             </p>
         ),
-        fulfilled: ({ result }) => {
-            return (
-                <p>
-                    <LoadingInline text={t("landingEventsCreateFulfilled", name)} />
-                </p>
-            )
-        },
+        fulfilled: ({ result }) => (
+            <p>
+                <LoadingInline text={t("landingEventsCreateFulfilled", name)} />
+            </p>
+        )
     })
 }
 
