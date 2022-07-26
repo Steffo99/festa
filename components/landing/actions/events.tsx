@@ -42,17 +42,15 @@ const LandingActionEventsList = ({ data }: { data: Event[] }) => {
             <p>
                 {t("landingEventsDescription")}
             </p>
-            <p>
-                <ul className={style.landingActionEventsList}>
-                    {data.map(e => (
-                        <li key={e.slug}>
-                            <Link href={`/events/${e.slug}`}>
-                                {e.name}
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-            </p>
+            <ul className={style.landingActionEventsList}>
+                {data.map(e => (
+                    <li key={e.slug}>
+                        <Link href={`/events/${e.slug}`}>
+                            {e.name}
+                        </Link>
+                    </li>
+                ))}
+            </ul>
             <p>
                 <label htmlFor="festa-landing-action-events-form-create-name">
                     {t("landingEventsCreateDescription")}
