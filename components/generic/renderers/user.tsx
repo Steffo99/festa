@@ -20,7 +20,7 @@ export const FestaUserRenderer = ({ userId, fallbackData }: FestaUserRendererPro
 
     if (error) {
         return (
-            <span className={classNames(style.festaUserRenderer, mood.negative, cursor.hoverable)} title={error.response ? error.response.data : error}>
+            <span className={classNames(style.festaUserRenderer, mood.negative, cursor.hoverable)} title={error.toString()}>
                 <FestaIcon icon={faExclamationCircle} />
                 {userId}
             </span>
