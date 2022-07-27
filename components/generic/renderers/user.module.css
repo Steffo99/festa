@@ -1,0 +1,16 @@
+.festaUserRenderer {
+    display: inline-flex;
+    flex-direction: row;
+
+    gap: 4px;
+    justify-content: center;
+    align-items: center;
+}
+
+.festaUserRendererAvatar {
+    width: 1.35em;
+    height: 1.35em;
+    border-radius: 100%;
+
+
+}

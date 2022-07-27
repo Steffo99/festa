@@ -5,3 +5,7 @@
 .loadingAsync {
     cursor: progress;
 }
+
+.hoverable {
+    cursor: help;
+}
