@@ -1,5 +1,15 @@
+<div align="center">
+
+![](.media/icon-128x128_round.png)
+
 # Festa
 
-A website for organizing events
+All-in-one event organizer
 
-\[ **[Contribution guide](CONTRIBUTING.md)** \]
+</div>
+
+## Abandoned
+
+> [!Caution]
+> 
+> The project was abandoned due to realizing how ineffective the Prisma plus Pages Next.js Router was.
